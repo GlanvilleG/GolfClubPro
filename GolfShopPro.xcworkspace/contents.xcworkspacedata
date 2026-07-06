@@ -1,7 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:Assets"
+      name = "Assets">
+   </Group>
+   <Group
+      location = "group:CourseData"
+      name = "CourseData">
+   </Group>
+   <Group
+      location = "group:Documentation"
+      name = "Documentation">
+      <FileRef
+         location = "group:Architecture.md">
+      </FileRef>
+      <FileRef
+         location = "group:CodingStandards.md">
+      </FileRef>
+      <FileRef
+         location = "group:ChangeLog.md">
+      </FileRef>
+      <FileRef
+         location = "group:MeetingNotes.md">
+      </FileRef>
+      <Group
+         location = "group:Decisions"
+         name = "Decisions">
+         <FileRef
+            location = "group:ADR-000-template.md">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:Vision.md">
+      </FileRef>
+      <FileRef
+         location = "group:Roadmap.md">
+      </FileRef>
+      <FileRef
+         location = "group:TestingStrategy.md">
+      </FileRef>
+      <Group
+         location = "group:GolfProShop_Documentation"
+         name = "GolfProShop_Documentation">
+         <FileRef
+            location = "group:07-Database_Design.md">
+         </FileRef>
+         <FileRef
+            location = "group:08-Test_Plan.md">
+         </FileRef>
+         <FileRef
+            location = "group:01-Product_Requirements_Document.md">
+         </FileRef>
+         <FileRef
+            location = "group:05-API_Specification.md">
+         </FileRef>
+         <FileRef
+            location = "group:10-Commercialisation_Strategy.md">
+         </FileRef>
+         <FileRef
+            location = "group:04-UI_UX_Guide.md">
+         </FileRef>
+         <FileRef
+            location = "group:09-Release_Plan.md">
+         </FileRef>
+         <FileRef
+            location = "group:02-System_Architecture.md">
+         </FileRef>
+         <FileRef
+            location = "group:03-Data_Model.md">
+         </FileRef>
+         <FileRef
+            location = "group:README.md">
+         </FileRef>
+         <FileRef
+            location = "group:06-AI_Caddy_Design.md">
+         </FileRef>
+      </Group>
+   </Group>
+   <Group
+      location = "group:GolfShopPro"
+      name = "GolfShopPro">
+      <FileRef
+         location = "group:Assets.xcassets">
+      </FileRef>
+      <FileRef
+         location = "group:GolfShopProApp.swift">
+      </FileRef>
+      <FileRef
+         location = "group:README.md">
+      </FileRef>
+      <FileRef
+         location = "group:GolfCore">
+      </FileRef>
+      <FileRef
+         location = "group:ContentView.swift">
+      </FileRef>
+   </Group>
    <FileRef
-      location = "group:GolfShopPro/GolfShopPro.xcodeproj">
+      location = "group:GolfShopPro.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:GolfShopPro.xcworkspace">
+   </FileRef>
+   <Group
+      location = "group:GolfShopPro Watch App"
+      name = "GolfShopPro Watch App">
+      <FileRef
+         location = "group:Assets.xcassets">
+      </FileRef>
+      <FileRef
+         location = "group:GolfShopProApp.swift">
+      </FileRef>
+      <FileRef
+         location = "group:ContentView.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:GolfShopPro Watch AppTests"
+      name = "GolfShopPro Watch AppTests">
+      <FileRef
+         location = "group:GolfShopPro_Watch_AppTests.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:GolfShopPro Watch AppUITests"
+      name = "GolfShopPro Watch AppUITests">
+      <FileRef
+         location = "group:GolfShopPro_Watch_AppUITests.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:GolfShopProTests"
+      name = "GolfShopProTests">
+      <FileRef
+         location = "group:GolfShopProTests.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:GolfShopProUITests"
+      name = "GolfShopProUITests">
+      <FileRef
+         location = "group:GolfShopProUITests.swift">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:Packages"
+      name = "Packages">
+      <Group
+         location = "group:GolfCore"
+         name = "GolfCore">
+      </Group>
+   </Group>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <Group
+      location = "group:Samples"
+      name = "Samples">
+   </Group>
+   <Group
+      location = "group:Scripts"
+      name = "Scripts">
+   </Group>
 </Workspace>
