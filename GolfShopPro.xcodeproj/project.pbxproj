@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		5A66BC472FFB543F009A2428 /* GolfShopPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5A66BC462FFB543F009A2428 /* GolfShopPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5A66BC7E2FFB581F009A2428 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5A66BC7D2FFB581F009A2428 /* GolfCore */; };
+		5A66BC852FFB59DA009A2428 /* Vision.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC832FFB59DA009A2428 /* Vision.md */; };
+		5A66BC872FFB59F4009A2428 /* Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC862FFB59E2009A2428 /* Architecture.md */; };
+		5A66BC892FFB5A01009A2428 /* Roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC882FFB59F9009A2428 /* Roadmap.md */; };
+		5A66BC8B2FFB5A15009A2428 /* ChangeLog.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC8A2FFB5A09009A2428 /* ChangeLog.md */; };
+		5A66BC8D2FFB5A27009A2428 /* CodingStandards.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC8C2FFB5A1E009A2428 /* CodingStandards.md */; };
+		5A66BC8F2FFB5A3B009A2428 /* TestingStrategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A66BC8E2FFB5A2E009A2428 /* TestingStrategy.md */; };
+		5A66BC912FFB5A4F009A2428 /* MeetingNotes.md in Sources */ = {isa = PBXBuildFile; fileRef = 5A66BC902FFB5A47009A2428 /* MeetingNotes.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,11 +75,31 @@
 		5A66BC462FFB543F009A2428 /* GolfShopPro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GolfShopPro Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A66BC552FFB5440009A2428 /* GolfShopPro Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfShopPro Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A66BC5F2FFB5440009A2428 /* GolfShopPro Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfShopPro Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A66BC832FFB59DA009A2428 /* Vision.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Vision.md; sourceTree = "<group>"; };
+		5A66BC862FFB59E2009A2428 /* Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Architecture.md; sourceTree = "<group>"; };
+		5A66BC882FFB59F9009A2428 /* Roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Roadmap.md; sourceTree = "<group>"; };
+		5A66BC8A2FFB5A09009A2428 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
+		5A66BC8C2FFB5A1E009A2428 /* CodingStandards.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodingStandards.md; sourceTree = "<group>"; };
+		5A66BC8E2FFB5A2E009A2428 /* TestingStrategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TestingStrategy.md; sourceTree = "<group>"; };
+		5A66BC902FFB5A47009A2428 /* MeetingNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MeetingNotes.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5A66BC7B2FFB54F5009A2428 /* Exceptions for "GolfShopPro" folder in "GolfShopPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				GolfCore,
+			);
+			target = 5A66BC242FFB543F009A2428 /* GolfShopPro */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5A66BC272FFB543F009A2428 /* GolfShopPro */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5A66BC7B2FFB54F5009A2428 /* Exceptions for "GolfShopPro" folder in "GolfShopPro" target */,
+			);
 			path = GolfShopPro;
 			sourceTree = "<group>";
 		};
@@ -121,6 +149,7 @@
 		5A66BC432FFB543F009A2428 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				5A66BC7E2FFB581F009A2428 /* GolfCore in Frameworks */,
 			);
 		};
 		5A66BC522FFB5440009A2428 /* Frameworks */ = {
@@ -139,12 +168,14 @@
 		5A66BC1C2FFB543E009A2428 = {
 			isa = PBXGroup;
 			children = (
+				5A66BC842FFB59DA009A2428 /* Documentation */,
 				5A66BC272FFB543F009A2428 /* GolfShopPro */,
 				5A66BC352FFB543F009A2428 /* GolfShopProTests */,
 				5A66BC3F2FFB543F009A2428 /* GolfShopProUITests */,
 				5A66BC4A2FFB543F009A2428 /* GolfShopPro Watch App */,
 				5A66BC582FFB5440009A2428 /* GolfShopPro Watch AppTests */,
 				5A66BC622FFB5440009A2428 /* GolfShopPro Watch AppUITests */,
+				5A66BC7C2FFB581F009A2428 /* Frameworks */,
 				5A66BC262FFB543F009A2428 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -160,6 +191,27 @@
 				5A66BC5F2FFB5440009A2428 /* GolfShopPro Watch AppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5A66BC7C2FFB581F009A2428 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5A66BC842FFB59DA009A2428 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				5A66BC902FFB5A47009A2428 /* MeetingNotes.md */,
+				5A66BC8E2FFB5A2E009A2428 /* TestingStrategy.md */,
+				5A66BC8C2FFB5A1E009A2428 /* CodingStandards.md */,
+				5A66BC8A2FFB5A09009A2428 /* ChangeLog.md */,
+				5A66BC882FFB59F9009A2428 /* Roadmap.md */,
+				5A66BC862FFB59E2009A2428 /* Architecture.md */,
+				5A66BC832FFB59DA009A2428 /* Vision.md */,
+			);
+			path = Documentation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,6 +295,9 @@
 				5A66BC4A2FFB543F009A2428 /* GolfShopPro Watch App */,
 			);
 			name = "GolfShopPro Watch App";
+			packageProductDependencies = (
+				5A66BC7D2FFB581F009A2428 /* GolfCore */,
+			);
 			productName = "GolfShopPro Watch App";
 			productReference = 5A66BC462FFB543F009A2428 /* GolfShopPro Watch App.app */;
 			productType = "com.apple.product-type.application";
@@ -351,6 +406,12 @@
 		5A66BC232FFB543F009A2428 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				5A66BC872FFB59F4009A2428 /* Architecture.md in Resources */,
+				5A66BC8D2FFB5A27009A2428 /* CodingStandards.md in Resources */,
+				5A66BC892FFB5A01009A2428 /* Roadmap.md in Resources */,
+				5A66BC852FFB59DA009A2428 /* Vision.md in Resources */,
+				5A66BC8B2FFB5A15009A2428 /* ChangeLog.md in Resources */,
+				5A66BC8F2FFB5A3B009A2428 /* TestingStrategy.md in Resources */,
 			);
 		};
 		5A66BC302FFB543F009A2428 /* Resources */ = {
@@ -384,6 +445,7 @@
 		5A66BC212FFB543F009A2428 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				5A66BC912FFB5A4F009A2428 /* MeetingNotes.md in Sources */,
 			);
 		};
 		5A66BC2E2FFB543F009A2428 /* Sources */ = {
@@ -571,6 +633,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = GolfShopPro;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Dragon.GolfShopPro;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -604,6 +667,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = GolfShopPro;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Dragon.GolfShopPro;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -636,6 +700,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = GolfShopPro;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -671,6 +736,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = GolfShopPro;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -940,6 +1006,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5A66BC7D2FFB581F009A2428 /* GolfCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GolfCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5A66BC1D2FFB543E009A2428 /* Project object */;
 	validationLevel = 1;
