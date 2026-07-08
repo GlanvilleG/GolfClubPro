@@ -1,0 +1,946 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5ABC369B2FFDF02B00A78677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABC36852FFDF02A00A78677 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABC368C2FFDF02A00A78677;
+			remoteInfo = GolfClubPro;
+		};
+		5ABC36A52FFDF02B00A78677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABC36852FFDF02A00A78677 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABC368C2FFDF02A00A78677;
+			remoteInfo = GolfClubPro;
+		};
+		5ABC36B02FFDF02B00A78677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABC36852FFDF02A00A78677 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABC36AD2FFDF02B00A78677;
+			remoteInfo = "GolfClubPro Watch App";
+		};
+		5ABC36BE2FFDF02C00A78677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABC36852FFDF02A00A78677 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABC36AD2FFDF02B00A78677;
+			remoteInfo = "GolfClubPro Watch App";
+		};
+		5ABC36C82FFDF02C00A78677 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABC36852FFDF02A00A78677 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABC36AD2FFDF02B00A78677;
+			remoteInfo = "GolfClubPro Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5ABC36D22FFDF02C00A78677 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolder = Product;
+			files = (
+				5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfClubPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GolfClubPro Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5ABC368F2FFDF02A00A78677 /* GolfClubPro */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GolfClubPro;
+			sourceTree = "<group>";
+		};
+		5ABC369D2FFDF02B00A78677 /* GolfClubProTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GolfClubProTests;
+			sourceTree = "<group>";
+		};
+		5ABC36A72FFDF02B00A78677 /* GolfClubProUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GolfClubProUITests;
+			sourceTree = "<group>";
+		};
+		5ABC36B22FFDF02B00A78677 /* GolfClubPro Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "GolfClubPro Watch App";
+			sourceTree = "<group>";
+		};
+		5ABC36C02FFDF02C00A78677 /* GolfClubPro Watch AppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "GolfClubPro Watch AppTests";
+			sourceTree = "<group>";
+		};
+		5ABC36CA2FFDF02C00A78677 /* GolfClubPro Watch AppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "GolfClubPro Watch AppUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5ABC368A2FFDF02A00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5ABC36972FFDF02B00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5ABC36A12FFDF02B00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5ABC36AB2FFDF02B00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5ABC36BA2FFDF02C00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5ABC36C42FFDF02C00A78677 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5ABC36842FFDF02A00A78677 = {
+			isa = PBXGroup;
+			children = (
+				5ABC368F2FFDF02A00A78677 /* GolfClubPro */,
+				5ABC369D2FFDF02B00A78677 /* GolfClubProTests */,
+				5ABC36A72FFDF02B00A78677 /* GolfClubProUITests */,
+				5ABC36B22FFDF02B00A78677 /* GolfClubPro Watch App */,
+				5ABC36C02FFDF02C00A78677 /* GolfClubPro Watch AppTests */,
+				5ABC36CA2FFDF02C00A78677 /* GolfClubPro Watch AppUITests */,
+				5ABC368E2FFDF02A00A78677 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5ABC368E2FFDF02A00A78677 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */,
+				5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */,
+				5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */,
+				5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */,
+				5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */,
+				5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5ABC368C2FFDF02A00A78677 /* GolfClubPro */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36D32FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro" */;
+			buildPhases = (
+				5ABC36892FFDF02A00A78677 /* Sources */,
+				5ABC368A2FFDF02A00A78677 /* Frameworks */,
+				5ABC368B2FFDF02A00A78677 /* Resources */,
+				5ABC36D22FFDF02C00A78677 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ABC36B12FFDF02B00A78677 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC368F2FFDF02A00A78677 /* GolfClubPro */,
+			);
+			name = GolfClubPro;
+			productName = GolfClubPro;
+			productReference = 5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5ABC36992FFDF02B00A78677 /* GolfClubProTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36D62FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubProTests" */;
+			buildPhases = (
+				5ABC36962FFDF02B00A78677 /* Sources */,
+				5ABC36972FFDF02B00A78677 /* Frameworks */,
+				5ABC36982FFDF02B00A78677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ABC369C2FFDF02B00A78677 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC369D2FFDF02B00A78677 /* GolfClubProTests */,
+			);
+			name = GolfClubProTests;
+			productName = GolfClubProTests;
+			productReference = 5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5ABC36A32FFDF02B00A78677 /* GolfClubProUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36D92FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubProUITests" */;
+			buildPhases = (
+				5ABC36A02FFDF02B00A78677 /* Sources */,
+				5ABC36A12FFDF02B00A78677 /* Frameworks */,
+				5ABC36A22FFDF02B00A78677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ABC36A62FFDF02B00A78677 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC36A72FFDF02B00A78677 /* GolfClubProUITests */,
+			);
+			name = GolfClubProUITests;
+			productName = GolfClubProUITests;
+			productReference = 5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5ABC36AD2FFDF02B00A78677 /* GolfClubPro Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36CF2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch App" */;
+			buildPhases = (
+				5ABC36AA2FFDF02B00A78677 /* Sources */,
+				5ABC36AB2FFDF02B00A78677 /* Frameworks */,
+				5ABC36AC2FFDF02B00A78677 /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC36B22FFDF02B00A78677 /* GolfClubPro Watch App */,
+			);
+			name = "GolfClubPro Watch App";
+			productName = "GolfClubPro Watch App";
+			productReference = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5ABC36BC2FFDF02C00A78677 /* GolfClubPro Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36DC2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch AppTests" */;
+			buildPhases = (
+				5ABC36B92FFDF02C00A78677 /* Sources */,
+				5ABC36BA2FFDF02C00A78677 /* Frameworks */,
+				5ABC36BB2FFDF02C00A78677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ABC36BF2FFDF02C00A78677 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC36C02FFDF02C00A78677 /* GolfClubPro Watch AppTests */,
+			);
+			name = "GolfClubPro Watch AppTests";
+			productName = "GolfClubPro Watch AppTests";
+			productReference = 5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5ABC36C62FFDF02C00A78677 /* GolfClubPro Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABC36DF2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch AppUITests" */;
+			buildPhases = (
+				5ABC36C32FFDF02C00A78677 /* Sources */,
+				5ABC36C42FFDF02C00A78677 /* Frameworks */,
+				5ABC36C52FFDF02C00A78677 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ABC36C92FFDF02C00A78677 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5ABC36CA2FFDF02C00A78677 /* GolfClubPro Watch AppUITests */,
+			);
+			name = "GolfClubPro Watch AppUITests";
+			productName = "GolfClubPro Watch AppUITests";
+			productReference = 5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5ABC36852FFDF02A00A78677 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					5ABC368C2FFDF02A00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					5ABC36992FFDF02B00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 5ABC368C2FFDF02A00A78677;
+					};
+					5ABC36A32FFDF02B00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 5ABC368C2FFDF02A00A78677;
+					};
+					5ABC36AD2FFDF02B00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					5ABC36BC2FFDF02C00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 5ABC36AD2FFDF02B00A78677;
+					};
+					5ABC36C62FFDF02C00A78677 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 5ABC36AD2FFDF02B00A78677;
+					};
+				};
+			};
+			buildConfigurationList = 5ABC36882FFDF02A00A78677 /* Build configuration list for PBXProject "GolfClubPro" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5ABC36842FFDF02A00A78677;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 5ABC368E2FFDF02A00A78677 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5ABC368C2FFDF02A00A78677 /* GolfClubPro */,
+				5ABC36992FFDF02B00A78677 /* GolfClubProTests */,
+				5ABC36A32FFDF02B00A78677 /* GolfClubProUITests */,
+				5ABC36AD2FFDF02B00A78677 /* GolfClubPro Watch App */,
+				5ABC36BC2FFDF02C00A78677 /* GolfClubPro Watch AppTests */,
+				5ABC36C62FFDF02C00A78677 /* GolfClubPro Watch AppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5ABC368B2FFDF02A00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36982FFDF02B00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36A22FFDF02B00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36AC2FFDF02B00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36BB2FFDF02C00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36C52FFDF02C00A78677 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5ABC36892FFDF02A00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36962FFDF02B00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36A02FFDF02B00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36AA2FFDF02B00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36B92FFDF02C00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		5ABC36C32FFDF02C00A78677 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5ABC369C2FFDF02B00A78677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+			targetProxy = 5ABC369B2FFDF02B00A78677 /* PBXContainerItemProxy */;
+		};
+		5ABC36A62FFDF02B00A78677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+			targetProxy = 5ABC36A52FFDF02B00A78677 /* PBXContainerItemProxy */;
+		};
+		5ABC36B12FFDF02B00A78677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABC36AD2FFDF02B00A78677 /* GolfClubPro Watch App */;
+			targetProxy = 5ABC36B02FFDF02B00A78677 /* PBXContainerItemProxy */;
+		};
+		5ABC36BF2FFDF02C00A78677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABC36AD2FFDF02B00A78677 /* GolfClubPro Watch App */;
+			targetProxy = 5ABC36BE2FFDF02C00A78677 /* PBXContainerItemProxy */;
+		};
+		5ABC36C92FFDF02C00A78677 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABC36AD2FFDF02B00A78677 /* GolfClubPro Watch App */;
+			targetProxy = 5ABC36C82FFDF02C00A78677 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5ABC36CD2FFDF02C00A78677 /* Debug configuration for PBXProject "GolfClubPro" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5ABC36CE2FFDF02C00A78677 /* Release configuration for PBXProject "GolfClubPro" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		5ABC36D02FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch App" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Dragon.GolfClubPro;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubPro.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		5ABC36D12FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch App" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = Dragon.GolfClubPro;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubPro.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
+		5ABC36D42FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubPro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5ABC36D52FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubPro;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5ABC36D72FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubProTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubProTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GolfClubPro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GolfClubPro";
+			};
+			name = Debug;
+		};
+		5ABC36D82FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubProTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubProTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GolfClubPro.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GolfClubPro";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5ABC36DA2FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubProUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubProUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GolfClubPro;
+			};
+			name = Debug;
+		};
+		5ABC36DB2FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubProUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Dragon.GolfClubProUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GolfClubPro;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5ABC36DD2FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch AppTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Dragon.GolfClubPro-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GolfClubPro Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GolfClubPro Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		5ABC36DE2FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch AppTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Dragon.GolfClubPro-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GolfClubPro Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GolfClubPro Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
+		5ABC36E02FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch AppUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Dragon.GolfClubPro-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "GolfClubPro Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		5ABC36E12FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch AppUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6DK454KWA5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Dragon.GolfClubPro-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "GolfClubPro Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5ABC36882FFDF02A00A78677 /* Build configuration list for PBXProject "GolfClubPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36CD2FFDF02C00A78677 /* Debug configuration for PBXProject "GolfClubPro" */,
+				5ABC36CE2FFDF02C00A78677 /* Release configuration for PBXProject "GolfClubPro" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36CF2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36D02FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch App" */,
+				5ABC36D12FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch App" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36D32FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36D42FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro" */,
+				5ABC36D52FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36D62FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubProTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36D72FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubProTests" */,
+				5ABC36D82FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubProTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36D92FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubProUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36DA2FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubProUITests" */,
+				5ABC36DB2FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubProUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36DC2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36DD2FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch AppTests" */,
+				5ABC36DE2FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch AppTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5ABC36DF2FFDF02C00A78677 /* Build configuration list for PBXNativeTarget "GolfClubPro Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABC36E02FFDF02C00A78677 /* Debug configuration for PBXNativeTarget "GolfClubPro Watch AppUITests" */,
+				5ABC36E12FFDF02C00A78677 /* Release configuration for PBXNativeTarget "GolfClubPro Watch AppUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5ABC36852FFDF02A00A78677 /* Project object */;
+	validationLevel = 1;
+}
