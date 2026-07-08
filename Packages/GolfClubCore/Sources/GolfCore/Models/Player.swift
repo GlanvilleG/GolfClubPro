@@ -6,20 +6,20 @@
 //
 import Foundation
 
-public struct Player: Identifiable, Codable, Equatable {
-    public let id: UUID
-    public var dotGolfNumber: String?
+public struct Player: Codable, Equatable, Sendable {
+    public let id: PlayerID
+    public var dotGolfMemberID: DotGolfMemberID?
     public var name: String
     public var handicapIndex: Double?
 
     public init(
-        id: UUID = UUID(),
-        dotGolfNumber: String? = nil,
+        id: PlayerID = PlayerID(),
+        dotGolfMemberID: DotGolfMemberID? = nil,
         name: String,
         handicapIndex: Double? = nil
     ) {
         self.id = id
-        self.dotGolfNumber = dotGolfNumber
+        self.dotGolfMemberID = dotGolfMemberID
         self.name = name
         self.handicapIndex = handicapIndex
     }

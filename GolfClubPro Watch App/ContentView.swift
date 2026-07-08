@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import GolfCore
 
 struct ContentView: View {
+    private let player = Player(
+        dotGolfMemberID: DotGolfMemberID("123456"),
+        name: "Gerard Glanville",
+        handicapIndex: 12.0
+    )
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        let handicapText = String(format: "%.1f", player.handicapIndex ?? 0.0)
+        return Text("Welcome \(player.name), your handicap is currently \(handicapText)")
+            .padding()
     }
 }
 
