@@ -14,7 +14,6 @@
 		5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData-Persistence.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */; };
 		5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */; };
 		5ABC37A42FFE229900A78677 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37A32FFE228900A78677 /* README.md */; };
-		5AC130232FFF57F90077FB46 /* ADR-008-GPS.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */; };
 		5AC130252FFF58120077FB46 /* ADR-009-WeatherKit.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */; };
 		5AC130272FFF58300077FB46 /* ADR-010-Offline-First.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */; };
 		5AC130292FFF58470077FB46 /* ADR-011-Testing.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130282FFF58350077FB46 /* ADR-011-Testing.md */; };
@@ -30,6 +29,7 @@
 		5AFC4DAA30005937002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA930005937002DF421 /* GolfCore */; };
 		5AFC4DAC3000593E002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAB3000593E002DF421 /* GolfCore */; };
 		5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAD30005944002DF421 /* GolfCore */; };
+		5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,7 +96,6 @@
 		5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-005-SwiftData-Persistence.md"; sourceTree = "<group>"; };
 		5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-006-Watch First Architecture.md"; sourceTree = "<group>"; };
 		5ABC37A32FFE228900A78677 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-008-GPS.md"; sourceTree = "<group>"; };
 		5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-009-WeatherKit.md"; sourceTree = "<group>"; };
 		5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-010-Offline-First.md"; sourceTree = "<group>"; };
 		5AC130282FFF58350077FB46 /* ADR-011-Testing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-011-Testing.md"; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain-Driven-Design.md"; sourceTree = "<group>"; };
 		5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-004-Strongly-Typed-Identifiers.md"; sourceTree = "<group>"; };
 		5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-007-Round-Engine-State-Machine.md"; sourceTree = "<group>"; };
+		5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-008-GPS-and-Golf-Club-Detection.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -381,6 +381,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */,
 				5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */,
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
@@ -389,7 +390,6 @@
 				5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */,
 				5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */,
 				5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */,
-				5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */,
 				5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */,
 				5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */,
 				5AC130282FFF58350077FB46 /* ADR-011-Testing.md */,
@@ -692,9 +692,9 @@
 				5AFC4D2230003E79002DF421 /* ADR-007-Round-Engine-State-Machine.md in Resources */,
 				5AC1302B2FFF58600077FB46 /* ADR-012-Git-Workflow.md in Resources */,
 				5AC130252FFF58120077FB46 /* ADR-009-WeatherKit.md in Resources */,
-				5AC130232FFF57F90077FB46 /* ADR-008-GPS.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
+				5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */,
 				5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */,
 				5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */,
 			);
