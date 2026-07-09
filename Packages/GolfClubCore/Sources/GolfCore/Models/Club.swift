@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public enum ClubType: String, Codable, CaseIterable {
+public enum ClubType: String, Codable, CaseIterable, Sendable {
     case driver
     case fairwayWood
     case hybrid
@@ -15,21 +15,24 @@ public enum ClubType: String, Codable, CaseIterable {
     case putter
 }
 
-public struct Club: Identifiable, Codable, Equatable {
-    public let id: UUID
+public struct Club: Codable, Equatable, Sendable {
+    public let id: ClubID
     public var name: String
     public var type: ClubType
+    public var loftDegrees: Double?
     public var averageCarryMeters: Double?
 
     public init(
-        id: UUID = UUID(),
+        id: ClubID = ClubID(),
         name: String,
         type: ClubType,
+        loftDegrees: Double? = nil,
         averageCarryMeters: Double? = nil
     ) {
         self.id = id
         self.name = name
         self.type = type
+        self.loftDegrees = loftDegrees
         self.averageCarryMeters = averageCarryMeters
     }
 }

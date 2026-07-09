@@ -6,18 +6,21 @@
 //
 import Foundation
 
-public struct Course: Identifiable, Codable, Equatable {
-    public let id: UUID
+public struct Course: Codable, Equatable, Sendable {
+    public let id: CourseID
     public var name: String
     public var holes: [Hole]
+    public var teeSets: [TeeSet]
 
     public init(
-        id: UUID = UUID(),
+        id: CourseID = CourseID(),
         name: String,
-        holes: [Hole]
+        holes: [Hole] = [],
+        teeSets: [TeeSet] = []
     ) {
         self.id = id
         self.name = name
         self.holes = holes
+        self.teeSets = teeSets
     }
 }

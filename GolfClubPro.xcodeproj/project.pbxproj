@@ -30,6 +30,7 @@
 		5AC130492FFFA16D0077FB46 /* ADR-001-Repository-Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */; };
 		5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */; };
 		5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */; };
+		5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-001-Repository-Structure.md"; sourceTree = "<group>"; };
 		5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-002-Documentation-Strategy.md"; sourceTree = "<group>"; };
 		5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain-Driven-Design.md"; sourceTree = "<group>"; };
+		5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-004-Strongly-Typed-Identifiers.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -385,6 +387,7 @@
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
 				5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */,
 				5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */,
+				5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */,
 				5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */,
 				5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */,
 				5ABC37A12FFE220000A78677 /* ADR-007-AI Caddy Architecture.md */,
@@ -678,6 +681,7 @@
 		5ABC368B2FFDF02A00A78677 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
 				5ABC373C2FFDFC2700A78677 /* README.md in Resources */,
 				5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,

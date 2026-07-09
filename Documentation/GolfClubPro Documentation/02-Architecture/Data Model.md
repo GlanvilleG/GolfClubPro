@@ -182,6 +182,78 @@ public struct Shot: Codable, Equatable, Sendable {
 }
 ```
 
+## Shot Feedback
+```swift
+public struct ShotFeedback: Codable, Equatable, Sendable {
+    public var rawTranscript: String
+    public var classifiedErrors: [ShotError]
+    public var sentiment: ShotSentiment?
+    public var capturedAt: Date
+
+    public init(
+        rawTranscript: String,
+        classifiedErrors: [ShotError] = [],
+        sentiment: ShotSentiment? = nil,
+        capturedAt: Date = Date()
+    ) {
+        self.rawTranscript = rawTranscript
+        self.classifiedErrors = classifiedErrors
+        self.sentiment = sentiment
+        self.capturedAt = capturedAt
+    }
+}
+```
+
+## Shot Error
+```swift
+public enum ShotError: String, Codable, CaseIterable, Sendable {
+    case mishit
+    case miss
+    case badLie
+    case trouble
+
+    case push
+    case pull
+    case slice
+    case hook
+    case fade
+    case draw
+
+    case chunk
+    case fat
+    case thin
+    case blade
+    case top
+    case shank
+    case duff
+    case whiff
+
+    case short
+    case long
+    case overHit
+
+    case rough
+    case trees
+    case bunker
+    case water
+    case outOfBounds
+
+    case duckHook
+    case bananaBall
+    case wormBurner
+    case reload
+    case luckyOutcome
+}
+```
+## Shot Sentiment
+```swift
+public enum ShotSentiment: String, Codable, Sendable {
+    case positive
+    case neutral
+    case negative
+    case warning
+}
+```
 ## Lie
 
 ```swift
