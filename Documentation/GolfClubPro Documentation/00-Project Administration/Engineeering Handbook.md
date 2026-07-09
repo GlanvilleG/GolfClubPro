@@ -1,18 +1,18 @@
 
-Engineering Handbook
+## Engineering Handbook
 
-Document ID: GCP-ENG-000
-Version: 1.0.0
-Status: Draft
-Owner: Solution Architecture
-Project: GolfClubPro
-Repository: GolfClubPro
-Core Package: GolfCore
-Last Updated: YYYY-MM-DD
+# Document ID: GCP-ENG-000
+**Version**: 1.0.0
+**Status:** Draft
+**Owner**: Solution Architecture
+**Project:** GolfClubPro
+**Repository**: GolfClubPro
+**Core Package**: GolfCore
+**Last Updated**: 2026-07-09
 
 ⸻
 
-Purpose
+## Purpose
 
 The Engineering Handbook defines how GolfClubPro is designed, developed, tested, documented, and released.
 
@@ -22,7 +22,7 @@ This handbook complements the Software Design Manual by focusing on how developm
 
 ⸻
 
-Objectives
+## Objectives
 
 The Engineering Handbook aims to:
 
@@ -35,7 +35,7 @@ The Engineering Handbook aims to:
 
 ⸻
 
-Engineering Principles
+## Engineering Principles
 
 The GolfClubPro project follows these core principles:
 
@@ -52,21 +52,24 @@ The GolfClubPro project follows these core principles:
 
 ⸻
 
-Technology Stack
+## Technology Stack
 
 Area    Standard
-Language    Swift
-UI Framework    SwiftUI
-IDE    Xcode
-Source Control    Git (via Xcode Source Control)
-Documentation    Markdown
-Package Management    Swift Package Manager
-Core Package    GolfCore
-Target Platforms    iPhone, Apple Watch
+
+|Area| Standard|
+| --- | --- |
+|  Language|  Swift|
+|  UI Framework|  SwiftUI|
+|  IDE|  Xcode|
+|  Source Control|  Git (via Xcode Source Control)|
+|  Documentation|  Markdown|
+|  Package Management|  Swift Package Manager|
+|  Core Package |  GolfCore|
+|Target Platforms   |  iPhone, Apple Watch|
 
 ⸻
 
-Documentation Standards
+## Documentation Standards
 
 All project documentation is stored within the Documentation directory and version-controlled alongside the source code.
 
@@ -79,7 +82,7 @@ Documentation should:
 
 ⸻
 
-Architecture Decision Records (ADRs)
+## Architecture Decision Records (ADRs)
 
 Significant engineering decisions must be recorded as an Architecture Decision Record before or alongside implementation.
 
@@ -94,7 +97,7 @@ Each ADR should include:
 
 ⸻
 
-Definition of Done
+## Definition of Done
 
 A feature is considered complete when:
 
@@ -107,13 +110,13 @@ A feature is considered complete when:
 
 ⸻
 
-Continuous Improvement
+## Continuous Improvement
 
 This handbook is a living document and will evolve throughout the GolfClubPro project. New standards, processes, and engineering practices should be incorporated as the project matures.
 
 ⸻
 
-Related Documents
+## Related Documents
 
 * Development Principles
 * Product Requirements Document
@@ -127,7 +130,10 @@ Related Documents
 
 ⸻
 
-Revision History
+## Revision History
 
-Version    Date    Author    Description
-1.0.0    YYYY-MM-DD    Gerard Glanville    Initial Engineering Handbook
+|**Version    | Date |  Author   |  Description**|
+| --- | --- | --- | --- |
+|  1.0.0|  2026-07-09| Gerard Glanville |   Initial Engineering Handbook|
+|  |  |  |  |
+
