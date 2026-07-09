@@ -10,29 +10,27 @@
 		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ABC373C2FFDFC2700A78677 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372D2FFDFC2700A78677 /* README.md */; };
 		5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37302FFDFC2700A78677 /* ChangeLog.md */; };
-		5ABC373E2FFDFC2700A78677 /* 07-Database_Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37292FFDFC2700A78677 /* 07-Database_Design.md */; };
-		5ABC373F2FFDFC2700A78677 /* 09-Release_Plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372B2FFDFC2700A78677 /* 09-Release_Plan.md */; };
-		5ABC37402FFDFC2700A78677 /* 05-API_Specification.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37272FFDFC2700A78677 /* 05-API_Specification.md */; };
-		5ABC37412FFDFC2700A78677 /* 02-System_Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37242FFDFC2700A78677 /* 02-System_Architecture.md */; };
-		5ABC37422FFDFC2700A78677 /* 08-Test_Plan.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372A2FFDFC2700A78677 /* 08-Test_Plan.md */; };
-		5ABC37432FFDFC2700A78677 /* TestingStrategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37342FFDFC2700A78677 /* TestingStrategy.md */; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
-		5ABC37452FFDFC2700A78677 /* Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372F2FFDFC2700A78677 /* Architecture.md */; };
-		5ABC37462FFDFC2700A78677 /* 03-Data_Model.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37252FFDFC2700A78677 /* 03-Data_Model.md */; };
-		5ABC37472FFDFC2700A78677 /* Roadmap.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37332FFDFC2700A78677 /* Roadmap.md */; };
-		5ABC37482FFDFC2700A78677 /* 06-AI_Caddy_Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37282FFDFC2700A78677 /* 06-AI_Caddy_Design.md */; };
-		5ABC37492FFDFC2700A78677 /* 10-Commercialisation_Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372C2FFDFC2700A78677 /* 10-Commercialisation_Strategy.md */; };
-		5ABC374A2FFDFC2700A78677 /* Vision.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37352FFDFC2700A78677 /* Vision.md */; };
-		5ABC374B2FFDFC2700A78677 /* 04-UI_UX_Guide.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37262FFDFC2700A78677 /* 04-UI_UX_Guide.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
-		5ABC374D2FFDFC2700A78677 /* 01-Product_Requirements_Document.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37232FFDFC2700A78677 /* 01-Product_Requirements_Document.md */; };
-		5ABC374E2FFDFC2700A78677 /* CodingStandards.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37312FFDFC2700A78677 /* CodingStandards.md */; };
 		5ABC37652FFE0E1200A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37642FFE0E1200A78677 /* GolfCore */; };
 		5ABC37672FFE10F500A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37662FFE10F500A78677 /* GolfCore */; };
 		5ABC37692FFE110000A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37682FFE110000A78677 /* GolfCore */; };
 		5ABC376B2FFE110700A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376A2FFE110700A78677 /* GolfCore */; };
 		5ABC376D2FFE111600A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376C2FFE111600A78677 /* GolfCore */; };
 		5ABC376F2FFE111E00A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376E2FFE111E00A78677 /* GolfCore */; };
+		5ABC37962FFE215700A78677 /* ADR-001-Project Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */; };
+		5ABC37982FFE217800A78677 /* ADR-002-Documentation Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */; };
+		5ABC379A2FFE219300A78677 /* ADR-003-Domain Driven Design.md in Sources */ = {isa = PBXBuildFile; fileRef = 5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */; };
+		5ABC379C2FFE21B300A78677 /* ADR-004-Strongly Typed Identifiers.md in Sources */ = {isa = PBXBuildFile; fileRef = 5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */; };
+		5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData Persistence.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */; };
+		5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */; };
+		5ABC37A22FFE221500A78677 /* ADR-007-AI Caddy Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37A12FFE220000A78677 /* ADR-007-AI Caddy Architecture.md */; };
+		5ABC37A42FFE229900A78677 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37A32FFE228900A78677 /* README.md */; };
+		5AC130232FFF57F90077FB46 /* ADR-008-GPS.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */; };
+		5AC130252FFF58120077FB46 /* ADR-009-WeatherKit.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */; };
+		5AC130272FFF58300077FB46 /* ADR-010-Offline-First.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */; };
+		5AC130292FFF58470077FB46 /* ADR-011-Testing.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130282FFF58350077FB46 /* ADR-011-Testing.md */; };
+		5AC1302B2FFF58600077FB46 /* ADR-012-Git-Workflow.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1302A2FFF584D0077FB46 /* ADR-012-Git-Workflow.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,26 +91,100 @@
 		5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC37212FFDFC2700A78677 /* ADR-000-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-000-template.md"; sourceTree = "<group>"; };
-		5ABC37232FFDFC2700A78677 /* 01-Product_Requirements_Document.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "01-Product_Requirements_Document.md"; sourceTree = "<group>"; };
-		5ABC37242FFDFC2700A78677 /* 02-System_Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "02-System_Architecture.md"; sourceTree = "<group>"; };
-		5ABC37252FFDFC2700A78677 /* 03-Data_Model.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "03-Data_Model.md"; sourceTree = "<group>"; };
-		5ABC37262FFDFC2700A78677 /* 04-UI_UX_Guide.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "04-UI_UX_Guide.md"; sourceTree = "<group>"; };
-		5ABC37272FFDFC2700A78677 /* 05-API_Specification.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "05-API_Specification.md"; sourceTree = "<group>"; };
-		5ABC37282FFDFC2700A78677 /* 06-AI_Caddy_Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "06-AI_Caddy_Design.md"; sourceTree = "<group>"; };
-		5ABC37292FFDFC2700A78677 /* 07-Database_Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "07-Database_Design.md"; sourceTree = "<group>"; };
-		5ABC372A2FFDFC2700A78677 /* 08-Test_Plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "08-Test_Plan.md"; sourceTree = "<group>"; };
-		5ABC372B2FFDFC2700A78677 /* 09-Release_Plan.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "09-Release_Plan.md"; sourceTree = "<group>"; };
-		5ABC372C2FFDFC2700A78677 /* 10-Commercialisation_Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "10-Commercialisation_Strategy.md"; sourceTree = "<group>"; };
 		5ABC372D2FFDFC2700A78677 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5ABC372F2FFDFC2700A78677 /* Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Architecture.md; sourceTree = "<group>"; };
 		5ABC37302FFDFC2700A78677 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
-		5ABC37312FFDFC2700A78677 /* CodingStandards.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodingStandards.md; sourceTree = "<group>"; };
 		5ABC37322FFDFC2700A78677 /* MeetingNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MeetingNotes.md; sourceTree = "<group>"; };
-		5ABC37332FFDFC2700A78677 /* Roadmap.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Roadmap.md; sourceTree = "<group>"; };
-		5ABC37342FFDFC2700A78677 /* TestingStrategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TestingStrategy.md; sourceTree = "<group>"; };
-		5ABC37352FFDFC2700A78677 /* Vision.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Vision.md; sourceTree = "<group>"; };
 		5ABC37372FFDFC2700A78677 /* GolfClubCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GolfClubCore; sourceTree = "<group>"; };
+		5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-001-Project Structure.md"; sourceTree = "<group>"; };
+		5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-002-Documentation Strategy.md"; sourceTree = "<group>"; };
+		5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain Driven Design.md"; sourceTree = "<group>"; };
+		5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-004-Strongly Typed Identifiers.md"; sourceTree = "<group>"; };
+		5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-005-SwiftData Persistence.md"; sourceTree = "<group>"; };
+		5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-006-Watch First Architecture.md"; sourceTree = "<group>"; };
+		5ABC37A12FFE220000A78677 /* ADR-007-AI Caddy Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-007-AI Caddy Architecture.md"; sourceTree = "<group>"; };
+		5ABC37A32FFE228900A78677 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-008-GPS.md"; sourceTree = "<group>"; };
+		5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-009-WeatherKit.md"; sourceTree = "<group>"; };
+		5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-010-Offline-First.md"; sourceTree = "<group>"; };
+		5AC130282FFF58350077FB46 /* ADR-011-Testing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-011-Testing.md"; sourceTree = "<group>"; };
+		5AC1302A2FFF584D0077FB46 /* ADR-012-Git-Workflow.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-012-Git-Workflow.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5ABC377A2FFE1CA600A78677 /* Exceptions for "02-Architecture" folder in "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Domain Model.md",
+			);
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+		};
+		5ABC378D2FFE1DEA00A78677 /* Exceptions for "07-Business" folder in "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Licensing.md,
+			);
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+		};
+		5AC12FD92FFF52550077FB46 /* Exceptions for "00-Project Administration" folder in "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Domain Glossary.md",
+			);
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+		};
+		5AC12FED2FFF535B0077FB46 /* Exceptions for "04-Engineering" folder in "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Git Strategy.md",
+			);
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+		};
+		5AC12FF72FFF55040077FB46 /* Exceptions for "01-Product Management" folder in "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Commercialisation Strategy.md",
+			);
+			target = 5ABC368C2FFDF02A00A78677 /* GolfClubPro */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		5ABC377B2FFE1CA600A78677 /* Exceptions for "02-Architecture" folder in "Compile Sources" phase from "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5ABC36892FFDF02A00A78677 /* Sources */;
+			membershipExceptions = (
+				"Domain Model.md",
+			);
+		};
+		5ABC378E2FFE1DEA00A78677 /* Exceptions for "07-Business" folder in "Compile Sources" phase from "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5ABC36892FFDF02A00A78677 /* Sources */;
+			membershipExceptions = (
+				Licensing.md,
+			);
+		};
+		5AC12FDA2FFF52550077FB46 /* Exceptions for "00-Project Administration" folder in "Compile Sources" phase from "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5ABC36892FFDF02A00A78677 /* Sources */;
+			membershipExceptions = (
+				"Domain Glossary.md",
+			);
+		};
+		5AC12FEE2FFF535B0077FB46 /* Exceptions for "04-Engineering" folder in "Compile Sources" phase from "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5ABC36892FFDF02A00A78677 /* Sources */;
+			membershipExceptions = (
+				"Git Strategy.md",
+			);
+		};
+		5AC12FF82FFF55040077FB46 /* Exceptions for "01-Product Management" folder in "Compile Sources" phase from "GolfClubPro" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 5ABC36892FFDF02A00A78677 /* Sources */;
+			membershipExceptions = (
+				"Commercialisation Strategy.md",
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5ABC368F2FFDF02A00A78677 /* GolfClubPro */ = {
@@ -143,6 +215,71 @@
 		5ABC36CA2FFDF02C00A78677 /* GolfClubPro Watch AppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "GolfClubPro Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		5ABC37702FFE1B9F00A78677 /* 01-Product Management */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5AC12FF72FFF55040077FB46 /* Exceptions for "01-Product Management" folder in "GolfClubPro" target */,
+				5AC12FF82FFF55040077FB46 /* Exceptions for "01-Product Management" folder in "Compile Sources" phase from "GolfClubPro" target */,
+			);
+			path = "01-Product Management";
+			sourceTree = "<group>";
+		};
+		5ABC37762FFE1C0300A78677 /* 02-Architecture */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5ABC377A2FFE1CA600A78677 /* Exceptions for "02-Architecture" folder in "GolfClubPro" target */,
+				5ABC377B2FFE1CA600A78677 /* Exceptions for "02-Architecture" folder in "Compile Sources" phase from "GolfClubPro" target */,
+			);
+			path = "02-Architecture";
+			sourceTree = "<group>";
+		};
+		5ABC377E2FFE1CF500A78677 /* 03-User Experience */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "03-User Experience";
+			sourceTree = "<group>";
+		};
+		5ABC377F2FFE1D4000A78677 /* 04-Engineering */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5AC12FED2FFF535B0077FB46 /* Exceptions for "04-Engineering" folder in "GolfClubPro" target */,
+				5AC12FEE2FFF535B0077FB46 /* Exceptions for "04-Engineering" folder in "Compile Sources" phase from "GolfClubPro" target */,
+			);
+			path = "04-Engineering";
+			sourceTree = "<group>";
+		};
+		5ABC37892FFE1DBA00A78677 /* 07-Business */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5ABC378D2FFE1DEA00A78677 /* Exceptions for "07-Business" folder in "GolfClubPro" target */,
+				5ABC378E2FFE1DEA00A78677 /* Exceptions for "07-Business" folder in "Compile Sources" phase from "GolfClubPro" target */,
+			);
+			path = "07-Business";
+			sourceTree = "<group>";
+		};
+		5AC12FBE2FFF507F0077FB46 /* 00-Project Administration */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5AC12FD92FFF52550077FB46 /* Exceptions for "00-Project Administration" folder in "GolfClubPro" target */,
+				5AC12FDA2FFF52550077FB46 /* Exceptions for "00-Project Administration" folder in "Compile Sources" phase from "GolfClubPro" target */,
+			);
+			path = "00-Project Administration";
+			sourceTree = "<group>";
+		};
+		5AC12FF92FFF56140077FB46 /* 05-AI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "05-AI";
+			sourceTree = "<group>";
+		};
+		5AC130122FFF57120077FB46 /* 06-Operations */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "06-Operations";
+			sourceTree = "<group>";
+		};
+		5AC1302C2FFF58CB0077FB46 /* Diagrams */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Diagrams;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -247,6 +384,18 @@
 			isa = PBXGroup;
 			children = (
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
+				5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */,
+				5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */,
+				5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */,
+				5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */,
+				5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */,
+				5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */,
+				5ABC37A12FFE220000A78677 /* ADR-007-AI Caddy Architecture.md */,
+				5AC130222FFF57E90077FB46 /* ADR-008-GPS.md */,
+				5AC130242FFF57FE0077FB46 /* ADR-009-WeatherKit.md */,
+				5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */,
+				5AC130282FFF58350077FB46 /* ADR-011-Testing.md */,
+				5AC1302A2FFF584D0077FB46 /* ADR-012-Git-Workflow.md */,
 			);
 			path = Decisions;
 			sourceTree = "<group>";
@@ -254,16 +403,14 @@
 		5ABC372E2FFDFC2700A78677 /* GolfClubPro Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				5ABC37232FFDFC2700A78677 /* 01-Product_Requirements_Document.md */,
-				5ABC37242FFDFC2700A78677 /* 02-System_Architecture.md */,
-				5ABC37252FFDFC2700A78677 /* 03-Data_Model.md */,
-				5ABC37262FFDFC2700A78677 /* 04-UI_UX_Guide.md */,
-				5ABC37272FFDFC2700A78677 /* 05-API_Specification.md */,
-				5ABC37282FFDFC2700A78677 /* 06-AI_Caddy_Design.md */,
-				5ABC37292FFDFC2700A78677 /* 07-Database_Design.md */,
-				5ABC372A2FFDFC2700A78677 /* 08-Test_Plan.md */,
-				5ABC372B2FFDFC2700A78677 /* 09-Release_Plan.md */,
-				5ABC372C2FFDFC2700A78677 /* 10-Commercialisation_Strategy.md */,
+				5AC12FBE2FFF507F0077FB46 /* 00-Project Administration */,
+				5ABC37702FFE1B9F00A78677 /* 01-Product Management */,
+				5ABC37762FFE1C0300A78677 /* 02-Architecture */,
+				5ABC377E2FFE1CF500A78677 /* 03-User Experience */,
+				5ABC377F2FFE1D4000A78677 /* 04-Engineering */,
+				5AC12FF92FFF56140077FB46 /* 05-AI */,
+				5AC130122FFF57120077FB46 /* 06-Operations */,
+				5ABC37892FFE1DBA00A78677 /* 07-Business */,
 				5ABC372D2FFDFC2700A78677 /* README.md */,
 			);
 			path = "GolfClubPro Documentation";
@@ -272,15 +419,12 @@
 		5ABC37362FFDFC2700A78677 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				5AC1302C2FFF58CB0077FB46 /* Diagrams */,
+				5ABC37A32FFE228900A78677 /* README.md */,
 				5ABC37222FFDFC2700A78677 /* Decisions */,
 				5ABC372E2FFDFC2700A78677 /* GolfClubPro Documentation */,
-				5ABC372F2FFDFC2700A78677 /* Architecture.md */,
 				5ABC37302FFDFC2700A78677 /* ChangeLog.md */,
-				5ABC37312FFDFC2700A78677 /* CodingStandards.md */,
 				5ABC37322FFDFC2700A78677 /* MeetingNotes.md */,
-				5ABC37332FFDFC2700A78677 /* Roadmap.md */,
-				5ABC37342FFDFC2700A78677 /* TestingStrategy.md */,
-				5ABC37352FFDFC2700A78677 /* Vision.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -340,6 +484,15 @@
 			);
 			fileSystemSynchronizedGroups = (
 				5ABC368F2FFDF02A00A78677 /* GolfClubPro */,
+				5ABC37702FFE1B9F00A78677 /* 01-Product Management */,
+				5ABC37762FFE1C0300A78677 /* 02-Architecture */,
+				5ABC377E2FFE1CF500A78677 /* 03-User Experience */,
+				5ABC377F2FFE1D4000A78677 /* 04-Engineering */,
+				5ABC37892FFE1DBA00A78677 /* 07-Business */,
+				5AC12FBE2FFF507F0077FB46 /* 00-Project Administration */,
+				5AC12FF92FFF56140077FB46 /* 05-AI */,
+				5AC130122FFF57120077FB46 /* 06-Operations */,
+				5AC1302C2FFF58CB0077FB46 /* Diagrams */,
 			);
 			name = GolfClubPro;
 			packageProductDependencies = (
@@ -530,23 +683,19 @@
 			files = (
 				5ABC373C2FFDFC2700A78677 /* README.md in Resources */,
 				5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */,
-				5ABC373E2FFDFC2700A78677 /* 07-Database_Design.md in Resources */,
-				5ABC373F2FFDFC2700A78677 /* 09-Release_Plan.md in Resources */,
-				5ABC37402FFDFC2700A78677 /* 05-API_Specification.md in Resources */,
-				5ABC37412FFDFC2700A78677 /* 02-System_Architecture.md in Resources */,
-				5ABC37422FFDFC2700A78677 /* 08-Test_Plan.md in Resources */,
-				5ABC37432FFDFC2700A78677 /* TestingStrategy.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
-				5ABC37452FFDFC2700A78677 /* Architecture.md in Resources */,
-				5ABC37462FFDFC2700A78677 /* 03-Data_Model.md in Resources */,
-				5ABC37472FFDFC2700A78677 /* Roadmap.md in Resources */,
-				5ABC37482FFDFC2700A78677 /* 06-AI_Caddy_Design.md in Resources */,
-				5ABC37492FFDFC2700A78677 /* 10-Commercialisation_Strategy.md in Resources */,
-				5ABC374A2FFDFC2700A78677 /* Vision.md in Resources */,
-				5ABC374B2FFDFC2700A78677 /* 04-UI_UX_Guide.md in Resources */,
+				5AC130272FFF58300077FB46 /* ADR-010-Offline-First.md in Resources */,
+				5ABC37A42FFE229900A78677 /* README.md in Resources */,
+				5AC130292FFF58470077FB46 /* ADR-011-Testing.md in Resources */,
+				5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData Persistence.md in Resources */,
+				5ABC37A22FFE221500A78677 /* ADR-007-AI Caddy Architecture.md in Resources */,
+				5AC1302B2FFF58600077FB46 /* ADR-012-Git-Workflow.md in Resources */,
+				5AC130252FFF58120077FB46 /* ADR-009-WeatherKit.md in Resources */,
+				5AC130232FFF57F90077FB46 /* ADR-008-GPS.md in Resources */,
+				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
+				5ABC37982FFE217800A78677 /* ADR-002-Documentation Strategy.md in Resources */,
 				5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */,
-				5ABC374D2FFDFC2700A78677 /* 01-Product_Requirements_Document.md in Resources */,
-				5ABC374E2FFDFC2700A78677 /* CodingStandards.md in Resources */,
+				5ABC37962FFE215700A78677 /* ADR-001-Project Structure.md in Resources */,
 			);
 		};
 		5ABC36982FFDF02B00A78677 /* Resources */ = {
@@ -580,6 +729,8 @@
 		5ABC36892FFDF02A00A78677 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				5ABC379A2FFE219300A78677 /* ADR-003-Domain Driven Design.md in Sources */,
+				5ABC379C2FFE21B300A78677 /* ADR-004-Strongly Typed Identifiers.md in Sources */,
 			);
 		};
 		5ABC36962FFDF02B00A78677 /* Sources */ = {

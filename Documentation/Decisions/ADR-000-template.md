@@ -1,5 +1,5 @@
 # ADR-000: Decision Title
-
+ADR -     Architecture Decision Records (ADRs) (design decisions)
 ## Status
 
 Proposed / Accepted / Superseded
