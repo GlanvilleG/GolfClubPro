@@ -190,7 +190,20 @@ public struct RoundEngine: Sendable {
 
         return updatedRound
     }
+    public func recordShotFeedbackTranscript(
+        _ transcript: String,
+        using normalizer: ShotFeedbackNormalizer = ShotFeedbackNormalizer(),
+        for round: Round
+    ) throws -> Round {
+        let feedback = normalizer.normalize(transcript)
 
+        return try recordShotFeedback(
+            rawTranscript: feedback.rawTranscript,
+            classifiedErrors: feedback.classifiedErrors,
+            sentiment: feedback.sentiment,
+            for: round
+        )
+    }
     public func recordPutts(
         _ putts: Int,
         for round: Round

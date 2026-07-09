@@ -11,12 +11,6 @@
 		5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37302FFDFC2700A78677 /* ChangeLog.md */; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
-		5ABC37652FFE0E1200A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37642FFE0E1200A78677 /* GolfCore */; };
-		5ABC37672FFE10F500A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37662FFE10F500A78677 /* GolfCore */; };
-		5ABC37692FFE110000A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC37682FFE110000A78677 /* GolfCore */; };
-		5ABC376B2FFE110700A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376A2FFE110700A78677 /* GolfCore */; };
-		5ABC376D2FFE111600A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376C2FFE111600A78677 /* GolfCore */; };
-		5ABC376F2FFE111E00A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376E2FFE111E00A78677 /* GolfCore */; };
 		5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData-Persistence.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */; };
 		5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */; };
 		5ABC37A42FFE229900A78677 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37A32FFE228900A78677 /* README.md */; };
@@ -30,6 +24,12 @@
 		5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */; };
 		5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */; };
 		5AFC4D2230003E79002DF421 /* ADR-007-Round-Engine-State-Machine.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */; };
+		5AFC4DA4300058E4002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA3300058E4002DF421 /* GolfCore */; };
+		5AFC4DA630005924002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA530005924002DF421 /* GolfCore */; };
+		5AFC4DA83000592E002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA73000592E002DF421 /* GolfCore */; };
+		5AFC4DAA30005937002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA930005937002DF421 /* GolfCore */; };
+		5AFC4DAC3000593E002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAB3000593E002DF421 /* GolfCore */; };
+		5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAD30005944002DF421 /* GolfCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,37 +286,37 @@
 		5ABC368A2FFDF02A00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC37652FFE0E1200A78677 /* GolfCore in Frameworks */,
+				5AFC4DA4300058E4002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36972FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC376D2FFE111600A78677 /* GolfCore in Frameworks */,
+				5AFC4DA630005924002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36A12FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC376F2FFE111E00A78677 /* GolfCore in Frameworks */,
+				5AFC4DA83000592E002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36AB2FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC37672FFE10F500A78677 /* GolfCore in Frameworks */,
+				5AFC4DAA30005937002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36BA2FFDF02C00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC37692FFE110000A78677 /* GolfCore in Frameworks */,
+				5AFC4DAC3000593E002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36C42FFDF02C00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5ABC376B2FFE110700A78677 /* GolfCore in Frameworks */,
+				5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -493,7 +493,7 @@
 			);
 			name = GolfClubPro;
 			packageProductDependencies = (
-				5ABC37642FFE0E1200A78677 /* GolfCore */,
+				5AFC4DA3300058E4002DF421 /* GolfCore */,
 			);
 			productName = GolfClubPro;
 			productReference = 5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */;
@@ -517,7 +517,7 @@
 			);
 			name = GolfClubProTests;
 			packageProductDependencies = (
-				5ABC376C2FFE111600A78677 /* GolfCore */,
+				5AFC4DA530005924002DF421 /* GolfCore */,
 			);
 			productName = GolfClubProTests;
 			productReference = 5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */;
@@ -541,7 +541,7 @@
 			);
 			name = GolfClubProUITests;
 			packageProductDependencies = (
-				5ABC376E2FFE111E00A78677 /* GolfCore */,
+				5AFC4DA73000592E002DF421 /* GolfCore */,
 			);
 			productName = GolfClubProUITests;
 			productReference = 5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */;
@@ -562,7 +562,7 @@
 			);
 			name = "GolfClubPro Watch App";
 			packageProductDependencies = (
-				5ABC37662FFE10F500A78677 /* GolfCore */,
+				5AFC4DA930005937002DF421 /* GolfCore */,
 			);
 			productName = "GolfClubPro Watch App";
 			productReference = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */;
@@ -586,7 +586,7 @@
 			);
 			name = "GolfClubPro Watch AppTests";
 			packageProductDependencies = (
-				5ABC37682FFE110000A78677 /* GolfCore */,
+				5AFC4DAB3000593E002DF421 /* GolfCore */,
 			);
 			productName = "GolfClubPro Watch AppTests";
 			productReference = 5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */;
@@ -610,7 +610,7 @@
 			);
 			name = "GolfClubPro Watch AppUITests";
 			packageProductDependencies = (
-				5ABC376A2FFE110700A78677 /* GolfCore */,
+				5AFC4DAD30005944002DF421 /* GolfCore */,
 			);
 			productName = "GolfClubPro Watch AppUITests";
 			productReference = 5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */;
@@ -659,6 +659,9 @@
 			);
 			mainGroup = 5ABC36842FFDF02A00A78677;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5ABC368E2FFDF02A00A78677 /* Products */;
 			projectDirPath = "";
@@ -1284,29 +1287,41 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/GolfClubCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		5ABC37642FFE0E1200A78677 /* GolfCore */ = {
+		5AFC4DA3300058E4002DF421 /* GolfCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
+			productName = GolfCore;
+		};
+		5AFC4DA530005924002DF421 /* GolfCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
+			productName = GolfCore;
+		};
+		5AFC4DA73000592E002DF421 /* GolfCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
+			productName = GolfCore;
+		};
+		5AFC4DA930005937002DF421 /* GolfCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GolfCore;
 		};
-		5ABC37662FFE10F500A78677 /* GolfCore */ = {
+		5AFC4DAB3000593E002DF421 /* GolfCore */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
 			productName = GolfCore;
 		};
-		5ABC37682FFE110000A78677 /* GolfCore */ = {
+		5AFC4DAD30005944002DF421 /* GolfCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = GolfCore;
-		};
-		5ABC376A2FFE110700A78677 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GolfCore;
-		};
-		5ABC376C2FFE111600A78677 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GolfCore;
-		};
-		5ABC376E2FFE111E00A78677 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
 			productName = GolfCore;
 		};
 /* End XCSwiftPackageProductDependency section */

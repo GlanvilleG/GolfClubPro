@@ -200,4 +200,23 @@ final class RoundEngineTests: XCTestCase {
 
         XCTAssertThrowsError(try engine.markShotHit(for: round))
     }
+    
+    func testRecordShotFeedbackTranscriptNormalizesFeedback() throws {
+        var round = try sampleRound()
+        round = try engine.announceClub(clubID: ClubID(), for: round)
+        round = try engine.markShotHit(for: round)
+
+        round = try engine.recordShotFeedbackTranscript(
+            "I pushed it right into the bunker",
+            for: round
+        )
+
+        let shot = try XCTUnwrap(round.currentHoleSession?.shots.first)
+
+        XCTAssertEqual(round.state, .awaitingBallPosition)
+        XCTAssertEqual(shot.feedback?.rawTranscript, "I pushed it right into the bunker")
+        XCTAssertTrue(shot.feedback?.classifiedErrors.contains(.push) == true)
+        XCTAssertTrue(shot.feedback?.classifiedErrors.contains(.bunker) == true)
+        XCTAssertEqual(shot.feedback?.sentiment, .negative)
+    }
 }
