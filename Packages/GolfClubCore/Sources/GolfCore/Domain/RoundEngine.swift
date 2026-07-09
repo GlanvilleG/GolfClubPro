@@ -13,6 +13,7 @@ public enum RoundEngineError: Error, Equatable, Sendable {
     case noClubSelected
     case noShotInProgress
     case invalidPuttCount
+    case invalidState(expected: [RoundState], actual: RoundState)
 }
 
 public struct RoundEngine: Sendable {
@@ -37,6 +38,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.roundActive, .awaitingHoleConfirmation])
 
         var updatedRound = round
         updatedRound.teeSetID = teeSetID
@@ -49,6 +51,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.roundActive, .awaitingHoleConfirmation, .holeCompleted, .holePendingCompletion])
 
         var updatedRound = round
 
@@ -71,6 +74,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.awaitingClub, .clubSelected, .awaitingBallPosition])
 
         var updatedRound = round
 
@@ -97,14 +101,12 @@ public struct RoundEngine: Sendable {
             roundID: updatedRound.id,
             holeID: currentHole.holeID,
             clubID: clubID,
-            startLocation: currentLocation,
-            lie: nil
+            startLocation: currentLocation
         )
 
         currentHole.shots.append(newShot)
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceCurrentHoleSession(in: updatedRound, with: currentHole)
-
+        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
         updatedRound.state = .clubSelected
 
         return updatedRound
@@ -115,6 +117,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.clubSelected])
 
         var updatedRound = round
 
@@ -126,12 +129,14 @@ public struct RoundEngine: Sendable {
             throw RoundEngineError.noClubSelected
         }
 
-        var shot = currentHole.shots[lastShotIndex]
-        shot.clubID = clubID
-        currentHole.shots[lastShotIndex] = shot
+        guard currentHole.shots[lastShotIndex].completedAt == nil else {
+            throw RoundEngineError.noShotInProgress
+        }
+
+        currentHole.shots[lastShotIndex].clubID = clubID
 
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceCurrentHoleSession(in: updatedRound, with: currentHole)
+        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
         updatedRound.state = .clubSelected
 
         return updatedRound
@@ -141,13 +146,13 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.clubSelected])
 
-        var updatedRound = round
-
-        guard updatedRound.currentHoleSession != nil else {
+        guard round.currentHoleSession != nil else {
             throw RoundEngineError.noActiveHole
         }
 
+        var updatedRound = round
         updatedRound.state = .awaitingShotFeedback
         return updatedRound
     }
@@ -159,6 +164,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.awaitingShotFeedback])
 
         var updatedRound = round
 
@@ -179,7 +185,7 @@ public struct RoundEngine: Sendable {
 
         currentHole.shots[lastShotIndex] = shot
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceCurrentHoleSession(in: updatedRound, with: currentHole)
+        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
         updatedRound.state = .awaitingBallPosition
 
         return updatedRound
@@ -190,6 +196,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.awaitingClub, .clubSelected, .awaitingBallPosition, .putting])
 
         guard putts >= 0 else {
             throw RoundEngineError.invalidPuttCount
@@ -205,7 +212,7 @@ public struct RoundEngine: Sendable {
         currentHole.status = .pendingCompletion
 
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceCurrentHoleSession(in: updatedRound, with: currentHole)
+        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
         updatedRound.state = .holePendingCompletion
 
         return updatedRound
@@ -215,6 +222,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.holePendingCompletion, .putting, .awaitingClub])
 
         var updatedRound = round
 
@@ -234,6 +242,7 @@ public struct RoundEngine: Sendable {
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.putting, .holePendingCompletion, .awaitingClub, .awaitingBallPosition])
 
         var updatedRound = round
 
@@ -243,7 +252,7 @@ public struct RoundEngine: Sendable {
 
         currentHole.status = .pendingCompletion
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceCurrentHoleSession(in: updatedRound, with: currentHole)
+        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
         updatedRound.state = .holePendingCompletion
 
         return updatedRound
@@ -253,6 +262,7 @@ public struct RoundEngine: Sendable {
         _ round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
+        try ensure(round, isIn: [.holeCompleted, .holePendingCompletion, .roundActive, .awaitingHoleConfirmation])
 
         var updatedRound = round
         updatedRound.completedAt = Date()
@@ -267,11 +277,16 @@ public struct RoundEngine: Sendable {
         }
     }
 
-    private func replaceCurrentHoleSession(
-        in round: Round,
-        with holeSession: HoleSession
-    ) -> Round {
-        replaceHoleSession(in: round, with: holeSession)
+    private func ensure(
+        _ round: Round,
+        isIn validStates: [RoundState]
+    ) throws {
+        guard validStates.contains(round.state) else {
+            throw RoundEngineError.invalidState(
+                expected: validStates,
+                actual: round.state
+            )
+        }
     }
 
     private func replaceHoleSession(
