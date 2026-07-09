@@ -129,6 +129,94 @@ public struct Course: Codable, Equatable, Sendable {
 }
 ```
 
+## Course Geometry and Lie Detection Models
+
+GolfClubPro uses course geometry to infer where the ball has come to rest.
+
+The following models support implicit lie detection and golfer confirmation.
+
+### CourseAreaType
+
+Represents the type of area on the golf course.
+
+```swift
+public enum CourseAreaType: String, Codable, CaseIterable, Sendable {
+    case tee
+    case fairway
+    case rough
+    case green
+    case fringe
+    case bunker
+    case water
+    case trees
+    case outOfBounds
+    case penaltyArea
+    case unknown
+}
+```
+
+### CourseArea
+
+Represents a mapped area of the course.
+
+```swift
+public struct CourseArea: Codable, Equatable, Sendable {
+    public var type: CourseAreaType
+    public var boundary: [GeoCoordinate]
+}
+```
+
+### CourseGeometry
+
+Represents the mapped geometry for a course or hole.
+
+```swift
+public struct CourseGeometry: Codable, Equatable, Sendable {
+    public var areas: [CourseArea]
+}
+```
+
+### LieSource
+
+Defines how the lie was determined.
+
+```swift
+public enum LieSource: String, Codable, Sendable {
+    case inferredFromCourseGeometry
+    case golferConfirmed
+    case golferCorrected
+    case unknown
+}
+```
+
+### LieDetectionResult
+
+Represents the result of implicit lie detection.
+
+```swift
+public struct LieDetectionResult: Codable, Equatable, Sendable {
+    public var lie: Lie
+    public var source: LieSource
+    public var confidence: Double?
+}
+```
+
+### Shot Lie Data
+
+The `Shot` model should support:
+
+```swift
+public var inferredLie: Lie?
+public var confirmedLie: Lie?
+public var lieSource: LieSource?
+public var lieDetectionConfidence: Double?
+```
+
+The effective lie should use this priority:
+
+```text
+confirmedLie > inferredLie > unknown
+```
 ## Hole
 
 ```swift
