@@ -18,9 +18,6 @@
 		5ABC376B2FFE110700A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376A2FFE110700A78677 /* GolfCore */; };
 		5ABC376D2FFE111600A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376C2FFE111600A78677 /* GolfCore */; };
 		5ABC376F2FFE111E00A78677 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5ABC376E2FFE111E00A78677 /* GolfCore */; };
-		5ABC37962FFE215700A78677 /* ADR-001-Project Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */; };
-		5ABC37982FFE217800A78677 /* ADR-002-Documentation Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */; };
-		5ABC379A2FFE219300A78677 /* ADR-003-Domain Driven Design.md in Sources */ = {isa = PBXBuildFile; fileRef = 5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */; };
 		5ABC379C2FFE21B300A78677 /* ADR-004-Strongly Typed Identifiers.md in Sources */ = {isa = PBXBuildFile; fileRef = 5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */; };
 		5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData Persistence.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */; };
 		5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */; };
@@ -31,6 +28,9 @@
 		5AC130272FFF58300077FB46 /* ADR-010-Offline-First.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */; };
 		5AC130292FFF58470077FB46 /* ADR-011-Testing.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130282FFF58350077FB46 /* ADR-011-Testing.md */; };
 		5AC1302B2FFF58600077FB46 /* ADR-012-Git-Workflow.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1302A2FFF584D0077FB46 /* ADR-012-Git-Workflow.md */; };
+		5AC130492FFFA16D0077FB46 /* ADR-001-Repository-Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */; };
+		5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */; };
+		5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,9 +95,6 @@
 		5ABC37302FFDFC2700A78677 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
 		5ABC37322FFDFC2700A78677 /* MeetingNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MeetingNotes.md; sourceTree = "<group>"; };
 		5ABC37372FFDFC2700A78677 /* GolfClubCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GolfClubCore; sourceTree = "<group>"; };
-		5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-001-Project Structure.md"; sourceTree = "<group>"; };
-		5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-002-Documentation Strategy.md"; sourceTree = "<group>"; };
-		5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain Driven Design.md"; sourceTree = "<group>"; };
 		5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-004-Strongly Typed Identifiers.md"; sourceTree = "<group>"; };
 		5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-005-SwiftData Persistence.md"; sourceTree = "<group>"; };
 		5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-006-Watch First Architecture.md"; sourceTree = "<group>"; };
@@ -108,6 +105,9 @@
 		5AC130262FFF58170077FB46 /* ADR-010-Offline-First.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-010-Offline-First.md"; sourceTree = "<group>"; };
 		5AC130282FFF58350077FB46 /* ADR-011-Testing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-011-Testing.md"; sourceTree = "<group>"; };
 		5AC1302A2FFF584D0077FB46 /* ADR-012-Git-Workflow.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-012-Git-Workflow.md"; sourceTree = "<group>"; };
+		5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-001-Repository-Structure.md"; sourceTree = "<group>"; };
+		5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-002-Documentation-Strategy.md"; sourceTree = "<group>"; };
+		5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain-Driven-Design.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -384,9 +384,9 @@
 			isa = PBXGroup;
 			children = (
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
-				5ABC37952FFE214200A78677 /* ADR-001-Project Structure.md */,
-				5ABC37972FFE215D00A78677 /* ADR-002-Documentation Strategy.md */,
-				5ABC37992FFE218100A78677 /* ADR-003-Domain Driven Design.md */,
+				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
+				5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */,
+				5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */,
 				5ABC379B2FFE21A000A78677 /* ADR-004-Strongly Typed Identifiers.md */,
 				5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData Persistence.md */,
 				5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */,
@@ -689,13 +689,14 @@
 				5AC130292FFF58470077FB46 /* ADR-011-Testing.md in Resources */,
 				5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData Persistence.md in Resources */,
 				5ABC37A22FFE221500A78677 /* ADR-007-AI Caddy Architecture.md in Resources */,
+				5AC130492FFFA16D0077FB46 /* ADR-001-Repository-Structure.md in Resources */,
 				5AC1302B2FFF58600077FB46 /* ADR-012-Git-Workflow.md in Resources */,
 				5AC130252FFF58120077FB46 /* ADR-009-WeatherKit.md in Resources */,
 				5AC130232FFF57F90077FB46 /* ADR-008-GPS.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
-				5ABC37982FFE217800A78677 /* ADR-002-Documentation Strategy.md in Resources */,
+				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
 				5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */,
-				5ABC37962FFE215700A78677 /* ADR-001-Project Structure.md in Resources */,
+				5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */,
 			);
 		};
 		5ABC36982FFDF02B00A78677 /* Resources */ = {
@@ -729,7 +730,6 @@
 		5ABC36892FFDF02A00A78677 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
-				5ABC379A2FFE219300A78677 /* ADR-003-Domain Driven Design.md in Sources */,
 				5ABC379C2FFE21B300A78677 /* ADR-004-Strongly Typed Identifiers.md in Sources */,
 			);
 		};
