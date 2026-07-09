@@ -1,205 +1,441 @@
 
 # Domain Model
 
-## Purpose
+**Document ID:** GCP-ARC-002  
+**Version:** 1.0.0  
+**Status:** Draft  
+**Owner:** Solution Architecture  
+**Related ADRs:** ADR-003 (Domain Driven Design), ADR-004 (Strongly Typed Identifiers)
 
-The Domain Model defines the core business concepts used by GolfClubPro and GolfCore.
+---
 
-It describes what the system understands about golf before considering UI, database, APIs, or Apple frameworks.
+# Purpose
 
-## Core Domain Concepts
+The Domain Model defines the business concepts that make up GolfClubPro.
 
-### Player
+It is independent of implementation technologies such as SwiftUI, SwiftData, CloudKit, Core Location, WeatherKit, or any external API.
 
-A golfer using GolfClubPro.
+The purpose of this document is to establish a common language that is shared by software engineers, product owners, designers, testers, and future AI systems.
 
-A Player may have:
+All software within **GolfCore** should model the concepts described in this document.
+
+---
+
+# Domain Design Principles
+
+The GolfClubPro domain model is based on the following principles:
+
+- Business concepts are defined before implementation.
+- Business rules belong in the domain, not in the user interface.
+- Internal identifiers are independent of external systems.
+- Models describe *what exists*, not *how it is stored*.
+- AI consumes domain information but does not define it.
+- The domain remains stable even when technology changes.
+
+---
+
+# Domain Overview
+
+GolfClubPro models the complete journey of a golfer during a playing session.
+
+The primary domain is centred around a **Round**.
+
+```text
+Player
+   │
+   ├── Equipment Profile
+   │
+   ▼
+Round
+   │
+   ├── Course
+   │      └── Holes
+   │
+   ├── Weather Context
+   │
+   ├── GPS Position
+   │
+   ├── Shots
+   │
+   └── Recommendations
+```
+
+A Round represents a player's interaction with a golf course over time.
+
+---
+
+# Core Entities
+
+## Player
+
+A Player represents a golfer using GolfClubPro.
+
+### Responsibilities
+
+- Owns playing history
+- Owns equipment profile
+- Owns playing preferences
+- May be linked to DotGolf
+
+### Attributes
 
 - PlayerID
-
-- Optional DotGolfMemberID
-
+- DotGolfMemberID (optional)
 - Name
+- Handicap Index
+- Dominant Hand
+- Preferred Units
+- Equipment Profile
 
-- Handicap index
+### Relationships
 
-- Equipment profile
+Player owns:
 
-- Historical shot record
+- Equipment Profile
+- Rounds
+- Statistics
+- Coaching History
 
-### Club
+---
 
-A piece of golfing equipment used by a player.
+## Equipment Profile
 
-A Club may have:
+An Equipment Profile represents the collection of clubs used by a player.
+
+Each club maintains historical performance rather than relying on manufacturer specifications.
+
+Future versions may also include:
+
+- Ball type
+- GPS device
+- Range finder
+- Wear history
+- Loft adjustments
+
+---
+
+## Club
+
+A Club represents one physical golf club.
+
+### Attributes
 
 - ClubID
-
 - Name
+- Club Type
+- Loft
+- Manufacturer
+- Model
+- Average Carry
+- Average Total Distance
+- Dispersion Pattern
+- Confidence Rating
 
-- Club type
+Historical performance is unique to each player.
 
-- Average carry distance
+---
 
-- Dispersion pattern
+## Course
 
-- Confidence rating
+A Course represents a playable golf course.
 
-### Course
-
-A playable golf course.
-
-A Course may have:
+### Attributes
 
 - CourseID
-
 - Name
-
-- Location
-
+- Country
+- Region
+- GPS Boundary
+- Local Rules
+- Tee Sets
 - Holes
 
-- Tee sets
+Future versions may support multiple layouts for the same course.
 
-- Local rules
+---
 
-### Hole
+## Tee Set
 
-A playable hole within a course.
+A Tee Set defines one playable course configuration.
 
-A Hole may have:
+Examples:
+
+- Championship
+- Black
+- Blue
+- White
+- Yellow
+- Red
+
+Each Tee Set defines the start location and measured distance for every hole.
+
+---
+
+## Hole
+
+A Hole represents one playable golf hole.
+
+### Attributes
 
 - HoleID
-
-- Hole number
-
+- Hole Number
 - Par
-
-- Stroke index
-
-- Tee locations
-
-- Green location
-
+- Stroke Index
+- Tee Locations
+- Green Location
 - Hazards
+- Ideal Landing Areas
+- GPS Geometry
 
-- Ideal landing areas
+---
 
-### Round
+## Hazard
 
-A playing session by a player on a course.
+A Hazard represents an area that influences play.
 
-A Round may have:
+Examples include:
+
+- Bunkers
+- Water
+- Trees
+- Out of Bounds
+- Native Grass
+- Penalty Areas
+
+---
+
+## Round
+
+The Round is the central entity of GolfClubPro.
+
+Every shot, recommendation, statistic and coaching event belongs to a Round.
+
+### Attributes
 
 - RoundID
-
 - PlayerID
-
 - CourseID
+- Tee Set
+- Start Time
+- Finish Time
+- Score
+- Status
 
-- Start time
+### Status
 
-- Finish time
+A Round may be:
 
-- Selected tee set
+- Planned
+- Active
+- Paused
+- Completed
+- Abandoned
 
-- Holes played
+---
 
-- Shots recorded
+## Hole Session
 
-### Shot
+A Hole Session represents a player's activity on one hole during a Round.
 
-A recorded stroke or ball movement event.
+It contains:
 
-A Shot may have:
+- Current hole
+- Pin position
+- Shots
+- Score
+- Penalties
+- Timing
+
+---
+
+## Shot
+
+A Shot represents a single stroke.
+
+It is one of the most important entities in the system.
+
+### Attributes
 
 - ShotID
-
 - RoundID
-
 - HoleID
-
 - ClubID
-
-- Start location
-
-- End location
-
-- Distance
-
-- Direction
-
+- Timestamp
+- GPS Start
+- GPS Finish
+- Carry Distance
+- Total Distance
+- Launch Direction
+- Shot Shape
 - Lie
+- Weather Context
 
-- Weather context
+Future versions may include launch monitor data.
 
-- Penalty context
+---
 
-### Recommendation
+## Lie
 
-Advice generated by the AI Caddy.
+Lie represents the condition of the golf ball before the shot.
 
-A Recommendation may include:
+Examples:
 
-- Suggested club
+- Tee
+- Fairway
+- Rough
+- Sand
+- Fringe
+- Green
 
-- Aim point
+---
 
-- Wind adjustment
+## Weather Context
 
-- Confidence score
+Weather Context captures environmental conditions when the shot occurred.
 
-- Coaching explanation
+Attributes include:
 
-## Identifier Strategy
+- Wind Speed
+- Wind Direction
+- Temperature
+- Humidity
+- Pressure
 
-GolfClubPro uses strongly typed identifiers:
+Weather is captured so recommendations can be explained retrospectively.
+
+---
+
+## Recommendation
+
+A Recommendation is advice generated before a shot.
+
+It may include:
+
+- Club
+- Aim Point
+- Target Distance
+- Wind Adjustment
+- Confidence Score
+- Coaching Notes
+
+Recommendations are advisory only.
+
+The player always remains responsible for shot selection.
+
+---
+
+## Statistics
+
+Statistics are derived information.
+
+Examples include:
+
+- Average Carry
+- Fairways Hit
+- Greens in Regulation
+- Putting Statistics
+- Shot Dispersion
+- Club Confidence
+
+Statistics are calculated rather than manually entered.
+
+---
+
+## Coaching Session
+
+A Coaching Session represents AI-generated post-round analysis.
+
+It explains:
+
+- Strengths
+- Weaknesses
+- Trends
+- Improvement Opportunities
+- Practice Recommendations
+
+---
+
+# Identifier Strategy
+
+Every major entity has a strongly typed identifier.
+
+Examples:
 
 - PlayerID
-
 - DotGolfMemberID
-
 - CourseID
-
 - HoleID
-
+- TeeSetID
 - ClubID
-
 - RoundID
-
 - ShotID
+- RecommendationID
 
-External identifiers are kept separate from internal identifiers.
+External identifiers are never reused as internal identifiers.
 
-## Domain Boundaries
+---
 
-GolfCore should not directly depend on:
+# Domain Relationships
+
+The following relationships define the core model.
+
+- A Player owns many Rounds.
+- A Player owns one Equipment Profile.
+- A Round references one Course.
+- A Course contains many Holes.
+- A Hole belongs to one Course.
+- A Round contains many Hole Sessions.
+- A Hole Session contains many Shots.
+- Every Shot uses one Club.
+- Every Shot records one Weather Context.
+- A Recommendation is generated before a Shot.
+- Statistics are calculated from completed Rounds.
+
+---
+
+# Domain Boundaries
+
+The domain layer should never directly depend on:
 
 - SwiftUI
-
-- WeatherKit
-
-- CloudKit
-
-- SwiftData
-
+- UIKit
 - Core Location
+- WeatherKit
+- CloudKit
+- SwiftData
+- Network APIs
 
-Adapters and services may translate Apple framework types into GolfCore domain types.
+Platform-specific services translate external data into domain objects.
 
-## Future Domain Areas
+---
 
-- Handicap calculation
+# Future Domain Expansion
 
-- Course mapping
+The following capabilities are anticipated but not required for Version 1.
 
-- Shot dispersion
+- DotGolf score synchronisation
+- Tournament management
+- Team competitions
+- Club fitting
+- Strokes Gained analytics
+- Machine learning shot prediction
+- Personalised coaching plans
+- Course strategy simulation
+- Indoor simulator integration
+- Launch monitor integration
+- Vision Pro round review
+- macOS coaching dashboard
 
-- Strokes gained
+---
 
-- Weather-adjusted carry
+# Traceability
 
-- AI learning model
+This document is the authoritative source for GolfCore business entities.
 
-- Coach sharing
+Every Swift model should be traceable back to a corresponding entity defined here.
 
+Any addition, removal, or significant modification to a domain entity must be accompanied by:
+
+- An update to this document.
+- A review of the Domain Glossary.
+- Consideration of a new or updated Architecture Decision Record (ADR).
