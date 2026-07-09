@@ -1,10 +1,4 @@
-//
-//  Domain Glossary.swift
-//  GolfClubPro
-//
-//  Created by Dragon Development on 08/07/2026.
-//
-# GolfClubPro Domain Glossary
+GolfClubPro Domain Glossary
 
 **Document ID:** GCP-DOM-001  
 **Version:** 1.0  
@@ -17,9 +11,7 @@
 # Purpose
 
 The Domain Glossary defines the common business language used throughout the GolfClubPro project.
-
 Its purpose is to ensure that developers, testers, designers, product owners and future AI models use consistent terminology.
-
 This glossary is the authoritative source for all domain definitions used within:
 
 - Product Requirements
@@ -45,31 +37,24 @@ This glossary is the authoritative source for all domain definitions used within
 # Glossary
 
 ## AI Caddy
-
 The recommendation engine that analyses historical and current playing conditions to provide personalised advice before each shot.
 
 ---
 
 ## Aim Point
-
 The intended target location selected before executing a shot.
-
 This may differ from the final target due to wind, hazards or player shot tendencies.
 
 ---
 
 ## Carry Distance
-
 The horizontal distance travelled by the golf ball before first contacting the ground.
-
 Carry distance excludes roll.
 
 ---
 
 ## Club
-
 A single item of golfing equipment used to strike the ball.
-
 Examples include:
 
 - Driver
@@ -99,7 +84,6 @@ The club suggested by the AI Caddy based on:
 ## Confidence Score
 
 A numerical indication of how confident the AI Caddy is that a recommendation is appropriate.
-
 Future versions may express confidence as a percentage.
 
 ---
@@ -126,7 +110,6 @@ The complete physical definition of a golf course including:
 ## Dispersion
 
 The statistical spread of repeated golf shots.
-
 Dispersion may be measured laterally, longitudinally or radially.
 
 ---
