@@ -419,8 +419,8 @@
 		5ABC37362FFDFC2700A78677 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
-				5AC1302C2FFF58CB0077FB46 /* Diagrams */,
 				5ABC37A32FFE228900A78677 /* README.md */,
+				5AC1302C2FFF58CB0077FB46 /* Diagrams */,
 				5ABC37222FFDFC2700A78677 /* Decisions */,
 				5ABC372E2FFDFC2700A78677 /* GolfClubPro Documentation */,
 				5ABC37302FFDFC2700A78677 /* ChangeLog.md */,
