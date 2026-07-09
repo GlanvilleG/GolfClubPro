@@ -15,10 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ABC368C2FFDF02A00A78677"
-               BuildableName = "GolfClubPro.app"
-               BlueprintName = "GolfClubPro"
-               ReferencedContainer = "container:GolfClubPro.xcodeproj">
+               BlueprintIdentifier = "GolfCore"
+               BuildableName = "GolfCore"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,23 +30,12 @@
       shouldAutocreateTestPlan = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
+            skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ABC36992FFDF02B00A78677"
-               BuildableName = "GolfClubProTests.xctest"
-               ReferencedContainer = "container:GolfClubPro.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5ABC36A32FFDF02B00A78677"
-               BuildableName = "GolfClubProUITests.xctest"
-               ReferencedContainer = "container:GolfClubPro.xcodeproj">
+               BlueprintIdentifier = "GolfCoreTests"
+               BuildableName = "GolfCoreTests"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -63,16 +51,6 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       queueDebuggingEnabled = "No">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5ABC368C2FFDF02A00A78677"
-            BuildableName = "GolfClubPro.app"
-            BlueprintName = "GolfClubPro"
-            ReferencedContainer = "container:GolfClubPro.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -80,16 +58,14 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5ABC368C2FFDF02A00A78677"
-            BuildableName = "GolfClubPro.app"
-            BlueprintName = "GolfClubPro"
-            ReferencedContainer = "container:GolfClubPro.xcodeproj">
+            BlueprintIdentifier = "GolfCore"
+            BuildableName = "GolfCore"
+            ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

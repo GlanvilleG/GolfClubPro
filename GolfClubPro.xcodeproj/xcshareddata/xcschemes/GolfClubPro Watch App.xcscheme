@@ -30,6 +30,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5ABC368C2FFDF02A00A78677"
                BuildableName = "GolfClubPro.app"
+               BlueprintName = "GolfClubPro"
                ReferencedContainer = "container:GolfClubPro.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

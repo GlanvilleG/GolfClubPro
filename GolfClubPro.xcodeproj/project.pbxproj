@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		5ABC373C2FFDFC2700A78677 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC372D2FFDFC2700A78677 /* README.md */; };
 		5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37302FFDFC2700A78677 /* ChangeLog.md */; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
@@ -91,7 +90,6 @@
 		5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GolfClubPro Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC37212FFDFC2700A78677 /* ADR-000-template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-000-template.md"; sourceTree = "<group>"; };
-		5ABC372D2FFDFC2700A78677 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5ABC37302FFDFC2700A78677 /* ChangeLog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ChangeLog.md; sourceTree = "<group>"; };
 		5ABC37322FFDFC2700A78677 /* MeetingNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MeetingNotes.md; sourceTree = "<group>"; };
 		5ABC37372FFDFC2700A78677 /* GolfClubCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GolfClubCore; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 				5AC12FF92FFF56140077FB46 /* 05-AI */,
 				5AC130122FFF57120077FB46 /* 06-Operations */,
 				5ABC37892FFE1DBA00A78677 /* 07-Business */,
-				5ABC372D2FFDFC2700A78677 /* README.md */,
 			);
 			path = "GolfClubPro Documentation";
 			sourceTree = "<group>";
@@ -682,7 +679,6 @@
 			isa = PBXResourcesBuildPhase;
 			files = (
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
-				5ABC373C2FFDFC2700A78677 /* README.md in Resources */,
 				5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
 				5AC130272FFF58300077FB46 /* ADR-010-Offline-First.md in Resources */,
