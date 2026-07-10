@@ -222,4 +222,97 @@ final class RecommendationEngineTests: XCTestCase {
             currentShotPlan: shotPlan
         )
     }
+    func testHighDispersionReducesClubScore() throws {
+        let consistentClub = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        let inconsistentClub = Club(
+            name: "7 Iron Backup",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        let consistentSummary = ClubDispersionSummary(
+            clubID: consistentClub.id,
+            sampleSize: 10,
+            directionalSampleSize: 10,
+            averageDistanceMeters: 145,
+            distanceStandardDeviationMeters: 4,
+            averageDirectionalErrorDegrees: 1,
+            meanAbsoluteDirectionalErrorDegrees: 2,
+            leftMissPercentage: 20,
+            rightMissPercentage: 20,
+            centredPercentage: 60,
+            directionalTendency: .centred
+        )
+
+        let inconsistentSummary = ClubDispersionSummary(
+            clubID: inconsistentClub.id,
+            sampleSize: 10,
+            directionalSampleSize: 10,
+            averageDistanceMeters: 145,
+            distanceStandardDeviationMeters: 22,
+            averageDirectionalErrorDegrees: 10,
+            meanAbsoluteDirectionalErrorDegrees: 12,
+            leftMissPercentage: 10,
+            rightMissPercentage: 80,
+            centredPercentage: 10,
+            directionalTendency: .right
+        )
+
+        var context = makeContext(
+            targetDistanceMeters: 145,
+            clubs: [consistentClub, inconsistentClub]
+        )
+
+        context.dispersionSummaries = [
+            consistentSummary,
+            inconsistentSummary
+        ]
+
+        let result = try engine.recommend(for: context)
+
+        XCTAssertEqual(
+            result.preferredClub?.clubID,
+            consistentClub.id
+        )
+    }
+    func testRightDispersionProducesLeftAimOffset() throws {
+        let club = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        let dispersion = ClubDispersionSummary(
+            clubID: club.id,
+            sampleSize: 10,
+            directionalSampleSize: 10,
+            averageDistanceMeters: 145,
+            distanceStandardDeviationMeters: 5,
+            averageDirectionalErrorDegrees: 8,
+            meanAbsoluteDirectionalErrorDegrees: 8,
+            leftMissPercentage: 10,
+            rightMissPercentage: 80,
+            centredPercentage: 10,
+            directionalTendency: .right
+        )
+
+        var context = makeContext(
+            targetDistanceMeters: 145,
+            clubs: [club]
+        )
+
+        context.dispersionSummaries = [dispersion]
+
+        let result = try engine.recommend(for: context)
+
+        XCTAssertLessThan(
+            result.aimOffsetDegrees,
+            0
+        )
+    }
 }

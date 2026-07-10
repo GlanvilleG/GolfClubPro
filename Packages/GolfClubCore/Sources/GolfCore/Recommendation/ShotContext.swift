@@ -90,6 +90,8 @@ public struct ShotContext:
     public var currentShotPlan: ShotPlan?
 
     public var environment: EnvironmentalContext
+    
+    public var dispersionSummaries: [ClubDispersionSummary]
 
     public init(
         player: Player,
@@ -100,6 +102,7 @@ public struct ShotContext:
         courseArea: CourseAreaType,
         availableClubs: [Club],
         recentShotHistory: [RecentShotSummary] = [],
+        dispersionSummaries: [ClubDispersionSummary] = [],
         strategyGeometry: HoleStrategyGeometry,
         currentShotPlan: ShotPlan? = nil,
         environment: EnvironmentalContext =
@@ -113,6 +116,7 @@ public struct ShotContext:
         self.courseArea = courseArea
         self.availableClubs = availableClubs
         self.recentShotHistory = recentShotHistory
+        self.dispersionSummaries = dispersionSummaries
         self.strategyGeometry = strategyGeometry
         self.currentShotPlan = currentShotPlan
         self.environment = environment
