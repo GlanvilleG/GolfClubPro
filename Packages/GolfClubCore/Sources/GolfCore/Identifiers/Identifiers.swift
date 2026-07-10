@@ -75,3 +75,14 @@ public struct ShotPlanID: Codable, Hashable, Sendable {
     public let value: UUID
     public init(_ value: UUID = UUID()) { self.value = value }
 }
+public struct RecommendationAuditRecordID:
+    Codable,
+    Hashable,
+    Sendable {
+
+    public let value: UUID
+
+    public init(_ value: UUID = UUID()) {
+        self.value = value
+    }
+}

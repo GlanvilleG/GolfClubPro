@@ -46,19 +46,22 @@ public struct RecommendationResult:
     public var alternatives: [ClubRecommendation]
     public var aimOffsetDegrees: Double
     public var explanation: String
+    public var auditRecord: RecommendationAuditRecord? = nil
 
     public init(
         shotPlan: ShotPlan,
         preferredClub: ClubRecommendation?,
         alternatives: [ClubRecommendation],
         aimOffsetDegrees: Double,
-        explanation: String
+        explanation: String,
+        auditRecord: RecommendationAuditRecord? = nil
     ) {
         self.shotPlan = shotPlan
         self.preferredClub = preferredClub
         self.alternatives = alternatives
         self.aimOffsetDegrees = aimOffsetDegrees
         self.explanation = explanation
+        self.auditRecord = auditRecord
     }
 }
 
@@ -128,20 +131,90 @@ public struct RecommendationEngine: Sendable {
             context: context
         )
 
+        let explanation = makeExplanation(
+            preferred: preferred,
+            shotPlan: shotPlan,
+            context: context,
+            aimOffsetDegrees: aimOffset
+        )
+
+        let auditRecord: RecommendationAuditRecord?
+
+        if context.player.recommendationAuditEnabled {
+            auditRecord = makeAuditRecord(
+                context: context,
+                shotPlan: shotPlan,
+                preferred: preferred,
+                alternatives: alternatives,
+                aimOffsetDegrees: aimOffset,
+                explanation: explanation,
+                candidates: recommendations
+            )
+        } else {
+            auditRecord = nil
+        }
+        
         return RecommendationResult(
             shotPlan: shotPlan,
             preferredClub: preferred,
             alternatives: alternatives,
             aimOffsetDegrees: aimOffset,
-            explanation: makeExplanation(
-                preferred: preferred,
-                shotPlan: shotPlan,
-                context: context,
-                aimOffsetDegrees: aimOffset
-            )
+            explanation: explanation,
+            auditRecord: auditRecord
         )
     }
 
+    private func makeAuditRecord(
+        context: ShotContext,
+        shotPlan: ShotPlan,
+        preferred: ClubRecommendation?,
+        alternatives: [ClubRecommendation],
+        aimOffsetDegrees: Double,
+        explanation: String,
+        candidates: [ClubRecommendation]
+    ) -> RecommendationAuditRecord {
+        RecommendationAuditRecord(
+            playerID: context.player.id,
+            roundID: context.roundID,
+            holeID: context.hole.id,
+            currentPosition:
+                context.currentPosition,
+            playableLie:
+                context.playableLie,
+            courseArea:
+                context.courseArea,
+            targetPoint:
+                shotPlan.aimPoint,
+            targetBearingDegrees:
+                shotPlan.targetBearingDegrees,
+            targetDistanceMeters:
+                shotPlan.targetDistanceMeters,
+            preferredClubID:
+                preferred?.clubID,
+            alternativeClubIDs:
+                alternatives.map(\.clubID),
+            candidateClubs:
+                candidates.map {
+                    RecommendationCandidateSnapshot(
+                        clubID: $0.clubID,
+                        score: $0.score,
+                        adjustedCarryMeters:
+                            $0.adjustedCarryMeters,
+                        confidence:
+                            $0.confidence
+                    )
+                },
+            aimOffsetDegrees:
+                aimOffsetDegrees,
+            riskLevel:
+                shotPlan.riskLevel,
+            recommendationConfidence:
+                preferred?.confidence ?? 0,
+            explanation:
+                explanation
+        )
+    }
+    
     private func scoreClub(
         _ club: Club,
         targetDistanceMeters: Double,

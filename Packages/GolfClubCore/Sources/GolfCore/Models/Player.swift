@@ -11,16 +11,19 @@ public struct Player: Codable, Equatable, Sendable {
     public var dotGolfMemberID: DotGolfMemberID?
     public var name: String
     public var handicapIndex: Double?
+    public var recommendationAuditEnabled: Bool
 
     public init(
         id: PlayerID = PlayerID(),
         dotGolfMemberID: DotGolfMemberID? = nil,
         name: String,
-        handicapIndex: Double? = nil
+        handicapIndex: Double? = nil,
+        recommendationAuditEnabled: Bool = false
     ) {
         self.id = id
         self.dotGolfMemberID = dotGolfMemberID
         self.name = name
         self.handicapIndex = handicapIndex
+        self.recommendationAuditEnabled = recommendationAuditEnabled
     }
 }
