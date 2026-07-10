@@ -31,6 +31,7 @@
 		5AFC4DB830008F0B002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB730008EFF002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md */; };
 		5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */; };
 		5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */; };
+		5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		5AFC4DB730008EFF002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-010-Strategic-Route-and-Target-Planning.md"; sourceTree = "<group>"; };
 		5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-011-AI-Caddy-Architecture.md"; sourceTree = "<group>"; };
 		5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-012-Weather-Integration.md"; sourceTree = "<group>"; };
+		5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-013-Offline-First-Architecture.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -383,6 +385,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
 				5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */,
 				5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */,
 				5AFC4DB730008EFF002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md */,
@@ -684,6 +687,7 @@
 		5ABC368B2FFDF02A00A78677 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */,
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
 				5ABC373D2FFDFC2700A78677 /* ChangeLog.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
