@@ -7,20 +7,79 @@
 
 import SwiftUI
 import GolfCore
+import SwiftData
 
 struct ContentView: View {
-    private let player = Player(
-        dotGolfMemberID: DotGolfMemberID("123456"),
-        name: "Gerard Glanville",
-        handicapIndex: 12.0
-    )
+
+    @Environment(RoundSession.self)
+    private var roundSession
 
     var body: some View {
-        Text("Welcome \(player.name)")
+        NavigationStack {
+            VStack(spacing: 16) {
+                if roundSession.isLoading {
+                    ProgressView(
+                        "Restoring round…"
+                    )
+                } else if let round =
+                    roundSession.activeRound {
+
+                    Text("Active Round")
+                        .font(.title2)
+                        .bold()
+
+                    Text(
+                        "State: \(round.state.rawValue)"
+                    )
+
+                    Text(
+                        "Pending sync events: \(roundSession.activeSnapshot?.pendingEvents.count ?? 0)"
+                    )
+
+                    Button("Finish Round") {
+                        Task {
+                            await roundSession
+                                .finishRound()
+                        }
+                    }
+                } else {
+                    ContentUnavailableView(
+                        "No Active Round",
+                        systemImage: "figure.golf",
+                        description: Text(
+                            "A new round can be started after golf-club detection."
+                        )
+                    )
+                }
+
+                if let error =
+                    roundSession.errorMessage {
+                    Text(error)
+                        .foregroundStyle(.red)
+
+                    Button("Dismiss Error") {
+                        roundSession.clearError()
+                    }
+                }
+            }
             .padding()
+            .navigationTitle("GolfClubPro")
+        }
     }
 }
 
 #Preview {
+    let dependencies =
+        try! AppDependencies.preview()
+
+    let session = RoundSession(
+        coordinator:
+            dependencies.roundCoordinator
+    )
+
     ContentView()
+        .environment(session)
+        .modelContainer(
+            dependencies.modelContainer
+        )
 }

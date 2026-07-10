@@ -12,16 +12,27 @@ import GolfCore
 @main
 struct GolfClubProApp: App {
 
-    private let modelContainer: ModelContainer
+    private let dependencies: AppDependencies
+
+    @State private var roundSession:
+        RoundSession
 
     init() {
         do {
-            modelContainer = try ModelContainer(
-                for: ActiveRoundSnapshotRecord.self
+            let dependencies =
+                try AppDependencies.live()
+
+            self.dependencies = dependencies
+
+            _roundSession = State(
+                initialValue: RoundSession(
+                    coordinator:
+                        dependencies.roundCoordinator
+                )
             )
         } catch {
             fatalError(
-                "Unable to create SwiftData container: \(error)"
+                "Unable to initialise GolfClubPro: \(error)"
             )
         }
     }
@@ -29,7 +40,14 @@ struct GolfClubProApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(roundSession)
+                .task {
+                    await roundSession
+                        .restoreActiveRound()
+                }
         }
-        .modelContainer(modelContainer)
+        .modelContainer(
+            dependencies.modelContainer
+        )
     }
 }
