@@ -32,6 +32,7 @@
 		5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */; };
 		5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */; };
 		5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */; };
+		5AFC4DD730010D27002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +111,7 @@
 		5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-011-AI-Caddy-Architecture.md"; sourceTree = "<group>"; };
 		5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-012-Weather-Integration.md"; sourceTree = "<group>"; };
 		5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-013-Offline-First-Architecture.md"; sourceTree = "<group>"; };
+		5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-014-Intelligent-Round-Orchestrator.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -385,6 +387,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */,
 				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
 				5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */,
 				5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */,
@@ -698,6 +701,7 @@
 				5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
+				5AFC4DD730010D27002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md in Resources */,
 				5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */,
 				5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */,
 				5AFC4DB830008F0B002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md in Resources */,
