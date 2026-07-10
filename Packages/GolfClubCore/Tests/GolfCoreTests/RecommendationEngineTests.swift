@@ -315,4 +315,135 @@ final class RecommendationEngineTests: XCTestCase {
             0
         )
     }
+    func testStaleWeatherReducesConfidence() throws {
+        let club = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        var liveContext = makeContext(
+            targetDistanceMeters: 145,
+            clubs: [club]
+        )
+
+        liveContext.environment = EnvironmentalContext(
+            weatherSnapshot: WeatherSnapshot(
+                observedAt: Date(),
+                location: liveContext.currentPosition,
+                wind: WindContext(
+                    speedMetersPerSecond: 4,
+                    directionDegrees: 180
+                ),
+                availability: .live,
+                source: .weatherKit
+            )
+        )
+
+        var staleContext = liveContext
+
+        staleContext.environment = EnvironmentalContext(
+            weatherSnapshot: WeatherSnapshot(
+                observedAt: Date()
+                    .addingTimeInterval(-60 * 60),
+                location: staleContext.currentPosition,
+                wind: WindContext(
+                    speedMetersPerSecond: 4,
+                    directionDegrees: 180
+                ),
+                availability: .stale,
+                source: .cachedWeatherKit
+            )
+        )
+
+        let liveResult =
+            try engine.recommend(
+                for: liveContext
+            )
+
+        let staleResult =
+            try engine.recommend(
+                for: staleContext
+            )
+
+        XCTAssertGreaterThan(
+            liveResult.preferredClub?.confidence ?? 0,
+            staleResult.preferredClub?.confidence ?? 0
+        )
+    }
+    func testUnavailableWeatherStillProducesRecommendation()
+        throws {
+
+        let club = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        var context = makeContext(
+            targetDistanceMeters: 145,
+            clubs: [club]
+        )
+
+        context.environment =
+            EnvironmentalContext()
+
+        let result =
+            try engine.recommend(
+                for: context
+            )
+
+        XCTAssertEqual(
+            result.preferredClub?.clubID,
+            club.id
+        )
+
+        XCTAssertTrue(
+            result.explanation.contains(
+                "Live weather was unavailable"
+            )
+        )
+    }
+    func testCachedWeatherIsMentionedInExplanation()
+        throws {
+
+        let club = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        var context = makeContext(
+            targetDistanceMeters: 145,
+            clubs: [club]
+        )
+
+        context.environment = EnvironmentalContext(
+            weatherSnapshot: WeatherSnapshot(
+                observedAt:
+                    Date().addingTimeInterval(
+                        -30 * 60
+                    ),
+                location:
+                    context.currentPosition,
+                wind: WindContext(
+                    speedMetersPerSecond: 3,
+                    directionDegrees: 90
+                ),
+                availability: .cached,
+                source: .cachedWeatherKit
+            )
+        )
+
+        let result =
+            try engine.recommend(
+                for: context
+            )
+
+        XCTAssertTrue(
+            result.explanation.contains(
+                "Recent cached weather data was used"
+            )
+        )
+    }
 }

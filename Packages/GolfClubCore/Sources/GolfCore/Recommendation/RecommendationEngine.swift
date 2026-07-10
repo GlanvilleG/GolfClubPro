@@ -315,7 +315,10 @@ public struct RecommendationEngine: Sendable {
             shotPlan.riskLevel == .high ? 0.15 :
             shotPlan.riskLevel == .moderate ? 0.05 :
             0
-
+        let missingWeatherPenalty =
+            context.environment.wind == nil ? 0.03
+            : 0
+        
         let finalScore = min(
             1,
             max(
@@ -325,7 +328,8 @@ public struct RecommendationEngine: Sendable {
                 shotPlan.confidence * 0.15 -
                 historyPenalty -
                 dispersionPenalty -
-                routeRiskPenalty
+                routeRiskPenalty -
+                missingWeatherPenalty
             )
         )
 
@@ -708,14 +712,18 @@ public struct RecommendationEngine: Sendable {
             dispersionConsistencyConfidence(
                 dispersion
             )
-
+        let weatherConfidence =
+            weatherConfidenceAdjustment(
+                for: context.environment.weatherAvailability
+            )
         return min(
             1,
             max(
                 0,
-                sampleConfidence * 0.40 +
-                distanceConfidence * 0.35 +
-                consistencyConfidence * 0.25
+                sampleConfidence * 0.35 +
+                distanceConfidence * 0.30 +
+                consistencyConfidence * 0.20 +
+                weatherConfidence * 0.15
             )
         )
     }
@@ -829,6 +837,29 @@ public struct RecommendationEngine: Sendable {
                 break
             }
         }
+        switch context.environment.weatherAvailability {
+        case .live:
+            if context.environment.wind != nil {
+                reasons.append(
+                    "Live weather data was used."
+                )
+            }
+
+        case .cached:
+            reasons.append(
+                "Recent cached weather data was used."
+            )
+
+        case .stale:
+            reasons.append(
+                "Weather data is stale, so confidence has been reduced."
+            )
+
+        case .unavailable:
+            reasons.append(
+                "Live weather was unavailable, so no wind adjustment was applied."
+            )
+        }
         return reasons
     }
 
@@ -855,10 +886,31 @@ public struct RecommendationEngine: Sendable {
                 "Aim directly at the planned target."
         }
 
+        let weatherDescription: String
+
+        switch context.environment.weatherAvailability {
+        case .live:
+            weatherDescription =
+                "Live weather data was used."
+
+        case .cached:
+            weatherDescription =
+                "Recent cached weather data was used."
+
+        case .stale:
+            weatherDescription =
+                "Weather data is stale, so treat the recommendation cautiously."
+
+        case .unavailable:
+            weatherDescription =
+                "Live weather was unavailable."
+        }
+        
         return """
         Recommended club confidence is \(Int((preferred.confidence * 100).rounded())) percent. \
         The adjusted carry is \(Int(preferred.adjustedCarryMeters.rounded())) metres. \
         \(directionDescription) \
+        \(weatherDescription) \
         \(shotPlan.rationale)
         """
     }
@@ -880,5 +932,30 @@ public struct RecommendationEngine: Sendable {
         }
 
         return difference
+    }
+    private func weatherConfidenceAdjustment(
+        for availability: WeatherAvailability
+    ) -> Double {
+        switch availability {
+        case .live:
+            return 1.0
+        case .cached:
+            return 0.90
+        case .stale:
+            return 0.70
+        case .unavailable:
+            return 0.55
+        }
+    }
+    private func windDataConfidence(
+        for context: ShotContext
+    ) -> Double {
+        guard context.environment.wind != nil else {
+            return 0.65
+        }
+
+        return weatherConfidenceAdjustment(
+            for: context.environment.weatherAvailability
+        )
     }
 }
