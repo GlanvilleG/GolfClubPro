@@ -14,6 +14,8 @@ public enum RoundEngineError: Error, Equatable, Sendable {
     case noShotInProgress
     case invalidPuttCount
     case invalidState(expected: [RoundState], actual: RoundState)
+    case noCompletedShot
+    case invalidLieConfirmation
 }
 
 public struct RoundEngine: Sendable {
@@ -33,6 +35,59 @@ public struct RoundEngine: Sendable {
         )
     }
 
+    public func confirmLie(
+        _ playableLie: PlayableLie,
+        forLastCompletedShotIn round: Round
+    ) throws -> Round {
+        try updateLastCompletedShot(
+            in: round,
+            playableLie: playableLie,
+            source: .golferConfirmed
+        )
+    }
+
+    public func correctLie(
+        _ playableLie: PlayableLie,
+        forLastCompletedShotIn round: Round
+    ) throws -> Round {
+        try updateLastCompletedShot(
+            in: round,
+            playableLie: playableLie,
+            source: .golferCorrected
+        )
+    }
+    
+    private func updateLastCompletedShot(
+        in round: Round,
+        playableLie: PlayableLie,
+        source: LieSource
+    ) throws -> Round {
+        try ensureRoundIsOpen(round)
+
+        var updatedRound = round
+
+        guard var currentHole = updatedRound.currentHoleSession else {
+            throw RoundEngineError.noActiveHole
+        }
+
+        guard let shotIndex = currentHole.shots.lastIndex(
+            where: { $0.completedAt != nil }
+        ) else {
+            throw RoundEngineError.noCompletedShot
+        }
+
+        currentHole.shots[shotIndex].confirmedPlayableLie = playableLie
+        currentHole.shots[shotIndex].lieSource = source
+
+        updatedRound.currentHoleSession = currentHole
+        updatedRound = replaceHoleSession(
+            in: updatedRound,
+            with: currentHole
+        )
+
+        return updatedRound
+    }
+    
     public func confirmTeeSet(
         _ teeSetID: TeeSetID,
         for round: Round
@@ -71,10 +126,15 @@ public struct RoundEngine: Sendable {
     public func announceClub(
         clubID: ClubID,
         currentLocation: GeoCoordinate? = nil,
+        courseGeometry: CourseGeometry? = nil,
+        using lieDetector: LieDetector = LieDetector(),
         for round: Round
     ) throws -> Round {
         try ensureRoundIsOpen(round)
-        try ensure(round, isIn: [.awaitingClub, .clubSelected, .awaitingBallPosition])
+        try ensure(
+            round,
+            isIn: [.awaitingClub, .clubSelected, .awaitingBallPosition]
+        )
 
         var updatedRound = round
 
@@ -82,16 +142,34 @@ public struct RoundEngine: Sendable {
             throw RoundEngineError.noActiveHole
         }
 
-        if let lastShotIndex = currentHole.shots.lastIndex(where: { $0.completedAt == nil }) {
+        if let lastShotIndex = currentHole.shots.lastIndex(
+            where: { $0.completedAt == nil }
+        ) {
             var completedShot = currentHole.shots[lastShotIndex]
+
             completedShot.endLocation = currentLocation
             completedShot.completedAt = Date()
 
-            if let start = completedShot.startLocation, let end = currentLocation {
-                completedShot.distanceMeters = DistanceCalculator.distanceMeters(
-                    from: start,
-                    to: end
+            if let start = completedShot.startLocation,
+               let end = currentLocation {
+                completedShot.distanceMeters =
+                    DistanceCalculator.distanceMeters(
+                        from: start,
+                        to: end
+                    )
+            }
+
+            if let location = currentLocation,
+               let geometry = courseGeometry {
+                let result = lieDetector.detectLie(
+                    at: location,
+                    using: geometry
                 )
+
+                completedShot.inferredCourseArea = result.courseArea
+                completedShot.inferredPlayableLie = result.playableLie
+                completedShot.lieSource = result.source
+                completedShot.lieDetectionConfidence = result.confidence
             }
 
             currentHole.shots[lastShotIndex] = completedShot
@@ -106,7 +184,10 @@ public struct RoundEngine: Sendable {
 
         currentHole.shots.append(newShot)
         updatedRound.currentHoleSession = currentHole
-        updatedRound = replaceHoleSession(in: updatedRound, with: currentHole)
+        updatedRound = replaceHoleSession(
+            in: updatedRound,
+            with: currentHole
+        )
         updatedRound.state = .clubSelected
 
         return updatedRound

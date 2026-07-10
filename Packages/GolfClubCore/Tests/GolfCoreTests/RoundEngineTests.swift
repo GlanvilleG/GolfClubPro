@@ -219,4 +219,116 @@ final class RoundEngineTests: XCTestCase {
         XCTAssertTrue(shot.feedback?.classifiedErrors.contains(.bunker) == true)
         XCTAssertEqual(shot.feedback?.sentiment, .negative)
     }
+    func testNextClubInfersPreviousShotLie() throws {
+        let geometry = CourseGeometry(
+            areas: [
+                CourseArea(
+                    type: .fairway,
+                    boundary: [
+                        GeoCoordinate(latitude: 0, longitude: 0),
+                        GeoCoordinate(latitude: 0, longitude: 10),
+                        GeoCoordinate(latitude: 10, longitude: 10),
+                        GeoCoordinate(latitude: 10, longitude: 0)
+                    ]
+                )
+            ]
+        )
+
+        var round = try sampleRound()
+
+        round = try engine.announceClub(
+            clubID: ClubID(),
+            currentLocation: GeoCoordinate(latitude: 1, longitude: 1),
+            for: round
+        )
+
+        round = try engine.markShotHit(for: round)
+
+        round = try engine.recordShotFeedbackTranscript(
+            "Good strike",
+            for: round
+        )
+
+        round = try engine.announceClub(
+            clubID: ClubID(),
+            currentLocation: GeoCoordinate(latitude: 5, longitude: 5),
+            courseGeometry: geometry,
+            for: round
+        )
+
+        let shots = try XCTUnwrap(
+            round.currentHoleSession?.shots
+        )
+
+        XCTAssertEqual(shots[0].inferredCourseArea, .fairway)
+        XCTAssertEqual(shots[0].inferredPlayableLie, .fairway)
+        XCTAssertEqual(
+            shots[0].lieSource,
+            .inferredFromCourseGeometry
+        )
+        XCTAssertEqual(shots[0].effectivePlayableLie, .fairway)
+    }
+    func testGolferCanCorrectInferredLie() throws {
+        let geometry = CourseGeometry(
+            areas: [
+                CourseArea(
+                    type: .rough,
+                    boundary: [
+                        GeoCoordinate(latitude: 0, longitude: 0),
+                        GeoCoordinate(latitude: 0, longitude: 10),
+                        GeoCoordinate(latitude: 10, longitude: 10),
+                        GeoCoordinate(latitude: 10, longitude: 0)
+                    ]
+                )
+            ]
+        )
+
+        var round = try sampleRound()
+
+        round = try engine.announceClub(
+            clubID: ClubID(),
+            currentLocation: GeoCoordinate(latitude: 1, longitude: 1),
+            for: round
+        )
+
+        round = try engine.markShotHit(for: round)
+
+        round = try engine.recordShotFeedbackTranscript(
+            "Pulled it",
+            for: round
+        )
+
+        round = try engine.announceClub(
+            clubID: ClubID(),
+            currentLocation: GeoCoordinate(latitude: 5, longitude: 5),
+            courseGeometry: geometry,
+            for: round
+        )
+
+        round = try engine.correctLie(
+            .deepRough,
+            forLastCompletedShotIn: round
+        )
+
+        let completedShot = try XCTUnwrap(
+            round.currentHoleSession?.shots.first
+        )
+
+        XCTAssertEqual(
+            completedShot.inferredPlayableLie,
+            .lightRough
+        )
+        XCTAssertEqual(
+            completedShot.confirmedPlayableLie,
+            .deepRough
+        )
+        XCTAssertEqual(
+            completedShot.lieSource,
+            .golferCorrected
+        )
+        XCTAssertEqual(
+            completedShot.effectivePlayableLie,
+            .deepRough
+        )
+    }
 }

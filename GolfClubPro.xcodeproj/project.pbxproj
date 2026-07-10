@@ -30,6 +30,7 @@
 		5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAD30005944002DF421 /* GolfCore */; };
 		5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */; };
 		5AFC4DB430005FE6002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */; };
+		5AFC4DB6300071E4002DF421 /* Founding Concept Discussions.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB5300071D0002DF421 /* Founding Concept Discussions.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-007-Round-Engine-State-Machine.md"; sourceTree = "<group>"; };
 		5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-008-GPS-and-Golf-Club-Detection.md"; sourceTree = "<group>"; };
 		5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-009-Course-Geometry-and-Lie-Detection.md"; sourceTree = "<group>"; };
+		5AFC4DB5300071D0002DF421 /* Founding Concept Discussions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Founding Concept Discussions.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -416,6 +418,7 @@
 		5ABC37362FFDFC2700A78677 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4DB5300071D0002DF421 /* Founding Concept Discussions.md */,
 				5ABC37A32FFE228900A78677 /* README.md */,
 				5AC1302C2FFF58CB0077FB46 /* Diagrams */,
 				5ABC37222FFDFC2700A78677 /* Decisions */,
@@ -695,6 +698,7 @@
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
 				5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */,
 				5AFC4DB430005FE6002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md in Resources */,
+				5AFC4DB6300071E4002DF421 /* Founding Concept Discussions.md in Resources */,
 				5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */,
 				5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */,
 			);
