@@ -3,7 +3,7 @@
 
 **Document ID:** GCP-ADR-013  
 **Status:** Accepted  
-**Date:** YYYY-MM-DD  
+**Date:** 2026-07-10
 **Decision Makers:** Solution Architecture  
 **Related Documents:** System Architecture, Database Design, Watch-First Architecture, Recommendation Engine, Weather Integration  
 **Related ADRs:** ADR-005 SwiftData Persistence Strategy, ADR-006 Watch-First Architecture, ADR-008 GPS and Golf Club Detection, ADR-011 AI Caddy Architecture, ADR-012 Weather Integration
@@ -676,4 +676,4 @@ Future versions may include:
 
 | Version | Date | Description |
 |----------|------|-------------|
-| 1.0.0 | YYYY-MM-DD | Initial accepted version |
+| 1.0.0 | 2026-07-10| Initial accepted version |

@@ -86,3 +86,26 @@ public struct RecommendationAuditRecordID:
         self.value = value
     }
 }
+public struct OfflineEventID:
+    Codable,
+    Hashable,
+    Sendable {
+
+    public let value: UUID
+
+    public init(_ value: UUID = UUID()) {
+        self.value = value
+    }
+}
+
+public struct DeviceID:
+    Codable,
+    Hashable,
+    Sendable {
+
+    public let value: UUID
+
+    public init(_ value: UUID = UUID()) {
+        self.value = value
+    }
+}
