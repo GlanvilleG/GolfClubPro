@@ -55,17 +55,19 @@ public struct LieDetectionResult: Codable, Equatable, Sendable {
     public var playableLie: PlayableLie
     public var source: LieSource
     public var confidence: Double?
+    public var distanceToBoundaryMeters: Double?
 
     public init(
         courseArea: CourseAreaType,
         playableLie: PlayableLie,
         source: LieSource,
-        confidence: Double? = nil
+        confidence: Double? = nil,
+        distanceToBoundaryMeters: Double? = nil
     ) {
         self.courseArea = courseArea
         self.playableLie = playableLie
         self.source = source
         self.confidence = confidence
+        self.distanceToBoundaryMeters = distanceToBoundaryMeters
     }
 }
-

@@ -170,6 +170,7 @@ public struct RoundEngine: Sendable {
                 completedShot.inferredPlayableLie = result.playableLie
                 completedShot.lieSource = result.source
                 completedShot.lieDetectionConfidence = result.confidence
+                completedShot.lieConfirmationRequirement = lieDetector.confirmationRequirement(for: result)
             }
 
             currentHole.shots[lastShotIndex] = completedShot

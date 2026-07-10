@@ -21,11 +21,20 @@ public struct LieDetector: Sendable {
             }
 
             if contains(coordinate, in: area.boundary) {
+                let boundaryDistance = minimumDistanceToBoundaryMeters(
+                    from: coordinate,
+                    polygon: area.boundary
+                )
+
                 return LieDetectionResult(
                     courseArea: area.type,
                     playableLie: playableLie(for: area.type),
                     source: .inferredFromCourseGeometry,
-                    confidence: 0.75
+                    confidence: confidence(
+                        for: area.type,
+                        distanceToBoundaryMeters: boundaryDistance
+                    ),
+                    distanceToBoundaryMeters: boundaryDistance
                 )
             }
         }
@@ -34,11 +43,65 @@ public struct LieDetector: Sendable {
             courseArea: .unknown,
             playableLie: .unknown,
             source: .unknown,
-            confidence: nil
+            confidence: 0,
+            distanceToBoundaryMeters: nil
         )
     }
 
-    private func playableLie(for areaType: CourseAreaType) -> PlayableLie {
+    public func confirmationRequirement(
+        for result: LieDetectionResult,
+        confidenceThreshold: Double = 0.70,
+        boundaryThresholdMeters: Double = 5
+    ) -> LieConfirmationRequirement {
+        var reasons: [LieConfirmationReason] = []
+
+        if result.courseArea == .unknown ||
+            result.playableLie == .unknown {
+            reasons.append(.unknownArea)
+        }
+
+        if (result.confidence ?? 0) < confidenceThreshold {
+            reasons.append(.lowConfidence)
+        }
+
+        if let distance = result.distanceToBoundaryMeters,
+           distance <= boundaryThresholdMeters {
+            reasons.append(.nearBoundary)
+        }
+
+        if isSensitiveArea(result.courseArea) {
+            reasons.append(.sensitiveArea)
+        }
+
+        if reasons.contains(.unknownArea) {
+            return .required(
+                inferredLie: result.playableLie,
+                reasons: reasons
+            )
+        }
+
+        if reasons.contains(.sensitiveArea),
+           reasons.contains(.nearBoundary) ||
+            reasons.contains(.lowConfidence) {
+            return .required(
+                inferredLie: result.playableLie,
+                reasons: reasons
+            )
+        }
+
+        if !reasons.isEmpty {
+            return .recommended(
+                inferredLie: result.playableLie,
+                reasons: reasons
+            )
+        }
+
+        return .notRequired
+    }
+
+    private func playableLie(
+        for areaType: CourseAreaType
+    ) -> PlayableLie {
         switch areaType {
         case .tee:
             return .tee
@@ -69,30 +132,156 @@ public struct LieDetector: Sendable {
         }
     }
 
+    private func confidence(
+        for areaType: CourseAreaType,
+        distanceToBoundaryMeters: Double
+    ) -> Double {
+        let baseConfidence: Double
+
+        switch areaType {
+        case .fairway, .green, .tee:
+            baseConfidence = 0.90
+        case .rough, .fringe, .bunker:
+            baseConfidence = 0.82
+        case .trees, .nativeArea, .cartPath:
+            baseConfidence = 0.72
+        case .water, .outOfBounds, .penaltyArea:
+            baseConfidence = 0.70
+        case .unknown:
+            baseConfidence = 0
+        }
+
+        switch distanceToBoundaryMeters {
+        case ..<2:
+            return max(0, baseConfidence - 0.35)
+        case 2..<5:
+            return max(0, baseConfidence - 0.20)
+        case 5..<10:
+            return max(0, baseConfidence - 0.08)
+        default:
+            return baseConfidence
+        }
+    }
+
+    private func isSensitiveArea(
+        _ areaType: CourseAreaType
+    ) -> Bool {
+        switch areaType {
+        case .water, .outOfBounds, .penaltyArea:
+            return true
+        default:
+            return false
+        }
+    }
+
     private func contains(
         _ point: GeoCoordinate,
         in polygon: [GeoCoordinate]
     ) -> Bool {
         var isInside = false
-        var j = polygon.count - 1
+        var previousIndex = polygon.count - 1
 
-        for i in 0..<polygon.count {
-            let xi = polygon[i].longitude
-            let yi = polygon[i].latitude
-            let xj = polygon[j].longitude
-            let yj = polygon[j].latitude
+        for currentIndex in polygon.indices {
+            let current = polygon[currentIndex]
+            let previous = polygon[previousIndex]
 
             let intersects =
-                ((yi > point.latitude) != (yj > point.latitude)) &&
-                (point.longitude < (xj - xi) * (point.latitude - yi) / (yj - yi) + xi)
+                ((current.latitude > point.latitude) !=
+                    (previous.latitude > point.latitude)) &&
+                (
+                    point.longitude <
+                    (previous.longitude - current.longitude) *
+                    (point.latitude - current.latitude) /
+                    (previous.latitude - current.latitude) +
+                    current.longitude
+                )
 
             if intersects {
                 isInside.toggle()
             }
 
-            j = i
+            previousIndex = currentIndex
         }
 
         return isInside
+    }
+
+    private func minimumDistanceToBoundaryMeters(
+        from point: GeoCoordinate,
+        polygon: [GeoCoordinate]
+    ) -> Double {
+        guard polygon.count >= 2 else {
+            return .infinity
+        }
+
+        var minimumDistance = Double.infinity
+
+        for index in polygon.indices {
+            let start = polygon[index]
+            let end = polygon[(index + 1) % polygon.count]
+
+            minimumDistance = min(
+                minimumDistance,
+                distanceToSegmentMeters(
+                    point: point,
+                    start: start,
+                    end: end
+                )
+            )
+        }
+
+        return minimumDistance
+    }
+
+    private func distanceToSegmentMeters(
+        point: GeoCoordinate,
+        start: GeoCoordinate,
+        end: GeoCoordinate
+    ) -> Double {
+        let referenceLatitude =
+            point.latitude * .pi / 180
+
+        let metersPerLatitudeDegree = 111_320.0
+        let metersPerLongitudeDegree =
+            111_320.0 * cos(referenceLatitude)
+
+        let pointX =
+            point.longitude * metersPerLongitudeDegree
+        let pointY =
+            point.latitude * metersPerLatitudeDegree
+
+        let startX =
+            start.longitude * metersPerLongitudeDegree
+        let startY =
+            start.latitude * metersPerLatitudeDegree
+
+        let endX =
+            end.longitude * metersPerLongitudeDegree
+        let endY =
+            end.latitude * metersPerLatitudeDegree
+
+        let deltaX = endX - startX
+        let deltaY = endY - startY
+        let segmentLengthSquared =
+            deltaX * deltaX + deltaY * deltaY
+
+        guard segmentLengthSquared > 0 else {
+            return hypot(pointX - startX, pointY - startY)
+        }
+
+        let projection =
+            ((pointX - startX) * deltaX +
+             (pointY - startY) * deltaY) /
+            segmentLengthSquared
+
+        let clampedProjection = min(1, max(0, projection))
+
+        let closestX = startX + clampedProjection * deltaX
+        let closestY = startY + clampedProjection * deltaY
+
+        return hypot(
+            pointX - closestX,
+            pointY - closestY
+        )
     }
 }
