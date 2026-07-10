@@ -39,6 +39,8 @@ public struct Shot: Codable, Equatable, Sendable {
     public var startLocation: GeoCoordinate?
     public var endLocation: GeoCoordinate?
     public var distanceMeters: Double?
+    public var plannedBearingDegrees: Double?
+    public var plannedDistanceMeters: Double?
 
     public var inferredCourseArea: CourseAreaType?
     public var inferredPlayableLie: PlayableLie?
@@ -63,6 +65,8 @@ public struct Shot: Codable, Equatable, Sendable {
         startLocation: GeoCoordinate? = nil,
         endLocation: GeoCoordinate? = nil,
         distanceMeters: Double? = nil,
+        plannedBearingDegrees: Double? = nil,
+        plannedDistanceMeters: Double? = nil,
         inferredCourseArea: CourseAreaType? = nil,
         inferredPlayableLie: PlayableLie? = nil,
         confirmedPlayableLie: PlayableLie? = nil,
@@ -80,6 +84,8 @@ public struct Shot: Codable, Equatable, Sendable {
         self.startLocation = startLocation
         self.endLocation = endLocation
         self.distanceMeters = distanceMeters
+        self.plannedBearingDegrees = plannedBearingDegrees
+        self.plannedDistanceMeters = plannedDistanceMeters
         self.inferredCourseArea = inferredCourseArea
         self.inferredPlayableLie = inferredPlayableLie
         self.confirmedPlayableLie = confirmedPlayableLie
