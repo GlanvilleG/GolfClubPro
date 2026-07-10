@@ -79,6 +79,7 @@ Represents a round identity.
 
 Represents a shot identity.
 
+
 ---
 
 # Core Swift Models
@@ -175,6 +176,20 @@ public struct CourseGeometry: Codable, Equatable, Sendable {
     public var areas: [CourseArea]
 }
 ```
+### Strategic Planning##
+* TargetPoint
+* PlayingRoute
+* RouteStrategy
+* ShotPlan
+* LandingZone
+* HoleStrategyGeometry
+### Decision Support
+* Strategy
+* Route planning
+* Target selection
+* Club recommendation
+* Risk assessment
+* AI reasoning
 
 ### LieSource
 
@@ -217,6 +232,8 @@ The effective lie should use this priority:
 ```text
 confirmedLie > inferredLie > unknown
 ```
+
+
 ## Hole
 
 ```swift

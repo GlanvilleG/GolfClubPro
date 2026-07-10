@@ -203,6 +203,25 @@ Examples include:
 - Penalty Areas
 
 ---
+## Strategic Route Planning
+
+GolfClubPro distinguishes between the final destination and the immediate target.
+
+The final destination is the hole.
+
+The immediate target may be:
+
+- The pin
+- Green centre
+- A fairway landing zone
+- A lay-up position
+- A safe miss area
+- A recovery location
+
+A Playing Route contains one or more target points that guide the golfer toward the hole.
+
+The selected route considers course geometry, hazards, player capability, lie, wind, and likely future shot position.
+
 # Round Flow Model
 
 ## Purpose
