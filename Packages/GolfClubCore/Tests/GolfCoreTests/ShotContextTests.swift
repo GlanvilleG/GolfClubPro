@@ -102,11 +102,22 @@ final class ShotContextTests: XCTestCase {
             directionDegrees: 270
         )
 
-        let environment = EnvironmentalContext(
+        let snapshot = WeatherSnapshot(
+            observedAt: Date(),
+            location: GeoCoordinate(
+                latitude: -39.9300,
+                longitude: 175.0500
+            ),
             wind: wind,
             temperatureCelsius: 18,
             humidityPercent: 70,
             pressureHPa: 1012,
+            availability: .live,
+            source: .weatherKit
+        )
+
+        let environment = EnvironmentalContext(
+            weatherSnapshot: snapshot,
             elevationChangeMeters: 4
         )
 

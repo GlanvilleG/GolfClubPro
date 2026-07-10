@@ -26,24 +26,39 @@ public struct EnvironmentalContext:
     Equatable,
     Sendable {
 
-    public var wind: WindContext?
-    public var temperatureCelsius: Double?
-    public var humidityPercent: Double?
-    public var pressureHPa: Double?
+    public var weatherSnapshot: WeatherSnapshot?
     public var elevationChangeMeters: Double?
 
     public init(
-        wind: WindContext? = nil,
-        temperatureCelsius: Double? = nil,
-        humidityPercent: Double? = nil,
-        pressureHPa: Double? = nil,
+        weatherSnapshot: WeatherSnapshot? = nil,
         elevationChangeMeters: Double? = nil
     ) {
-        self.wind = wind
-        self.temperatureCelsius = temperatureCelsius
-        self.humidityPercent = humidityPercent
-        self.pressureHPa = pressureHPa
-        self.elevationChangeMeters = elevationChangeMeters
+        self.weatherSnapshot = weatherSnapshot
+        self.elevationChangeMeters =
+            elevationChangeMeters
+    }
+
+    public var wind: WindContext? {
+        weatherSnapshot?.wind
+    }
+
+    public var temperatureCelsius: Double? {
+        weatherSnapshot?.temperatureCelsius
+    }
+
+    public var humidityPercent: Double? {
+        weatherSnapshot?.humidityPercent
+    }
+
+    public var pressureHPa: Double? {
+        weatherSnapshot?.pressureHPa
+    }
+
+    public var weatherAvailability:
+        WeatherAvailability {
+
+        weatherSnapshot?.availability ??
+            .unavailable
     }
 }
 

@@ -199,4 +199,74 @@ final class RecommendationAuditTests:
                 "Test recommendation."
         )
     }
+    func testAuditRecordCapturesWeatherSnapshot()
+        throws {
+
+        let club = Club(
+            name: "7 Iron",
+            type: .iron,
+            averageCarryMeters: 145
+        )
+
+        let player = Player(
+            name: "Gerard",
+            recommendationAuditEnabled: true
+        )
+
+        var context = makeContext(
+            player: player,
+            clubs: [club]
+        )
+
+        let observedAt = Date()
+
+        context.environment = EnvironmentalContext(
+            weatherSnapshot: WeatherSnapshot(
+                observedAt: observedAt,
+                location: context.currentPosition,
+                wind: WindContext(
+                    speedMetersPerSecond: 5,
+                    directionDegrees: 180
+                ),
+                temperatureCelsius: 17,
+                humidityPercent: 75,
+                pressureHPa: 1010,
+                availability: .live,
+                source: .weatherKit
+            )
+        )
+
+        let result =
+            try RecommendationEngine()
+                .recommend(for: context)
+
+        let record = try XCTUnwrap(
+            result.auditRecord
+        )
+
+        XCTAssertEqual(
+            record.weatherObservedAt,
+            observedAt
+        )
+
+        XCTAssertEqual(
+            record.weatherAvailability,
+            .live
+        )
+
+        XCTAssertEqual(
+            record.weatherSource,
+            .weatherKit
+        )
+
+        XCTAssertEqual(
+            record.windSpeedMetersPerSecond,
+            5
+        )
+
+        XCTAssertEqual(
+            record.windDirectionDegrees,
+            180
+        )
+    }
 }

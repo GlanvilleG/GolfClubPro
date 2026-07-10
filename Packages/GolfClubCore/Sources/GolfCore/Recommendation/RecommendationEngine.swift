@@ -211,7 +211,47 @@ public struct RecommendationEngine: Sendable {
             recommendationConfidence:
                 preferred?.confidence ?? 0,
             explanation:
-                explanation
+                explanation,
+            weatherObservedAt:
+                context.environment
+                    .weatherSnapshot?
+                    .observedAt,
+
+            weatherAvailability:
+                context.environment
+                    .weatherAvailability,
+
+            weatherSource:
+                context.environment
+                    .weatherSnapshot?
+                    .source ?? .unknown,
+
+            windSpeedMetersPerSecond:
+                context.environment
+                    .wind?
+                    .speedMetersPerSecond,
+
+            windDirectionDegrees:
+                context.environment
+                    .wind?
+                    .directionDegrees,
+
+            windGustMetersPerSecond:
+                context.environment
+                    .weatherSnapshot?
+                    .windGustMetersPerSecond,
+
+            temperatureCelsius:
+                context.environment
+                    .temperatureCelsius,
+
+            humidityPercent:
+                context.environment
+                    .humidityPercent,
+
+            pressureHPa:
+                context.environment
+                    .pressureHPa
         )
     }
     

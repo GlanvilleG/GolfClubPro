@@ -77,6 +77,18 @@ public struct RecommendationAuditRecord:
     public var golferDecision: RecommendationDecision
     public var selectedClubID: ClubID?
     public var actualShotID: ShotID?
+    
+    public var weatherObservedAt: Date?
+    public var weatherAvailability: WeatherAvailability
+    public var weatherSource: WeatherDataSource
+
+    public var windSpeedMetersPerSecond: Double?
+    public var windDirectionDegrees: Double?
+    public var windGustMetersPerSecond: Double?
+
+    public var temperatureCelsius: Double?
+    public var humidityPercent: Double?
+    public var pressureHPa: Double?
 
     public init(
         id: RecommendationAuditRecordID =
@@ -102,7 +114,16 @@ public struct RecommendationAuditRecord:
         golferDecision: RecommendationDecision =
             .notRecorded,
         selectedClubID: ClubID? = nil,
-        actualShotID: ShotID? = nil
+        actualShotID: ShotID? = nil,
+        weatherObservedAt: Date? = nil,
+        weatherAvailability: WeatherAvailability = .unavailable,
+        weatherSource: WeatherDataSource = .unknown,
+        windSpeedMetersPerSecond: Double? = nil,
+        windDirectionDegrees: Double? = nil,
+        windGustMetersPerSecond: Double? = nil,
+        temperatureCelsius: Double? = nil,
+        humidityPercent: Double? = nil,
+        pressureHPa: Double? = nil
     ) {
         self.id = id
         self.playerID = playerID
@@ -125,13 +146,24 @@ public struct RecommendationAuditRecord:
             aimOffsetDegrees
         self.riskLevel = riskLevel
         self.recommendationConfidence =
-            min(
-                1,
-                max(0, recommendationConfidence)
-            )
+            min(1, max(0, recommendationConfidence))
         self.explanation = explanation
         self.golferDecision = golferDecision
         self.selectedClubID = selectedClubID
         self.actualShotID = actualShotID
-    }
+        self.weatherObservedAt = weatherObservedAt
+        self.weatherAvailability = weatherAvailability
+        self.weatherSource = weatherSource
+        self.windSpeedMetersPerSecond =
+            windSpeedMetersPerSecond
+        self.windDirectionDegrees =
+            windDirectionDegrees
+        self.windGustMetersPerSecond =
+            windGustMetersPerSecond
+        self.temperatureCelsius =
+            temperatureCelsius
+        self.humidityPercent =
+            humidityPercent
+        self.pressureHPa =
+            pressureHPa    }
 }
