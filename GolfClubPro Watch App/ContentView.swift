@@ -8,6 +8,7 @@
 import SwiftUI
 import GolfCore
 
+
 struct ContentView: View {
     private let player = Player(
         dotGolfMemberID: DotGolfMemberID("123456"),

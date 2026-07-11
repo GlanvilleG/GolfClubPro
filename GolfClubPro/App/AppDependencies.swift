@@ -4,24 +4,35 @@
 //
 //  Created by Dragon Development on 10/07/2026.
 //
+//
+//  AppDependencies.swift
+//  GolfClubPro
+//
+//  Created by Dragon Development on 10/07/2026.
+//
+
 import Foundation
-import SwiftData
 import GolfCore
+import GolfPlatformApple
+import SwiftData
 
 @MainActor
 final class AppDependencies {
 
+    let platformProbe: GolfPlatformAppleProbe
+    
     let modelContainer: ModelContainer
-
     let snapshotStore: SwiftDataActiveRoundSnapshotStore
-
     let roundCoordinator: PersistentOfflineRoundCoordinator
+    let locationProvider: AppleLocationProvider
 
     init(
         modelContainer: ModelContainer
     ) {
         self.modelContainer = modelContainer
 
+        self.platformProbe = GolfPlatformAppleProbe()
+        
         let snapshotStore =
             SwiftDataActiveRoundSnapshotStore(
                 modelContainer: modelContainer
@@ -33,6 +44,9 @@ final class AppDependencies {
             PersistentOfflineRoundCoordinator(
                 store: snapshotStore
             )
+
+        self.locationProvider =
+            AppleLocationProvider()
     }
 
     static func live() throws -> AppDependencies {

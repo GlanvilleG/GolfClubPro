@@ -1,5 +1,5 @@
 //
-//  LocationService.swift
+//  LocationObservationProvider.swift
 //  GolfCore
 //
 //  Created by Dragon Development on 11/07/2026.

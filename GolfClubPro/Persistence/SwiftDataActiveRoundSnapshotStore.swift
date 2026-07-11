@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 import GolfCore
 
-public enum SwiftDataSnapshotStoreError:
+enum SwiftDataSnapshotStoreError:
     Error,
     Equatable,
     Sendable {
@@ -19,7 +19,7 @@ public enum SwiftDataSnapshotStoreError:
 }
 
 @ModelActor
-public actor SwiftDataActiveRoundSnapshotStore:
+actor SwiftDataActiveRoundSnapshotStore:
     ActiveRoundSnapshotStore {
 
     public func save(

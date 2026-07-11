@@ -19,12 +19,6 @@
 		5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */; };
 		5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */; };
 		5AFC4D2230003E79002DF421 /* ADR-007-Round-Engine-State-Machine.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */; };
-		5AFC4DA4300058E4002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA3300058E4002DF421 /* GolfCore */; };
-		5AFC4DA630005924002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA530005924002DF421 /* GolfCore */; };
-		5AFC4DA83000592E002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA73000592E002DF421 /* GolfCore */; };
-		5AFC4DAA30005937002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DA930005937002DF421 /* GolfCore */; };
-		5AFC4DAC3000593E002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAB3000593E002DF421 /* GolfCore */; };
-		5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4DAD30005944002DF421 /* GolfCore */; };
 		5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */; };
 		5AFC4DB430005FE6002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */; };
 		5AFC4DB6300071E4002DF421 /* Founding Concept Discussions.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB5300071D0002DF421 /* Founding Concept Discussions.md */; };
@@ -33,6 +27,10 @@
 		5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */; };
 		5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */; };
 		5AFC4DD730010D27002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */; };
+		5AFC4E9130021EB7002DF421 /* ADR-015-Apple-Platform-Integration.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */; };
+		5AFC4F2930022FB8002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2830022FB8002DF421 /* GolfCore */; };
+		5AFC4F2B30022FBE002DF421 /* GolfPlatformApple in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2A30022FBE002DF421 /* GolfPlatformApple */; };
+		5AFC4F2D30022FEE002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2C30022FEE002DF421 /* GolfCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +110,8 @@
 		5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-012-Weather-Integration.md"; sourceTree = "<group>"; };
 		5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-013-Offline-First-Architecture.md"; sourceTree = "<group>"; };
 		5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-014-Intelligent-Round-Orchestrator.md"; sourceTree = "<group>"; };
+		5AFC4E8A300219EF002DF421 /* GolfPlatformApple */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GolfPlatformApple; sourceTree = "<group>"; };
+		5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-015-Apple-Platform-Integration.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -292,37 +292,34 @@
 		5ABC368A2FFDF02A00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DA4300058E4002DF421 /* GolfCore in Frameworks */,
+				5AFC4F2B30022FBE002DF421 /* GolfPlatformApple in Frameworks */,
+				5AFC4F2930022FB8002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36972FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DA630005924002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36A12FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DA83000592E002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36AB2FFDF02B00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DAA30005937002DF421 /* GolfCore in Frameworks */,
+				5AFC4F2D30022FEE002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36BA2FFDF02C00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DAC3000593E002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 		5ABC36C42FFDF02C00A78677 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				5AFC4DAE30005944002DF421 /* GolfCore in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -387,6 +384,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */,
 				5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */,
 				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
 				5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */,
@@ -438,6 +436,7 @@
 		5ABC37382FFDFC2700A78677 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC4E8A300219EF002DF421 /* GolfPlatformApple */,
 				5ABC37372FFDFC2700A78677 /* GolfClubCore */,
 			);
 			path = Packages;
@@ -502,7 +501,8 @@
 			);
 			name = GolfClubPro;
 			packageProductDependencies = (
-				5AFC4DA3300058E4002DF421 /* GolfCore */,
+				5AFC4F2830022FB8002DF421 /* GolfCore */,
+				5AFC4F2A30022FBE002DF421 /* GolfPlatformApple */,
 			);
 			productName = GolfClubPro;
 			productReference = 5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */;
@@ -525,9 +525,6 @@
 				5ABC369D2FFDF02B00A78677 /* GolfClubProTests */,
 			);
 			name = GolfClubProTests;
-			packageProductDependencies = (
-				5AFC4DA530005924002DF421 /* GolfCore */,
-			);
 			productName = GolfClubProTests;
 			productReference = 5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -549,9 +546,6 @@
 				5ABC36A72FFDF02B00A78677 /* GolfClubProUITests */,
 			);
 			name = GolfClubProUITests;
-			packageProductDependencies = (
-				5AFC4DA73000592E002DF421 /* GolfCore */,
-			);
 			productName = GolfClubProUITests;
 			productReference = 5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -571,7 +565,7 @@
 			);
 			name = "GolfClubPro Watch App";
 			packageProductDependencies = (
-				5AFC4DA930005937002DF421 /* GolfCore */,
+				5AFC4F2C30022FEE002DF421 /* GolfCore */,
 			);
 			productName = "GolfClubPro Watch App";
 			productReference = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */;
@@ -594,9 +588,6 @@
 				5ABC36C02FFDF02C00A78677 /* GolfClubPro Watch AppTests */,
 			);
 			name = "GolfClubPro Watch AppTests";
-			packageProductDependencies = (
-				5AFC4DAB3000593E002DF421 /* GolfCore */,
-			);
 			productName = "GolfClubPro Watch AppTests";
 			productReference = 5ABC36BD2FFDF02C00A78677 /* GolfClubPro Watch AppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -618,9 +609,6 @@
 				5ABC36CA2FFDF02C00A78677 /* GolfClubPro Watch AppUITests */,
 			);
 			name = "GolfClubPro Watch AppUITests";
-			packageProductDependencies = (
-				5AFC4DAD30005944002DF421 /* GolfCore */,
-			);
 			productName = "GolfClubPro Watch AppUITests";
 			productReference = 5ABC36C72FFDF02C00A78677 /* GolfClubPro Watch AppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -669,7 +657,8 @@
 			mainGroup = 5ABC36842FFDF02A00A78677;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */,
+				5AFC4F2630022FA1002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */,
+				5AFC4F2730022FAB002DF421 /* XCLocalSwiftPackageReference "Packages/GolfPlatformApple" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5ABC368E2FFDF02A00A78677 /* Products */;
@@ -698,6 +687,7 @@
 				5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData-Persistence.md in Resources */,
 				5AC130492FFFA16D0077FB46 /* ADR-001-Repository-Structure.md in Resources */,
 				5AFC4D2230003E79002DF421 /* ADR-007-Round-Engine-State-Machine.md in Resources */,
+				5AFC4E9130021EB7002DF421 /* ADR-015-Apple-Platform-Integration.md in Resources */,
 				5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
@@ -994,6 +984,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfClubPro uses your location to detect the golf club and hole, record shot positions, calculate distances, and provide on-course recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1029,6 +1020,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = GolfClubPro;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GolfClubPro uses your location to detect the golf club and hole, record shot positions, calculate distances, and provide on-course recommendations.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1300,40 +1292,27 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */ = {
+		5AFC4F2630022FA1002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/GolfClubCore;
+		};
+		5AFC4F2730022FAB002DF421 /* XCLocalSwiftPackageReference "Packages/GolfPlatformApple" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/GolfPlatformApple;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5AFC4DA3300058E4002DF421 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
-			productName = GolfCore;
-		};
-		5AFC4DA530005924002DF421 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
-			productName = GolfCore;
-		};
-		5AFC4DA73000592E002DF421 /* GolfCore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
-			productName = GolfCore;
-		};
-		5AFC4DA930005937002DF421 /* GolfCore */ = {
+		5AFC4F2830022FB8002DF421 /* GolfCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GolfCore;
 		};
-		5AFC4DAB3000593E002DF421 /* GolfCore */ = {
+		5AFC4F2A30022FBE002DF421 /* GolfPlatformApple */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
-			productName = GolfCore;
+			productName = GolfPlatformApple;
 		};
-		5AFC4DAD30005944002DF421 /* GolfCore */ = {
+		5AFC4F2C30022FEE002DF421 /* GolfCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5AFC4DA23000583E002DF421 /* XCLocalSwiftPackageReference "Packages/GolfClubCore" */;
 			productName = GolfCore;
 		};
 /* End XCSwiftPackageProductDependency section */
