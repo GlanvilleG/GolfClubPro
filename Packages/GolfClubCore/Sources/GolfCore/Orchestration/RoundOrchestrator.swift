@@ -16,6 +16,38 @@ public enum RoundOrchestratorOutput:
         OrchestratorState
     )
 
+    case golfClubDetected(
+        GolfClubID,
+        confidence: Double
+    )
+
+    case requestGolfClubConfirmation(
+        GolfClubID,
+        confidence: Double
+    )
+
+    case golfClubDetectionAmbiguous(
+        candidates: [GolfClubDetectionCandidate]
+    )
+
+    case holeDetected(
+        HoleID,
+        confidence: Double
+    )
+
+    case requestHoleConfirmation(
+        HoleID,
+        confidence: Double
+    )
+
+    case holeDetectionAmbiguous(
+        candidates: [HoleDetectionCandidate]
+    )
+
+    case locationAccuracyInsufficient
+
+    case locationNotMatched
+
     case practiceSwingIgnored(
         confidence: Double
     )
@@ -25,7 +57,6 @@ public enum RoundOrchestratorOutput:
     )
 
     case shotConfirmed
-
     case shotFeedbackRecorded
 }
 
@@ -59,6 +90,10 @@ public actor RoundOrchestrator {
     private var lastLocation:
         LocationObservation?
     
+    private var pendingGolfClubID: GolfClubID?
+    
+    private var pendingHoleID: HoleID?
+    
     private let snapshotStore:
         (any RoundOrchestratorSnapshotStore)?
 
@@ -85,6 +120,16 @@ public actor RoundOrchestrator {
         )
     }
 
+    public func currentPendingGolfClubID()
+        -> GolfClubID? {
+        pendingGolfClubID
+    }
+
+    public func currentPendingHoleID()
+        -> HoleID? {
+        pendingHoleID
+    }
+    
     public func makeSnapshot()
         -> RoundOrchestratorSnapshot {
 
@@ -92,7 +137,9 @@ public actor RoundOrchestrator {
             roundID: activeSnapshot.round.id,
             state: state,
             candidateSwing: candidateSwing,
-            lastLocation: lastLocation
+            lastLocation: lastLocation,
+            pendingGolfClubID: pendingGolfClubID,
+            pendingHoleID: pendingHoleID
         )
     }
     public func restore(
@@ -107,6 +154,8 @@ public actor RoundOrchestrator {
         state = snapshot.state
         candidateSwing = snapshot.candidateSwing
         lastLocation = snapshot.lastLocation
+        pendingGolfClubID = snapshot.pendingGolfClubID
+        pendingHoleID = snapshot.pendingHoleID
     }
     
     public func currentSnapshot()
@@ -177,6 +226,55 @@ public actor RoundOrchestrator {
 
         switch event {
 
+        case let .holeDetectionCompleted(result):
+            return processHoleDetection(result)
+
+        case let .holeConfirmedByGolfer(holeID):
+            guard pendingHoleID == holeID else {
+                return .noAction
+            }
+
+            activeSnapshot =
+                try await coordinator.confirmHole(
+                    holeID,
+                    in: activeSnapshot
+                )
+
+            pendingHoleID = nil
+            state = .awaitingClubSelection
+
+            return .holeDetected(
+                holeID,
+                confidence: 1
+            )
+
+        case .holeDetectionRejected:
+            pendingHoleID = nil
+            state = .awaitingHoleDetection
+
+            return .stateChanged(state)
+            
+        case let .golfClubDetectionCompleted(result):
+            return processGolfClubDetection(result)
+
+        case let .golfClubConfirmedByGolfer(golfClubID):
+            guard pendingGolfClubID == golfClubID else {
+                return .noAction
+            }
+
+            pendingGolfClubID = nil
+            state = .awaitingHoleDetection
+
+            return .golfClubDetected(
+                golfClubID,
+                confidence: 1
+            )
+
+        case .golfClubDetectionRejected:
+            pendingGolfClubID = nil
+            state = .detectingGolfClub
+
+            return .stateChanged(state)
         case let .locationUpdated(observation):
             lastLocation = observation
             return .noAction
@@ -316,6 +414,86 @@ public actor RoundOrchestrator {
         }
     }
 
+    private func processHoleDetection(
+        _ result: HoleDetectionResult
+    ) -> RoundOrchestratorOutput {
+        switch result.status {
+        case .detected:
+            guard let holeID =
+                    result.selectedHoleID else {
+                return .locationNotMatched
+            }
+
+            pendingHoleID = holeID
+            state = .awaitingHoleConfirmation
+
+            return .requestHoleConfirmation(
+                holeID,
+                confidence: result.confidence
+            )
+
+        case .ambiguous:
+            pendingHoleID = nil
+            state = .awaitingHoleDetection
+
+            return .holeDetectionAmbiguous(
+                candidates: result.candidates
+            )
+
+        case .insufficientAccuracy:
+            return .locationAccuracyInsufficient
+
+        case .notFound:
+            return .locationNotMatched
+        }
+    }
+    private func processGolfClubDetection(
+        _ result: GolfClubDetectionResult
+    ) -> RoundOrchestratorOutput {
+        switch result.status {
+        case .detected:
+            guard let golfClubID =
+                    result.selectedGolfClubID else {
+                return .locationNotMatched
+            }
+
+            pendingGolfClubID = golfClubID
+
+            if golfClubID ==
+                activeSnapshot.round.golfClubID,
+               result.confidence >= 0.80 {
+
+                pendingGolfClubID = nil
+                state = .awaitingHoleDetection
+
+                return .golfClubDetected(
+                    golfClubID,
+                    confidence: result.confidence
+                )
+            }
+
+            state = .awaitingRoundConfirmation
+
+            return .requestGolfClubConfirmation(
+                golfClubID,
+                confidence: result.confidence
+            )
+
+        case .ambiguous:
+            pendingGolfClubID = nil
+            state = .detectingGolfClub
+
+            return .golfClubDetectionAmbiguous(
+                candidates: result.candidates
+            )
+
+        case .insufficientAccuracy:
+            return .locationAccuracyInsufficient
+
+        case .notFound:
+            return .locationNotMatched
+        }
+    }
     private func persistOrchestratorState()
         async throws {
 
@@ -330,13 +508,15 @@ public actor RoundOrchestrator {
         let nextRevision =
             (existing?.localRevision ?? 0) + 1
 
-        let snapshot = RoundOrchestratorSnapshot(
-            roundID: activeSnapshot.round.id,
-            state: state,
-            candidateSwing: candidateSwing,
-            lastLocation: lastLocation,
-            localRevision: nextRevision
-        )
+            let snapshot = RoundOrchestratorSnapshot(
+                roundID: activeSnapshot.round.id,
+                state: state,
+                candidateSwing: candidateSwing,
+                lastLocation: lastLocation,
+                localRevision: nextRevision,
+                pendingGolfClubID: pendingGolfClubID,
+                pendingHoleID: pendingHoleID
+            )
 
         try await snapshotStore.save(snapshot)
     }

@@ -54,4 +54,16 @@ public enum RoundOrchestratorEvent:
 
     case connectivityChanged(Bool)
     case applicationRestored
+    
+    case golfClubDetectionCompleted(GolfClubDetectionResult)
+
+    case golfClubConfirmedByGolfer(GolfClubID)
+
+    case golfClubDetectionRejected
+
+    case holeDetectionCompleted(HoleDetectionResult)
+
+    case holeConfirmedByGolfer(HoleID)
+
+    case holeDetectionRejected
 }

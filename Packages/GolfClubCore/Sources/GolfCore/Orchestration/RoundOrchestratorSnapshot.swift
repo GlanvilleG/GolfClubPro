@@ -12,6 +12,9 @@ public struct RoundOrchestratorSnapshot:
     Equatable,
     Sendable {
 
+    public var pendingGolfClubID: GolfClubID?
+    public var pendingHoleID: HoleID?
+    
     public var roundID: RoundID
     public var state: OrchestratorState
 
@@ -27,7 +30,9 @@ public struct RoundOrchestratorSnapshot:
         candidateSwing: CandidateSwing? = nil,
         lastLocation: LocationObservation? = nil,
         capturedAt: Date = Date(),
-        localRevision: Int = 1
+        localRevision: Int = 1,
+        pendingGolfClubID: GolfClubID? = nil,
+        pendingHoleID: HoleID? = nil
     ) {
         self.roundID = roundID
         self.state = state
@@ -35,6 +40,8 @@ public struct RoundOrchestratorSnapshot:
         self.lastLocation = lastLocation
         self.capturedAt = capturedAt
         self.localRevision = max(1, localRevision)
+        self.pendingGolfClubID = pendingGolfClubID
+        self.pendingHoleID = pendingHoleID
     }
 
     public var hasUnresolvedCandidateSwing: Bool {
