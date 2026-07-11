@@ -179,7 +179,7 @@ public final class AppleLocationProvider:
         // so location updates remain active.
     }
 
-    public static func makeObservation(
+    static func makeObservation(
         from location: CLLocation
     ) -> LocationObservation {
         LocationObservation(
