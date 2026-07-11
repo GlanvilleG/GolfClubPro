@@ -29,6 +29,13 @@ public enum RoundOrchestratorOutput:
     case shotFeedbackRecorded
 }
 
+public enum RoundOrchestratorError:
+    Error,
+    Equatable,
+    Sendable {
+
+    case roundIdentifierMismatch
+}
 public actor RoundOrchestrator {
 
     private let coordinator:
@@ -51,11 +58,16 @@ public actor RoundOrchestrator {
 
     private var lastLocation:
         LocationObservation?
+    
+    private let snapshotStore:
+        (any RoundOrchestratorSnapshotStore)?
 
     public init(
         snapshot: ActiveRoundSnapshot,
         coordinator:
             PersistentOfflineRoundCoordinator,
+        snapshotStore:
+            (any RoundOrchestratorSnapshotStore)? = nil,
         confidenceEvaluator:
             SwingConfidenceEvaluator =
                 SwingConfidenceEvaluator(),
@@ -65,14 +77,38 @@ public actor RoundOrchestrator {
     ) {
         self.activeSnapshot = snapshot
         self.coordinator = coordinator
-        self.confidenceEvaluator =
-            confidenceEvaluator
+        self.snapshotStore = snapshotStore
+        self.confidenceEvaluator = confidenceEvaluator
         self.thresholds = thresholds
         self.state = Self.initialState(
             for: snapshot.round
         )
     }
 
+    public func makeSnapshot()
+        -> RoundOrchestratorSnapshot {
+
+        RoundOrchestratorSnapshot(
+            roundID: activeSnapshot.round.id,
+            state: state,
+            candidateSwing: candidateSwing,
+            lastLocation: lastLocation
+        )
+    }
+    public func restore(
+        from snapshot: RoundOrchestratorSnapshot
+    ) throws {
+        guard snapshot.roundID ==
+                activeSnapshot.round.id else {
+            throw RoundOrchestratorError
+                .roundIdentifierMismatch
+        }
+
+        state = snapshot.state
+        candidateSwing = snapshot.candidateSwing
+        lastLocation = snapshot.lastLocation
+    }
+    
     public func currentSnapshot()
         -> ActiveRoundSnapshot {
         activeSnapshot
@@ -87,9 +123,55 @@ public actor RoundOrchestrator {
         -> CandidateSwing? {
         candidateSwing
     }
+    public static func restoring(
+        activeSnapshot: ActiveRoundSnapshot,
+        coordinator:
+            PersistentOfflineRoundCoordinator,
+        snapshotStore:
+            any RoundOrchestratorSnapshotStore,
+        confidenceEvaluator:
+            SwingConfidenceEvaluator =
+                SwingConfidenceEvaluator(),
+        thresholds:
+            SwingConfidenceThresholds =
+                SwingConfidenceThresholds()
+    ) async throws -> RoundOrchestrator {
 
+        let orchestrator = RoundOrchestrator(
+            snapshot: activeSnapshot,
+            coordinator: coordinator,
+            snapshotStore: snapshotStore,
+            confidenceEvaluator:
+                confidenceEvaluator,
+            thresholds: thresholds
+        )
+
+        if let storedSnapshot =
+            try await snapshotStore.load(
+                roundID: activeSnapshot.round.id
+            ) {
+            try await orchestrator.restore(
+                from: storedSnapshot
+            )
+        }
+
+        return orchestrator
+    }
+    
     @discardableResult
     public func process(
+        _ event: RoundOrchestratorEvent
+    ) async throws -> RoundOrchestratorOutput {
+
+        let output = try await processEvent(event)
+
+        try await persistOrchestratorState()
+
+        return output
+    }
+    
+    @discardableResult
+    private func processEvent(
         _ event: RoundOrchestratorEvent
     ) async throws -> RoundOrchestratorOutput {
 
@@ -234,6 +316,31 @@ public actor RoundOrchestrator {
         }
     }
 
+    private func persistOrchestratorState()
+        async throws {
+
+        guard let snapshotStore else {
+            return
+        }
+
+        let existing = try await snapshotStore.load(
+            roundID: activeSnapshot.round.id
+        )
+
+        let nextRevision =
+            (existing?.localRevision ?? 0) + 1
+
+        let snapshot = RoundOrchestratorSnapshot(
+            roundID: activeSnapshot.round.id,
+            state: state,
+            candidateSwing: candidateSwing,
+            lastLocation: lastLocation,
+            localRevision: nextRevision
+        )
+
+        try await snapshotStore.save(snapshot)
+    }
+    
     private func evaluateCandidate()
         async throws -> RoundOrchestratorOutput {
 
