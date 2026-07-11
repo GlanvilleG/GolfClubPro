@@ -19,8 +19,6 @@ import SwiftData
 @MainActor
 final class AppDependencies {
 
-    let platformProbe: GolfPlatformAppleProbe
-    
     let modelContainer: ModelContainer
     let snapshotStore: SwiftDataActiveRoundSnapshotStore
     let roundCoordinator: PersistentOfflineRoundCoordinator
@@ -30,8 +28,6 @@ final class AppDependencies {
         modelContainer: ModelContainer
     ) {
         self.modelContainer = modelContainer
-
-        self.platformProbe = GolfPlatformAppleProbe()
         
         let snapshotStore =
             SwiftDataActiveRoundSnapshotStore(
