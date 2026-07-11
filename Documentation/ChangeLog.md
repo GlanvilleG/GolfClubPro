@@ -18,9 +18,28 @@
 - Verified iPhone and Watch source ownership
 - Confirmed all package tests and application targets build
 
-## Pass 3 – Vocabulary & Naming Audit
+### Pass 3 – Vocabulary & Naming Audit
 
 The objective is that every class name immediately communicates its responsibility.
 - Our vocabulary - updated in 02-Architecture/Ubiquitous Language.md
+
+### Pass 4 — Public API Audit
+
+- Reduced unnecessary public declarations
+- Kept cross-module contracts explicit
+- Changed read-only external state to public private(set)
+- Kept app implementation types internal
+- Identified aggregate mutation controls for later refinement
+- Verified package tests and application builds
+
+### Pass 5 — DDD Responsibility Audit
+
+- Identified Round as the primary aggregate root
+- Classified entities and value objects
+- Confirmed engine, service, coordinator and provider responsibilities
+- Verified persistence contracts contain no business logic
+- Identified direct aggregate mutation for future restriction
+- Identified injectable clock requirement for deterministic timestamps
+- Recorded future separation of domain events and sync envelopes
 
 

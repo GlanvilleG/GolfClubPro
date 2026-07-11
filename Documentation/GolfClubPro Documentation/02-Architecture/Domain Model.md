@@ -12,11 +12,8 @@
 # Purpose
 
 The Domain Model defines the business concepts that make up GolfClubPro.
-
 It is independent of implementation technologies such as SwiftUI, SwiftData, CloudKit, Core Location, WeatherKit, or any external API.
-
 The purpose of this document is to establish a common language that is shared by software engineers, product owners, designers, testers, and future AI systems.
-
 All software within **GolfCore** should model the concepts described in this document.
 
 ---
@@ -101,9 +98,7 @@ Player owns:
 ## Equipment Profile
 
 An Equipment Profile represents the collection of clubs used by a player.
-
 Each club maintains historical performance rather than relying on manufacturer specifications.
-
 Future versions may also include:
 
 - Ball type
@@ -206,9 +201,7 @@ Examples include:
 ## Strategic Route Planning
 
 GolfClubPro distinguishes between the final destination and the immediate target.
-
 The final destination is the hole.
-
 The immediate target may be:
 
 - The pin
@@ -219,7 +212,6 @@ The immediate target may be:
 - A recovery location
 
 A Playing Route contains one or more target points that guide the golfer toward the hole.
-
 The selected route considers course geometry, hazards, player capability, lie, wind, and likely future shot position.
 
 # Round Flow Model
@@ -227,7 +219,6 @@ The selected route considers course geometry, hazards, player capability, lie, w
 ## Purpose
 
 The Round Flow Model defines the expected user journey during a live round of golf.
-
 GolfClubPro should minimise manual input by using GPS location, known course geometry, Apple Watch interaction, and short voice commands.
 
 ---
@@ -237,9 +228,7 @@ GolfClubPro should minimise manual input by using GPS location, known course geo
 ## 1. Golf Club Detection
 
 When the user opens GolfClubPro at a golf club, the system should use geolocation to match the user's current position against a known list of golf clubs.
-
 If the user is clearly located at a known golf club, the system should automatically select that golf club and remove the need for manual course selection.
-
 The user should be asked to confirm:
 
 > Start round at Whanganui Golf Club?
@@ -249,7 +238,6 @@ The user should be asked to confirm:
 ## 2. Round Start
 
 Once confirmed, the system creates an active round.
-
 The round status becomes:
 
 ```text
@@ -257,7 +245,6 @@ Active
 ```
 
 The system then waits for the golfer to move to a known starting hole.
-
 The starting hole is usually Hole 1 or Hole 10, but any hole must be supported.
 
 ---
@@ -265,7 +252,6 @@ The starting hole is usually Hole 1 or Hole 10, but any hole must be supported.
 ## 3. Hole Detection and Confirmation
 
 As the golfer approaches a tee area, the system compares the golfer's position against known tee locations.
-
 The system proposes the detected hole.
 
 Example:
@@ -273,9 +259,7 @@ Example:
 > Are you starting on Hole 10?
 
 The golfer confirms the hole.
-
 The golfer also confirms the tee colour being played.
-
 Examples:
 
 - Blue
@@ -290,15 +274,12 @@ Once confirmed, the hole session begins.
 ## 4. Club Announcement
 
 Before each shot, the golfer announces the club they intend to use.
-
 Example:
 
 > Driver
 
 The system records the intended club.
-
 The golfer may change their mind before striking the ball.
-
 Example:
 
 > Change to 3 wood
@@ -310,7 +291,6 @@ The system updates the intended club before the shot is recorded.
 ## 5. Shot Execution
 
 After the golfer hits the ball, the system should allow verbal shot feedback.
-
 Examples:
 
 - “I pushed it”
@@ -343,7 +323,6 @@ Example:
 5. Golfer announces “7 iron”
 
 At the moment “7 iron” is announced, the system records the current GPS location as the previous ball position and completes the previous shot.
-
 It then starts the next shot with “7 iron” as the intended club.
 
 ---
@@ -351,7 +330,6 @@ It then starts the next shot with “7 iron” as the intended club.
 ## 7. Putting Flow
 
 When the golfer selects or announces a putter, the system enters putting mode.
-
 The golfer should be able to verbally record the number of putts required to hole out.
 
 Examples:
@@ -373,7 +351,6 @@ A hole may be completed when:
 - The golfer verbally confirms completion.
 
 If the golfer walks off the green and proceeds to the next tee without formally completing the hole, the system should keep the hole record open and allow completion later.
-
 This supports real-world play where golfers may forget to complete scoring immediately.
 
 ---
@@ -518,7 +495,6 @@ It contains:
 ## Shot
 
 A Shot represents a single stroke.
-
 It is one of the most important entities in the system.
 
 ### Attributes
@@ -540,9 +516,7 @@ It is one of the most important entities in the system.
 ## Shot Feedback
 
 Shot Feedback captures the golfer's spoken or typed description immediately after a shot.
-
 It allows GolfClubPro to record the golfer's perception of the shot, including direction, contact quality, distance error, course position, and lucky or unlucky outcomes.
-
 Examples include:
 
 - “I pushed it”
@@ -575,7 +549,6 @@ Examples:
 ## Weather Context
 
 Weather Context captures environmental conditions when the shot occurred.
-
 Attributes include:
 
 - Wind Speed
@@ -591,7 +564,6 @@ Weather is captured so recommendations can be explained retrospectively.
 ## Recommendation
 
 A Recommendation is advice generated before a shot.
-
 It may include:
 
 - Club
@@ -610,7 +582,6 @@ The player always remains responsible for shot selection.
 ## Statistics
 
 Statistics are derived information.
-
 Examples include:
 
 - Average Carry
@@ -627,7 +598,6 @@ Statistics are calculated rather than manually entered.
 ## Coaching Session
 
 A Coaching Session represents AI-generated post-round analysis.
-
 It explains:
 
 - Strengths
@@ -641,7 +611,6 @@ It explains:
 # Identifier Strategy
 
 Every major entity has a strongly typed identifier.
-
 Examples:
 
 - PlayerID
@@ -675,6 +644,72 @@ The following relationships define the core model.
 - Statistics are calculated from completed Rounds.
 
 ---
+# Domain-Driven Design Classification
+
+### Aggregate Roots
+
+- Round
+
+### Entities
+
+- Player
+- GolfClub
+- Course
+- Hole
+- TeeSet
+- Club
+- Round
+- HoleSession
+- Shot
+- RecommendationAuditRecord
+- OfflineEvent
+
+### Value Objects
+
+- GeoCoordinate
+- TargetPoint
+- LandingZone
+- PlayingRoute
+- ShotPlan
+- ShotFeedback
+- WeatherSnapshot
+- EnvironmentalContext
+- LocationObservation
+- SwingObservation
+- CandidateSwing
+- Detection results
+- Recommendation snapshots
+
+### Domain Engines
+
+- RoundEngine
+- StrategyEngine
+- RecommendationEngine
+- PlayerStatisticsEngine
+
+### Domain Services
+
+- GolfClubDetectionService
+- HoleDetectionService
+- LieDetector
+- ShotFeedbackNormalizer
+- DistanceCalculator
+- SwingConfidenceEvaluator
+
+### Coordinators
+
+- RoundOrchestrator
+- OfflineRoundCoordinator
+- PersistentOfflineRoundCoordinator
+
+### Persistence Contracts
+
+- ActiveRoundSnapshotStore
+- RoundOrchestratorSnapshotStore
+
+### Platform Providers
+
+- AppleLocationProvider
 
 # Domain Boundaries
 
@@ -722,3 +757,69 @@ Any addition, removal, or significant modification to a domain entity must be ac
 - An update to this document.
 - A review of the Domain Glossary.
 - Consideration of a new or updated Architecture Decision Record (ADR).
+## Domain-Driven Design Classification
+
+### Aggregate Roots
+
+- Round
+
+### Entities
+
+- Player
+- GolfClub
+- Course
+- Hole
+- TeeSet
+- Club
+- Round
+- HoleSession
+- Shot
+- RecommendationAuditRecord
+- OfflineEvent
+
+### Value Objects
+
+- GeoCoordinate
+- TargetPoint
+- LandingZone
+- PlayingRoute
+- ShotPlan
+- ShotFeedback
+- WeatherSnapshot
+- EnvironmentalContext
+- LocationObservation
+- SwingObservation
+- CandidateSwing
+- Detection results
+- Recommendation snapshots
+
+### Domain Engines
+
+- RoundEngine
+- StrategyEngine
+- RecommendationEngine
+- PlayerStatisticsEngine
+
+### Domain Services
+
+- GolfClubDetectionService
+- HoleDetectionService
+- LieDetector
+- ShotFeedbackNormalizer
+- DistanceCalculator
+- SwingConfidenceEvaluator
+
+### Coordinators
+
+- RoundOrchestrator
+- OfflineRoundCoordinator
+- PersistentOfflineRoundCoordinator
+
+### Persistence Contracts
+
+- ActiveRoundSnapshotStore
+- RoundOrchestratorSnapshotStore
+
+### Platform Providers
+
+- AppleLocationProvider
