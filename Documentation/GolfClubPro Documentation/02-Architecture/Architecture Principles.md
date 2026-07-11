@@ -132,3 +132,12 @@ Every significant architectural decision receives an ADR.
 Documentation evolves with the software.
 
 Documentation is part of the product.
+
+## Module Ownership
+
+| Module | Owns | Must Not Own |
+|---|---|---|
+| GolfCore | Domain models, engines, services, coordinators, contracts | Apple APIs, SwiftUI, SwiftData |
+| GolfPlatformApple | Apple framework adapters and model mapping | Golf rules, recommendation decisions, persistence policy |
+| GolfClubPro | iPhone UI, dependency composition, SwiftData persistence | Duplicate domain or platform implementations |
+| GolfClubPro Watch App | Watch UI and Watch-specific interaction | iPhone persistence and unrelated platform adapters |
