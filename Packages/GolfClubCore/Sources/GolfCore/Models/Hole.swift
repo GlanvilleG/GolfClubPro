@@ -14,6 +14,7 @@ public struct Hole: Codable, Equatable, Sendable {
     public var lengthMeters: Double
     public var teeLocation: GeoCoordinate?
     public var greenLocation: GeoCoordinate?
+    public var teeDetectionRadiusMeters: Double
 
     public init(
         id: HoleID = HoleID(),
@@ -22,7 +23,8 @@ public struct Hole: Codable, Equatable, Sendable {
         strokeIndex: Int? = nil,
         lengthMeters: Double,
         teeLocation: GeoCoordinate? = nil,
-        greenLocation: GeoCoordinate? = nil
+        greenLocation: GeoCoordinate? = nil,
+        teeDetectionRadiusMeters: Double = 35
     ) {
         self.id = id
         self.number = number
@@ -31,5 +33,7 @@ public struct Hole: Codable, Equatable, Sendable {
         self.lengthMeters = lengthMeters
         self.teeLocation = teeLocation
         self.greenLocation = greenLocation
+        self.teeDetectionRadiusMeters =
+            max(0, teeDetectionRadiusMeters)
     }
 }
