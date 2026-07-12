@@ -50,3 +50,14 @@ The objective is that every class name immediately communicates its responsibili
 - Verified package manifests and dependency direction
 - Added automated architecture-boundary validation
 - Confirmed all package tests and application targets build
+
+### Pass 7 — Test Quality Audit
+
+- Removed placeholder and compile-only tests
+- Corrected async assertion patterns
+- Replaced fragile floating-point comparisons
+- Stabilised date-sensitive tests
+- Added shared test fixtures where useful
+- Improved behaviour-based test naming
+- Added missing boundary cases
+- Confirmed package and application test suites pass
