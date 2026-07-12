@@ -13,9 +13,7 @@
 ## Welcome
 
 Welcome to the GolfClubPro Software Design Manual.
-
 This documentation provides the complete engineering reference for the GolfClubPro platform. It defines the product vision, architecture, engineering standards, domain concepts, software design, testing strategy, and commercial direction.
-
 The documentation is maintained alongside the source code to ensure that architectural decisions and implementation remain aligned throughout the life of the project.
 
 ⸻
@@ -23,7 +21,6 @@ The documentation is maintained alongside the source code to ensure that archite
 ## About GolfClubPro
 
 GolfClubPro is an Apple-first golf platform designed for the Apple Watch and iPhone.
-
 The system combines:
 
 * GPS-based hole recognition
@@ -53,10 +50,9 @@ The Software Design Manual has five primary objectives:
 
 ## Documentation Structure
 
-00 Project Administration
+### 00 Project Administration
 
 Project governance and engineering management documentation.
-
 Includes:
 
 * Project Charter
@@ -243,10 +239,14 @@ Every significant feature should include:
 
 Documentation is considered part of the product and should be maintained with the same level of quality as the software itself.
 
+## Architecture Boundary Check
+Run the architecture validation **before submitting structural changes**:
+'''bash 
+./Scripts/check_architecture_boundaries.sh
+
 ⸻
 
 ## Future Evolution
 
 The Software Design Manual is intended to grow with GolfClubPro throughout its lifecycle.
-
 As new capabilities are introduced—including AI coaching, advanced analytics, cloud synchronisation, tournament management, and additional Apple platforms—the documentation will be expanded to reflect those capabilities while maintaining consistency with the project’s architectural principles.

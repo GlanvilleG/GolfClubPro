@@ -130,34 +130,32 @@ Every significant architectural decision receives an ADR.
 # Principle 13
 
 Documentation evolves with the software.
-
 Documentation is part of the product.
 \_\_\_\_\_\_\_\_\_
 
 # Public API Principle
 
 Package declarations are internal by default.
-
 A declaration is public only when another module must depend on it.
-
 Public APIs should prefer immutable values, read-only properties and narrow protocols. Implementation helpers remain internal or private.
 # DDD Responsibility Principle
 
 Entities own identity and lifecycle.
-
 Value Objects describe domain concepts and are compared by value.
-
 Aggregate Roots protect consistency boundaries.
-
 Engines make deterministic domain decisions.
-
 Domain Services perform stateless business operations that do not naturally belong to an Entity.
-
 Coordinators orchestrate workflows without duplicating domain rules.
-
 Providers adapt external platforms and services into domain-neutral models.
-
 Stores and Repositories persist state without making business decisions.
+
+## Dependency Direction Principle
+
+Dependencies point toward GolfCore.
+GolfCore must not depend on application targets, persistence implementations, Apple frameworks, or GolfPlatformApple.
+GolfPlatformApple may depend on GolfCore.
+Application targets may depend on both GolfCore and GolfPlatformApple.
+Circular module dependencies are prohibited.
 
 
 ## Module Ownership
