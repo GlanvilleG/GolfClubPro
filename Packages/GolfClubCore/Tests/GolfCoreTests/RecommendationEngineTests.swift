@@ -63,11 +63,24 @@ final class RecommendationEngineTests: XCTestCase {
             courseArea: .rough
         )
 
-        let result = try engine.recommend(for: context)
+        let result = try engine.recommend(
+            for: context
+        )
+
+        let preferredClub = try XCTUnwrap(
+            result.preferredClub
+        )
 
         XCTAssertEqual(
-            result.preferredClub?.clubID,
-            iron.id
+            preferredClub.clubID,
+            iron.id,
+            "A 7 iron should be preferred over a driver from deep rough at 150 metres."
+        )
+
+        XCTAssertNotEqual(
+            preferredClub.clubID,
+            driver.id,
+            "Deep rough should strongly penalise the driver."
         )
     }
 

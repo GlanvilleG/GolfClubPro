@@ -555,11 +555,21 @@ public actor RoundOrchestrator {
             )
 
         case .treatAsPracticeSwing:
-            return rejectCandidateAsPracticeSwing(
-                confidence:
-                    evaluation.candidate
-                        .computedConfidence
-            )
+            if evaluation.candidate
+                .observation
+                .returnedToAddress {
+
+                return rejectCandidateAsPracticeSwing(
+                    confidence:
+                        evaluation.candidate
+                            .computedConfidence
+                )
+            }
+
+            candidateSwing = evaluation.candidate
+            state = .validatingCandidateSwing
+
+            return .stateChanged(state)
         }
     }
 

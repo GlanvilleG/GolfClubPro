@@ -104,7 +104,7 @@ public struct RecommendationEngine: Sendable {
 
         let recommendations = context.availableClubs
             .filter { $0.type != .putter }
-            .map {
+            .compactMap {
                 scoreClub(
                     $0,
                     targetDistanceMeters:
@@ -153,7 +153,7 @@ public struct RecommendationEngine: Sendable {
         } else {
             auditRecord = nil
         }
-        
+
         return RecommendationResult(
             shotPlan: shotPlan,
             preferredClub: preferred,
@@ -163,7 +163,6 @@ public struct RecommendationEngine: Sendable {
             auditRecord: auditRecord
         )
     }
-
     private func makeAuditRecord(
         context: ShotContext,
         shotPlan: ShotPlan,
@@ -260,7 +259,7 @@ public struct RecommendationEngine: Sendable {
         targetDistanceMeters: Double,
         context: ShotContext,
         shotPlan: ShotPlan
-    ) -> ClubRecommendation {
+    ) -> ClubRecommendation? {
         let baseCarry =
             historicalCarry(
                 for: club,
@@ -301,6 +300,10 @@ public struct RecommendationEngine: Sendable {
             clubType: club.type,
             lie: context.playableLie
         )
+
+        guard lieScore >= 0.40 else {
+            return nil
+        }
 
         let historyPenalty = historicalErrorPenalty(
             for: club.id,

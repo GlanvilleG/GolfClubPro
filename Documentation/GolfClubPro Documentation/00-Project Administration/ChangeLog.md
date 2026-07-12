@@ -42,4 +42,11 @@ The objective is that every class name immediately communicates its responsibili
 - Identified injectable clock requirement for deterministic timestamps
 - Recorded future separation of domain events and sync envelopes
 
+### Pass 6 — Dependency and Import Audit
 
+- Confirmed GolfCore contains no Apple or UI framework imports
+- Confirmed GolfPlatformApple depends only on GolfCore
+- Confirmed SwiftData remains in the iPhone app layer
+- Verified package manifests and dependency direction
+- Added automated architecture-boundary validation
+- Confirmed all package tests and application targets build

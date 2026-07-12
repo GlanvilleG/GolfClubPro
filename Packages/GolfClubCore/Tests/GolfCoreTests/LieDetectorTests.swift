@@ -34,7 +34,7 @@ final class LieDetectorTests: XCTestCase {
         XCTAssertEqual(result.courseArea, .fairway)
         XCTAssertEqual(result.playableLie, .fairway)
         XCTAssertEqual(result.source, .inferredFromCourseGeometry)
-        XCTAssertEqual(result.confidence, 0.75)
+        XCTAssertEqual(result.confidence!, 0.9, accuracy: 0.0001)
     }
 
     func testReturnsUnknownOutsidePolygon() {

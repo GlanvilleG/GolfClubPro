@@ -61,16 +61,30 @@ final class RoundOrchestratorSnapshotTests:
             )
         )
 
-        let stored =
-            try await setup.snapshotStore.load(
-                roundID:
-                    setup.activeSnapshot.round.id
+       let stored = try await setup.snapshotStore.load(
+                roundID: setup.activeSnapshot.round.id
             )
 
-        XCTAssertNotNil(stored)
-        XCTAssertNotNil(
-            stored?.candidateSwing
-        )
+            let candidate = try XCTUnwrap(
+                stored?.candidateSwing
+            )
+
+            XCTAssertEqual(
+                candidate.classification,
+                .uncertain
+            )
+
+            XCTAssertEqual(
+                candidate.computedConfidence,
+                0.44,
+                accuracy: 0.0001
+            )
+
+            XCTAssertEqual(
+                stored?.state,
+                .awaitingShotConfirmation
+            )
+            
 
         XCTAssertEqual(
             stored?.state,
