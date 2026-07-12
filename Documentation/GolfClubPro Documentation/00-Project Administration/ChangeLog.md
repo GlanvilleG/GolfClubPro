@@ -61,3 +61,15 @@ The objective is that every class name immediately communicates its responsibili
 - Improved behaviour-based test naming
 - Added missing boundary cases
 - Confirmed package and application test suites pass
+
+### Pass 8 — Documentation Alignment
+
+- Updated System Context to reflect current packages and applications
+- Added Container Architecture
+- Updated Repository Structure
+- Updated Architectural Evolution
+- Reconciled ADR references and numbering
+- Updated roadmap and milestone status
+- Aligned Domain Model with current DDD responsibilities
+
+
