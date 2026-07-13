@@ -22,15 +22,18 @@ final class AppDependencies {
     let modelContainer: ModelContainer
     let snapshotStore: SwiftDataActiveRoundSnapshotStore
     let roundCoordinator: PersistentOfflineRoundCoordinator
-    let orchestratorSnapshotStore: SwiftDataRoundOrchestratorSnapshotStore
+    let orchestratorSnapshotStore:
+        SwiftDataRoundOrchestratorSnapshotStore
     let locationProvider: AppleLocationProvider
     let golfClubCatalogue: any GolfClubCatalogue
 
     init(
-        modelContainer: ModelContainer
-    ) {
+        modelContainer: ModelContainer,
+        golfClubCatalogue:
+            (any GolfClubCatalogue)? = nil
+    ) throws {
         self.modelContainer = modelContainer
-        
+
         let snapshotStore =
             SwiftDataActiveRoundSnapshotStore(
                 modelContainer: modelContainer
@@ -42,21 +45,25 @@ final class AppDependencies {
             PersistentOfflineRoundCoordinator(
                 store: snapshotStore
             )
+
         self.orchestratorSnapshotStore =
             SwiftDataRoundOrchestratorSnapshotStore(
                 modelContainer: modelContainer
             )
-        
+
         self.locationProvider =
             AppleLocationProvider()
-        
-        self.golfClubCatalogue =
-            DevelopmentGolfClubCatalogue
-                .makeCatalogue()
+
+        if let golfClubCatalogue {
+            self.golfClubCatalogue =
+                golfClubCatalogue
+        } else {
+            self.golfClubCatalogue =
+                try BundledGolfClubCatalogueLoader()
+                    .makeCatalogue()
+        }
     }
 
-    
-    
     static func live() throws -> AppDependencies {
         let modelContainer = try ModelContainer(
             for:
@@ -64,15 +71,16 @@ final class AppDependencies {
                 RoundOrchestratorSnapshotRecord.self
         )
 
-        return AppDependencies(
+        return try AppDependencies(
             modelContainer: modelContainer
         )
     }
 
     static func preview() throws -> AppDependencies {
-        let configuration = ModelConfiguration(
-            isStoredInMemoryOnly: true
-        )
+        let configuration =
+            ModelConfiguration(
+                isStoredInMemoryOnly: true
+            )
 
         let modelContainer = try ModelContainer(
             for:
@@ -81,8 +89,11 @@ final class AppDependencies {
             configurations: configuration
         )
 
-        return AppDependencies(
-            modelContainer: modelContainer
+        return try AppDependencies(
+            modelContainer: modelContainer,
+            golfClubCatalogue:
+                DevelopmentGolfClubCatalogue
+                    .makeCatalogue()
         )
     }
 }

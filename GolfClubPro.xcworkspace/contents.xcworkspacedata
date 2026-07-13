@@ -4,4 +4,7 @@
    <FileRef
       location = "group:GolfClubPro.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:BundledGolfClubCatalogueLoader.txt">
+   </FileRef>
 </Workspace>
