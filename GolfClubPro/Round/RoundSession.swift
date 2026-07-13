@@ -25,11 +25,8 @@ final class RoundSession {
     private let locationProvider:
         AppleLocationProvider
 
-    private let golfClubSource:
-        () -> [GolfClub]
-
-    private let holeSource:
-        () -> [Hole]
+    private let golfClubCatalogue:
+        any GolfClubCatalogue
 
     // MARK: - Runtime Components
 
@@ -69,10 +66,8 @@ final class RoundSession {
             any RoundOrchestratorSnapshotStore,
         locationProvider:
             AppleLocationProvider,
-        golfClubSource:
-            @escaping () -> [GolfClub],
-        holeSource:
-            @escaping () -> [Hole]
+        golfClubCatalogue:
+            any GolfClubCatalogue
     ) {
         self.roundCoordinator =
             roundCoordinator
@@ -83,13 +78,9 @@ final class RoundSession {
         self.locationProvider =
             locationProvider
 
-        self.golfClubSource =
-            golfClubSource
-
-        self.holeSource =
-            holeSource
+        self.golfClubCatalogue =
+            golfClubCatalogue
     }
-
     // MARK: - Derived State
 
     var activeRound: Round? {
@@ -399,17 +390,46 @@ final class RoundSession {
     // MARK: - Runtime Installation
 
     private func installRuntime(
+
         for snapshot: ActiveRoundSnapshot
+
     ) async throws {
+
         stopRuntime()
 
         let orchestrator =
+
             try await RoundOrchestrator.restoring(
+
                 activeSnapshot: snapshot,
-                coordinator: roundCoordinator,
+
+                coordinator:
+
+                    roundCoordinator,
+
                 snapshotStore:
+
                     orchestratorSnapshotStore
+
             )
+
+        let golfClubs =
+
+            try await golfClubCatalogue
+
+                .golfClubs()
+
+        let holes =
+
+            try await golfClubCatalogue
+
+                .holes(
+
+                    courseID:
+
+                        snapshot.round.courseID
+
+                )
 
         let locationCoordinator =
             GolfClubLocationCoordinator(
@@ -417,10 +437,12 @@ final class RoundSession {
                     self.locationProvider
                         .observations()
                 },
-                golfClubSource:
-                    golfClubSource,
-                holeSource:
-                    holeSource,
+                golfClubSource: {
+                    golfClubs
+                },
+                holeSource: {
+                    holes
+                },
                 orchestrator:
                     orchestrator
             )

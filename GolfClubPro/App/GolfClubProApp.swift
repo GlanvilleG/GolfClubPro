@@ -37,12 +37,8 @@ struct GolfClubProApp: App {
                     locationProvider:
                         dependencies
                             .locationProvider,
-                    golfClubSource: {
-                        []
-                    },
-                    holeSource: {
-                        []
-                    }
+                    golfClubCatalogue:
+                        dependencies.golfClubCatalogue
                 )
             )
         } catch {

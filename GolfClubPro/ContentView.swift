@@ -80,12 +80,8 @@ struct ContentView: View {
             dependencies.orchestratorSnapshotStore,
         locationProvider:
             dependencies.locationProvider,
-        golfClubSource: {
-            []
-        },
-        holeSource: {
-            []
-        }
+        golfClubCatalogue:
+            dependencies.golfClubCatalogue
     )
 
     ContentView()

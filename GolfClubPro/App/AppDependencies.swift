@@ -24,6 +24,7 @@ final class AppDependencies {
     let roundCoordinator: PersistentOfflineRoundCoordinator
     let orchestratorSnapshotStore: SwiftDataRoundOrchestratorSnapshotStore
     let locationProvider: AppleLocationProvider
+    let golfClubCatalogue: any GolfClubCatalogue
 
     init(
         modelContainer: ModelContainer
@@ -48,8 +49,14 @@ final class AppDependencies {
         
         self.locationProvider =
             AppleLocationProvider()
+        
+        self.golfClubCatalogue =
+            DevelopmentGolfClubCatalogue
+                .makeCatalogue()
     }
 
+    
+    
     static func live() throws -> AppDependencies {
         let modelContainer = try ModelContainer(
             for:
