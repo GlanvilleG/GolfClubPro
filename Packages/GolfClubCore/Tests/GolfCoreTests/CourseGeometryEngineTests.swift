@@ -12,7 +12,7 @@ final class CourseGeometryEngineTests:
     XCTestCase {
 
     private let engine =
-        CourseGeometryEngine()
+        HoleGeometryEngine()
 
     func testPointInsideFairwayReturnsFairway() {
         let geometry = HoleGeometry(
@@ -111,9 +111,9 @@ final class CourseGeometryEngineTests:
     }
 
     func testPointNearBoundaryRequiresConfirmation() {
-        let engine = CourseGeometryEngine(
+        let engine = HoleGeometryEngine(
             configuration:
-                CourseGeometryConfiguration(
+                HoleGeometryConfiguration(
                     boundaryConfirmationDistanceMeters:
                         10
                 )

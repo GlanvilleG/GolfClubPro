@@ -6,7 +6,7 @@
 //
 import Foundation
 
-public struct CourseGeometryAreaMatch:
+public struct HoleGeometryAreaMatch:
     Codable,
     Equatable,
     Sendable {
@@ -32,14 +32,14 @@ public struct CourseGeometryAreaMatch:
     }
 }
 
-public struct CourseGeometryResult:
+public struct HoleGeometryResult:
     Codable,
     Equatable,
     Sendable {
 
     public let primaryArea: HoleAreaType
     public let matches:
-        [CourseGeometryAreaMatch]
+        [HoleGeometryAreaMatch]
 
     public let nearestBoundaryDistanceMeters:
         Double?
@@ -50,7 +50,7 @@ public struct CourseGeometryResult:
 
     public init(
         primaryArea: HoleAreaType,
-        matches: [CourseGeometryAreaMatch],
+        matches: [HoleGeometryAreaMatch],
         nearestBoundaryDistanceMeters:
             Double?,
         confidence: Double,

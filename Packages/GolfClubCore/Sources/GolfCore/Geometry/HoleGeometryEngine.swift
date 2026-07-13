@@ -1,5 +1,5 @@
 //
-//  CourseGeometryEngine.swift
+// HoleGeometryEngine.swift
 //  GolfClubCore
 //
 //  Created by Dragon Development on 13/07/2026.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CourseGeometryConfiguration:
+public struct HoleGeometryConfiguration:
     Codable,
     Equatable,
     Sendable {
@@ -66,16 +66,16 @@ public struct CourseGeometryConfiguration:
     }
 }
 
-public struct CourseGeometryEngine:
+public struct HoleGeometryEngine:
     Sendable {
 
     private let configuration:
-        CourseGeometryConfiguration
+        HoleGeometryConfiguration
 
     public init(
         configuration:
-            CourseGeometryConfiguration =
-                CourseGeometryConfiguration()
+            HoleGeometryConfiguration =
+                HoleGeometryConfiguration()
     ) {
         self.configuration =
             configuration
@@ -84,7 +84,7 @@ public struct CourseGeometryEngine:
     public func evaluate(
         location: GeoCoordinate,
         geometry: HoleGeometry
-    ) -> CourseGeometryResult {
+    ) -> HoleGeometryResult {
         let matches =
             geometry.areas.compactMap {
                 evaluate(
@@ -106,7 +106,7 @@ public struct CourseGeometryEngine:
                     )
                     .min()
 
-            return CourseGeometryResult(
+            return HoleGeometryResult(
                 primaryArea: .unknown,
                 matches: matches,
                 nearestBoundaryDistanceMeters:
@@ -167,7 +167,7 @@ public struct CourseGeometryEngine:
             : configuration
                 .clearInteriorConfidence
 
-        return CourseGeometryResult(
+        return HoleGeometryResult(
             primaryArea: primary.areaType,
             matches: matches,
             nearestBoundaryDistanceMeters:
@@ -244,7 +244,7 @@ public struct CourseGeometryEngine:
     private func evaluate(
         location: GeoCoordinate,
         area: HoleArea
-    ) -> CourseGeometryAreaMatch? {
+    ) -> HoleGeometryAreaMatch? {
         guard let boundaryDistance =
                 distanceToBoundary(
                     from: location,
@@ -254,7 +254,7 @@ public struct CourseGeometryEngine:
             return nil
         }
 
-        return CourseGeometryAreaMatch(
+        return HoleGeometryAreaMatch(
             areaType: area.type,
             containsLocation:
                 contains(

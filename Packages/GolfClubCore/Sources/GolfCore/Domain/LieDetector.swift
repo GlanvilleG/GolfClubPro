@@ -10,7 +10,7 @@ import Foundation
 public struct LieDetector: Sendable {
 
     private let geometryEngine:
-        CourseGeometryEngine
+        HoleGeometryEngine
 
     private let minimumAutomaticConfidence:
         Double
@@ -23,8 +23,8 @@ public struct LieDetector: Sendable {
 
     public init(
         geometryEngine:
-            CourseGeometryEngine =
-                CourseGeometryEngine(),
+            HoleGeometryEngine =
+                HoleGeometryEngine(),
         minimumAutomaticConfidence:
             Double = 0.75,
         requiredConfidenceThreshold:
@@ -126,7 +126,7 @@ public struct LieDetector: Sendable {
     }
 
     private func confirmationRequirement(
-        geometryResult: CourseGeometryResult,
+        geometryResult: HoleGeometryResult,
         inferredLie: PlayableLie
     ) -> LieConfirmationRequirement {
 

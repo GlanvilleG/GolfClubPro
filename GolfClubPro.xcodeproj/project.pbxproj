@@ -30,6 +30,7 @@
 		5AFC4F2930022FB8002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2830022FB8002DF421 /* GolfCore */; };
 		5AFC4F2B30022FBE002DF421 /* GolfPlatformApple in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2A30022FBE002DF421 /* GolfPlatformApple */; };
 		5AFC4F2D30022FEE002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2C30022FEE002DF421 /* GolfCore */; };
+		5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +112,7 @@
 		5AFC4E8A300219EF002DF421 /* GolfPlatformApple */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = GolfPlatformApple; sourceTree = "<group>"; };
 		5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-015-Apple-Platform-Integration.md"; sourceTree = "<group>"; };
 		5AFC4F4230041B5D002DF421 /* check_architecture_boundaries.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_architecture_boundaries.sh; sourceTree = "<group>"; };
+		5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-016-Context-Centric-Domain-Architecture.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -375,6 +377,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */,
 				5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */,
 				5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */,
 				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
@@ -672,6 +675,7 @@
 			files = (
 				5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */,
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
+				5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
 				5ABC37A42FFE229900A78677 /* README.md in Resources */,
 				5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData-Persistence.md in Resources */,

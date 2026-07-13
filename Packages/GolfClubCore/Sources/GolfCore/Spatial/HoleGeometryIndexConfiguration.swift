@@ -8,13 +8,31 @@
 import Foundation
 
 public struct HoleGeometryIndexConfiguration:
+    Codable,
+    Equatable,
     Sendable {
 
-    public var teeRadiusMeters = 40
+    public var teeRadiusMeters:
+        Double
 
-    public var greenRadiusMeters = 35
+    public var greenRadiusMeters:
+        Double
 
-    public var nearbyHoleRadiusMeters = 250
+    public var maximumHoleDistanceMeters:
+        Double
 
-    public init() {}
+    public init(
+        teeRadiusMeters: Double = 35,
+        greenRadiusMeters: Double = 25,
+        maximumHoleDistanceMeters: Double = 250
+    ) {
+        self.teeRadiusMeters =
+            max(0, teeRadiusMeters)
+
+        self.greenRadiusMeters =
+            max(0, greenRadiusMeters)
+
+        self.maximumHoleDistanceMeters =
+            max(0, maximumHoleDistanceMeters)
+    }
 }
