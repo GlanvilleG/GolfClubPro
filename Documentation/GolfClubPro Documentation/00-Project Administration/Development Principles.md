@@ -45,5 +45,18 @@ The main branch should always build.
 
 ### 10. Build Incrementally
 
+### 11. Engineering Principle EP-001 — Compute Once, Reuse Many Times
+
+optimize for:
+1. O(1) lookups wherever practical.
+2. Immutable objects.
+3. Pre-computed indexes.
+4. Lazy evaluation.
+5. Cache expensive calculations.
+6. Avoid repeated allocation.
+7. Keep watch-side algorithms deterministic.
+8. Move expensive work to the iPhone where appropriate.
 Every milestone should produce a working, testable application.
+
+
 

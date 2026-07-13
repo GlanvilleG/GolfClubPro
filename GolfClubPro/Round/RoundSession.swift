@@ -30,14 +30,25 @@ final class RoundSession {
 
     // MARK: - Runtime Components
 
+    private(set) var spatialContext:
+        RoundSpatialContext?
+
+    private var spatialContextBuilder:
+        RoundSpatialContextBuilder?
+
     private var orchestrator:
         RoundOrchestrator?
 
     private var locationCoordinator:
         GolfClubLocationCoordinator?
+    
+    private var courseSpatialIndex:
+        CourseSpatialIndex?
+    
+    private var latestLocationObservation:
+        LocationObservation?
 
-    // MARK: - Observable State
-
+    // MARK: - Observable Spatial states
     private(set) var activeSnapshot:
         ActiveRoundSnapshot?
 
@@ -49,8 +60,8 @@ final class RoundSession {
 
     private(set) var pendingGolfClubID:
         GolfClubID?
-
-    private(set) var pendingHoleID:
+   
+   private(set) var pendingHoleID:
         HoleID?
 
     private(set) var isLoading = false
@@ -400,37 +411,30 @@ final class RoundSession {
         let orchestrator =
 
             try await RoundOrchestrator.restoring(
-
                 activeSnapshot: snapshot,
-
                 coordinator:
-
                     roundCoordinator,
-
                 snapshotStore:
-
                     orchestratorSnapshotStore
-
             )
 
         let golfClubs =
-
             try await golfClubCatalogue
-
                 .golfClubs()
 
-        let holes =
+       let holes =
+            try await golfClubCatalogue.holes(
+                courseID:
+                    snapshot.round.courseID
+            )
+        self.courseSpatialIndex =
+            CourseSpatialIndex(
+                holes: holes
+            )
 
-            try await golfClubCatalogue
-
-                .holes(
-
-                    courseID:
-
-                        snapshot.round.courseID
-
-                )
-
+        self.spatialContextBuilder =
+            RoundSpatialContextBuilder()
+               
         let locationCoordinator =
             GolfClubLocationCoordinator(
                 observationStream: {
@@ -446,7 +450,22 @@ final class RoundSession {
                 orchestrator:
                     orchestrator
             )
+        locationCoordinator.onObservation = {
+            [weak self] observation in
 
+            guard let self else {
+                return
+            }
+
+            Task { @MainActor in
+                await self.processLocationObservation(
+                    observation
+                )
+            }
+        }
+        self.locationCoordinator =
+            locationCoordinator
+        
         locationCoordinator.onOutput = {
             [weak self] output in
 
@@ -473,17 +492,28 @@ final class RoundSession {
             locationCoordinator
 
         await refreshRuntimeState()
+        
+        locationCoordinator.start()
 
         startLocationUpdates()
     }
 
     private func stopRuntime() {
+
+        // Spatial runtime
+        spatialContextBuilder = nil
+        spatialContext = nil
+        courseSpatialIndex = nil
+        latestLocationObservation = nil
+
+        // Location services
         locationCoordinator?.stop()
         locationCoordinator = nil
 
         locationProvider.stopUpdates()
         isLocationActive = false
 
+        // Round orchestration
         orchestrator = nil
 
         pendingGolfClubID = nil
@@ -532,6 +562,8 @@ final class RoundSession {
         pendingHoleID =
             await orchestrator
                 .currentPendingHoleID()
+            
+        refreshSpatialContext()
     }
 
     // MARK: - Operation Handling
@@ -559,4 +591,48 @@ final class RoundSession {
         errorMessage =
             "No active round is available."
     }
+    func processLocationObservation(
+        _ observation: LocationObservation
+    ) async {
+        latestLocationObservation =
+            observation
+
+        refreshSpatialContext()
+    }
+    
+    private func refreshSpatialContext() {
+        guard let builder =
+                spatialContextBuilder,
+              let courseIndex =
+                courseSpatialIndex,
+              let observation =
+                latestLocationObservation
+        else {
+            return
+        }
+
+        let currentHoleID =
+            activeSnapshot?
+                .round
+                .currentHoleSession?
+                .holeID
+
+        let input =
+            RoundSpatialContextInput(
+                currentHoleID:
+                    currentHoleID,
+                golferPosition:
+                    observation.coordinate,
+                observedAt:
+                    observation.observedAt,
+                courseIndex:
+                    courseIndex
+            )
+
+        spatialContext =
+            builder.build(
+                input: input
+            )
+    }
+        
 }

@@ -44,6 +44,9 @@ final class GolfClubLocationCoordinator {
 
     var onError:
         (@MainActor (Error) -> Void)?
+    
+    var onObservation:
+        (@MainActor (LocationObservation) -> Void)?
 
     init(
         observationStream:
@@ -96,11 +99,14 @@ final class GolfClubLocationCoordinator {
             @MainActor [weak self] in
 
             for await observation in stream {
+                await onObservation?(
+                    observation
+                )
                 guard let self,
                       !Task.isCancelled else {
                     return
                 }
-
+                
                 let outputs =
                     await self.processLocation(
                         observation

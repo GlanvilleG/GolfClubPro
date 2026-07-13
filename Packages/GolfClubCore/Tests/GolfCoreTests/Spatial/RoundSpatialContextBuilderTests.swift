@@ -11,30 +11,235 @@ import XCTest
 final class RoundSpatialContextBuilderTests:
     XCTestCase {
 
-    func testBuildsUnknownContextWhenNoHoleMatches() {
+    func testBuildsUnknownContextWhenNoHoleIsActive() {
+
         let builder =
-            RoundSpatialContextBuilder(
-                holes: []
-            )
+            RoundSpatialContextBuilder()
 
-        let position =
-            GeoCoordinate(
-                latitude: -39.93,
-                longitude: 175.05
-            )
-
-        let observedAt =
-            Date(
-                timeIntervalSince1970:
-                    1_700_000_000
+        let input =
+            RoundSpatialContextInput(
+                currentHoleID: nil,
+                golferPosition:
+                    GeoCoordinate(
+                        latitude: -39.9300,
+                        longitude: 175.0500
+                    ),
+                observedAt:
+                    Date(
+                        timeIntervalSince1970:
+                            1_700_000_000
+                    ),
+                courseIndex:
+                    CourseSpatialIndex(
+                        holes: []
+                    )
             )
 
         let context =
             builder.build(
+                input: input
+            )
+
+        XCTAssertNil(
+            context.hole
+        )
+
+        XCTAssertEqual(
+            context.holeLocationConfidence,
+            .none
+        )
+
+        XCTAssertTrue(
+            context.requiresConfirmation
+        )
+
+        XCTAssertNil(
+            context.distanceToTeeMeters
+        )
+
+        XCTAssertNil(
+            context.distanceToGreenMeters
+        )
+    }
+
+    func testBuildsContextForActiveHoleWithoutGeometry()
+        throws {
+
+        let hole =
+            makeHole()
+
+        let builder =
+            RoundSpatialContextBuilder()
+
+        let input =
+            RoundSpatialContextInput(
+                currentHoleID:
+                    hole.id,
                 golferPosition:
-                    position,
+                    hole.teeLocation!,
                 observedAt:
-                    observedAt
+                    Date(
+                        timeIntervalSince1970:
+                            1_700_000_000
+                    ),
+                courseIndex:
+                    CourseSpatialIndex(
+                        holes: [hole]
+                    )
+            )
+
+        let context =
+            builder.build(
+                input: input
+            )
+
+        XCTAssertEqual(
+            context.hole?.id,
+            hole.id
+        )
+
+        XCTAssertEqual(
+            context.holeLocationConfidence,
+            .certain
+        )
+
+        let teeDistance =
+            try XCTUnwrap(
+                context.distanceToTeeMeters
+            )
+
+        XCTAssertEqual(
+            teeDistance,
+            0,
+            accuracy: 0.001
+        )
+
+        XCTAssertNotNil(
+            context.distanceToGreenMeters
+        )
+
+        XCTAssertNil(
+            context.holeArea
+        )
+
+        XCTAssertNil(
+            context.playableLie
+        )
+
+        XCTAssertFalse(
+            context.requiresConfirmation
+        )
+    }
+
+    func testBuildsContextWithGeometry()
+        throws {
+
+        var hole =
+            makeHole()
+
+        hole.geometry =
+            HoleGeometry(
+                areas: [
+                    HoleArea(
+                        type: .fairway,
+                        boundary: [
+                            GeoCoordinate(
+                                latitude: -39.9305,
+                                longitude: 175.0495
+                            ),
+                            GeoCoordinate(
+                                latitude: -39.9305,
+                                longitude: 175.0505
+                            ),
+                            GeoCoordinate(
+                                latitude: -39.9295,
+                                longitude: 175.0505
+                            ),
+                            GeoCoordinate(
+                                latitude: -39.9295,
+                                longitude: 175.0495
+                            )
+                        ]
+                    )
+                ]
+            )
+
+        let builder =
+            RoundSpatialContextBuilder()
+
+        let input =
+            RoundSpatialContextInput(
+                currentHoleID:
+                    hole.id,
+                golferPosition:
+                    GeoCoordinate(
+                        latitude: -39.9300,
+                        longitude: 175.0500
+                    ),
+                observedAt:
+                    Date(
+                        timeIntervalSince1970:
+                            1_700_000_000
+                    ),
+                courseIndex:
+                    CourseSpatialIndex(
+                        holes: [hole]
+                    )
+            )
+
+        let context =
+            builder.build(
+                input: input
+            )
+
+        XCTAssertEqual(
+            context.hole?.id,
+            hole.id
+        )
+
+        XCTAssertEqual(
+            context.holeArea,
+            .fairway
+        )
+
+        XCTAssertEqual(
+            context.playableLie,
+            .fairway
+        )
+
+        XCTAssertNotNil(
+            context.nearestBoundaryDistanceMeters
+        )
+    }
+
+    func testUnknownHoleIDReturnsUnknownContext() {
+
+        let hole =
+            makeHole()
+
+        let builder =
+            RoundSpatialContextBuilder()
+
+        let input =
+            RoundSpatialContextInput(
+                currentHoleID:
+                    HoleID(),
+                golferPosition:
+                    hole.teeLocation!,
+                observedAt:
+                    Date(
+                        timeIntervalSince1970:
+                            1_700_000_000
+                    ),
+                courseIndex:
+                    CourseSpatialIndex(
+                        holes: [hole]
+                    )
+            )
+
+        let context =
+            builder.build(
+                input: input
             )
 
         XCTAssertNil(
@@ -51,137 +256,23 @@ final class RoundSpatialContextBuilderTests:
         )
     }
 
-    func testBuildsContextForGolferNearTee() {
-        let hole =
-            Hole(
-                number: 1,
-                par: 4,
-                lengthMeters: 350,
-                teeLocation:
-                    GeoCoordinate(
-                        latitude: -39.93,
-                        longitude: 175.05
-                    ),
-                greenLocation:
-                    GeoCoordinate(
-                        latitude: -39.9275,
-                        longitude: 175.052
-                    )
-            )
+    private func makeHole()
+        -> Hole {
 
-        let builder =
-            RoundSpatialContextBuilder(
-                holes: [hole]
-            )
-
-        let context =
-            builder.build(
-                golferPosition:
-                    GeoCoordinate(
-                        latitude: -39.93,
-                        longitude: 175.05
-                    ),
-                observedAt:
-                    Date(
-                        timeIntervalSince1970:
-                            1_700_000_000
-                    )
-            )
-
-        XCTAssertEqual(
-            context.hole?.id,
-            hole.id
-        )
-
-        XCTAssertEqual(
-            context.holeLocationConfidence,
-            .high
-        )
-
-        XCTAssertNotNil(
-            context.remainingDistanceMeters
-        )
-    }
-
-    func testGeometryAndLieAreIncludedWhenAvailable() {
-        let geometry =
-            HoleGeometry(
-                areas: [
-                    HoleArea(
-                        type: .fairway,
-                        boundary: [
-                            GeoCoordinate(
-                                latitude: -39.931,
-                                longitude: 175.049
-                            ),
-                            GeoCoordinate(
-                                latitude: -39.931,
-                                longitude: 175.051
-                            ),
-                            GeoCoordinate(
-                                latitude: -39.929,
-                                longitude: 175.051
-                            ),
-                            GeoCoordinate(
-                                latitude: -39.929,
-                                longitude: 175.049
-                            )
-                        ]
-                    )
-                ]
-            )
-
-        let hole =
-            Hole(
-                number: 1,
-                par: 4,
-                lengthMeters: 350,
-                teeLocation:
-                    GeoCoordinate(
-                        latitude: -39.93,
-                        longitude: 175.05
-                    ),
-                greenLocation:
-                    GeoCoordinate(
-                        latitude: -39.9275,
-                        longitude: 175.052
-                    ),
-                geometry:
-                    geometry
-            )
-
-        let builder =
-            RoundSpatialContextBuilder(
-                holes: [hole]
-            )
-
-        let context =
-            builder.build(
-                golferPosition:
-                    GeoCoordinate(
-                        latitude: -39.93,
-                        longitude: 175.05
-                    ),
-                observedAt:
-                    Date(
-                        timeIntervalSince1970:
-                            1_700_000_000
-                    )
-            )
-
-        XCTAssertEqual(
-            context.holeArea,
-            .fairway
-        )
-
-        XCTAssertEqual(
-            context.playableLie,
-            .fairway
-        )
-
-        XCTAssertNotNil(
-            context
-                .nearestBoundaryDistanceMeters
+        Hole(
+            number: 1,
+            par: 4,
+            lengthMeters: 350,
+            teeLocation:
+                GeoCoordinate(
+                    latitude: -39.9300,
+                    longitude: 175.0500
+                ),
+            greenLocation:
+                GeoCoordinate(
+                    latitude: -39.9275,
+                    longitude: 175.0520
+                )
         )
     }
 }

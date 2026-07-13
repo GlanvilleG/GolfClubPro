@@ -9,9 +9,6 @@ import Foundation
 public struct RoundSpatialContextBuilder:
     Sendable {
 
-    private let holeIndex:
-        HoleGeometryIndex
-
     private let geometryEngine:
         HoleGeometryEngine
 
@@ -19,10 +16,6 @@ public struct RoundSpatialContextBuilder:
         LieDetector
 
     public init(
-        holes: [Hole],
-        indexConfiguration:
-            HoleGeometryIndexConfiguration =
-                HoleGeometryIndexConfiguration(),
         geometryEngine:
             HoleGeometryEngine =
                 HoleGeometryEngine(),
@@ -30,13 +23,6 @@ public struct RoundSpatialContextBuilder:
             LieDetector =
                 LieDetector()
     ) {
-        self.holeIndex =
-            HoleGeometryIndex(
-                holes: holes,
-                configuration:
-                    indexConfiguration
-            )
-
         self.geometryEngine =
             geometryEngine
 
@@ -45,72 +31,69 @@ public struct RoundSpatialContextBuilder:
     }
 
     public func build(
-        golferPosition: GeoCoordinate,
-        observedAt: Date
+        input: RoundSpatialContextInput
     ) -> RoundSpatialContext {
 
-        let locationResult =
-            holeIndex.locate(
-                golfer: golferPosition
-            )
-
-        guard let hole =
-                locationResult.hole
+        guard let currentHoleID =
+                input.currentHoleID,
+              let hole =
+                input.courseIndex.hole(
+                    id: currentHoleID
+                )
         else {
-            return RoundSpatialContext(
-                observedAt:
-                    observedAt,
-                golferPosition:
-                    golferPosition,
-                hole: nil,
-                holeLocationConfidence:
-                    .none,
-                requiresConfirmation:
-                    true
+            return makeUnknownContext(
+                input: input
             )
         }
 
-        let remainingDistance =
-            hole.greenLocation.map {
-                DistanceCalculator
-                    .distanceMeters(
-                        from:
-                            golferPosition,
-                        to: $0
-                    )
-            }
+        let distanceToTee =
+            input.courseIndex
+                .distanceToTeeMeters(
+                    from:
+                        input.golferPosition,
+                    holeID:
+                        currentHoleID
+                )
+
+        let distanceToGreen =
+            input.courseIndex
+                .distanceToGreenMeters(
+                    from:
+                        input.golferPosition,
+                    holeID:
+                        currentHoleID
+                )
 
         guard let geometry =
-                hole.geometry
+                input.courseIndex.geometry(
+                    for: currentHoleID
+                ),
+              !geometry.areas.isEmpty
         else {
             return RoundSpatialContext(
                 observedAt:
-                    observedAt,
+                    input.observedAt,
                 golferPosition:
-                    golferPosition,
+                    input.golferPosition,
                 hole:
                     hole,
                 holeLocationConfidence:
-                    locationResult
-                        .confidence,
+                    .certain,
                 distanceToTeeMeters:
-                    locationResult
-                        .distanceToTeeMeters,
+                    distanceToTee,
                 distanceToGreenMeters:
-                    locationResult
-                        .distanceToGreenMeters,
+                    distanceToGreen,
                 remainingDistanceMeters:
-                    remainingDistance,
+                    distanceToGreen,
                 requiresConfirmation:
-                    locationResult
-                        .requiresConfirmation
+                    false
             )
         }
 
         let geometryResult =
             geometryEngine.evaluate(
                 location:
-                    golferPosition,
+                    input.golferPosition,
                 geometry:
                     geometry
             )
@@ -118,47 +101,54 @@ public struct RoundSpatialContextBuilder:
         let lieResult =
             lieDetector.detectLie(
                 at:
-                    golferPosition,
+                    input.golferPosition,
                 using:
                     geometry
             )
 
-        let requiresConfirmation =
-            locationResult
-                .requiresConfirmation ||
-            lieResult
-                .confirmationRequirement
-                .shouldPromptGolfer
-
         return RoundSpatialContext(
             observedAt:
-                observedAt,
+                input.observedAt,
             golferPosition:
-                golferPosition,
+                input.golferPosition,
             hole:
                 hole,
             holeLocationConfidence:
-                locationResult
-                    .confidence,
+                .certain,
             holeArea:
-                geometryResult
-                    .primaryArea,
+                geometryResult.primaryArea,
             playableLie:
-                lieResult
-                    .playableLie,
+                lieResult.playableLie,
             distanceToTeeMeters:
-                locationResult
-                    .distanceToTeeMeters,
+                distanceToTee,
             distanceToGreenMeters:
-                locationResult
-                    .distanceToGreenMeters,
+                distanceToGreen,
             remainingDistanceMeters:
-                remainingDistance,
+                distanceToGreen,
             nearestBoundaryDistanceMeters:
                 geometryResult
                     .nearestBoundaryDistanceMeters,
             requiresConfirmation:
-                requiresConfirmation
+                lieResult
+                    .confirmationRequirement
+                    .shouldPromptGolfer
+        )
+    }
+
+    private func makeUnknownContext(
+        input: RoundSpatialContextInput
+    ) -> RoundSpatialContext {
+        RoundSpatialContext(
+            observedAt:
+                input.observedAt,
+            golferPosition:
+                input.golferPosition,
+            hole:
+                nil,
+            holeLocationConfidence:
+                .none,
+            requiresConfirmation:
+                true
         )
     }
 }
