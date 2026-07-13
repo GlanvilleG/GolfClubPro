@@ -50,24 +50,56 @@ public enum LieSource: String, Codable, Sendable {
     case unknown
 }
 
-public struct LieDetectionResult: Codable, Equatable, Sendable {
-    public var courseArea: CourseAreaType
-    public var playableLie: PlayableLie
-    public var source: LieSource
-    public var confidence: Double?
-    public var distanceToBoundaryMeters: Double?
+public struct LieDetectionResult:
+    Codable,
+    Equatable,
+    Sendable {
+
+    public var courseArea:
+        CourseAreaType
+
+    public var playableLie:
+        PlayableLie
+
+    public var source:
+        LieSource
+
+    public var confidence:
+        Double?
+
+    public var distanceToBoundaryMeters:
+        Double?
+
+    public var confirmationRequirement:
+        LieConfirmationRequirement
 
     public init(
         courseArea: CourseAreaType,
         playableLie: PlayableLie,
         source: LieSource,
         confidence: Double? = nil,
-        distanceToBoundaryMeters: Double? = nil
+        distanceToBoundaryMeters:
+            Double? = nil,
+        confirmationRequirement:
+            LieConfirmationRequirement =
+                .notRequired
     ) {
-        self.courseArea = courseArea
-        self.playableLie = playableLie
-        self.source = source
-        self.confidence = confidence
-        self.distanceToBoundaryMeters = distanceToBoundaryMeters
+        self.courseArea =
+            courseArea
+
+        self.playableLie =
+            playableLie
+
+        self.source =
+            source
+
+        self.confidence =
+            confidence
+
+        self.distanceToBoundaryMeters =
+            distanceToBoundaryMeters
+
+        self.confirmationRequirement =
+            confirmationRequirement
     }
 }
