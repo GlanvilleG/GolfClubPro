@@ -47,6 +47,10 @@ Round
    │
    ├── Course
    │      └── Holes
+                 └── Hole
+                        ├── Tee Location
+                        ├── Green Location
+                        ├── Geometry
    │
    ├── Weather Context
    │

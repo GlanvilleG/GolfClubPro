@@ -38,7 +38,7 @@ public struct TargetSelector: Sendable {
     public func selectTarget(
         from currentPosition: GeoCoordinate,
         routes: [PlayingRoute],
-        hazards: [CourseArea]
+        hazards: [HoleArea]
     ) -> TargetSelection? {
         let candidates = routes.compactMap { route -> TargetSelection? in
             guard let target = route.immediateTarget else {

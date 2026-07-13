@@ -70,6 +70,7 @@ final class BundledGolfClubCatalogueLoaderTests:
 
         XCTAssertThrowsError(
             try loader.load()
+            
         ) { error in
             XCTAssertEqual(
                 error as?

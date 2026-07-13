@@ -106,7 +106,7 @@ public struct OfflineRoundCoordinator: Sendable {
     public func announceClub(
         _ clubID: ClubID,
         currentLocation: GeoCoordinate? = nil,
-        courseGeometry: CourseGeometry? = nil,
+        courseGeometry: HoleGeometry? = nil,
         in snapshot: ActiveRoundSnapshot
     ) throws -> ActiveRoundSnapshot {
         let previousShotIDs = currentShotIDs(
@@ -331,7 +331,7 @@ public struct OfflineRoundCoordinator: Sendable {
     // MARK: - Snapshot Cache Updates
 
     public func cacheCourseGeometry(
-        _ geometry: CourseGeometry,
+        _ geometry: HoleGeometry,
         in snapshot: ActiveRoundSnapshot
     ) -> ActiveRoundSnapshot {
         var updated = snapshot

@@ -126,7 +126,7 @@ public struct RoundEngine: Sendable {
     public func announceClub(
         clubID: ClubID,
         currentLocation: GeoCoordinate? = nil,
-        courseGeometry: CourseGeometry? = nil,
+        courseGeometry: HoleGeometry? = nil,
         using lieDetector: LieDetector = LieDetector(),
         for round: Round
     ) throws -> Round {
@@ -166,7 +166,7 @@ public struct RoundEngine: Sendable {
                     using: geometry
                 )
 
-                completedShot.inferredCourseArea = result.courseArea
+                completedShot.inferredCourseArea = result.holeArea
                 completedShot.inferredPlayableLie = result.playableLie
                 completedShot.lieSource = result.source
                 completedShot.lieDetectionConfidence = result.confidence

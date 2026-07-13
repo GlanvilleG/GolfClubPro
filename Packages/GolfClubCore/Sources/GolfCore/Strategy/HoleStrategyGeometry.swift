@@ -10,7 +10,7 @@ public struct HoleStrategyGeometry: Codable, Equatable, Sendable {
     public var holeID: HoleID
     public var centreLine: [GeoCoordinate]
     public var landingZones: [LandingZone]
-    public var hazards: [CourseArea]
+    public var hazards: [HoleArea]
     public var greenCentre: GeoCoordinate
     public var pinLocation: GeoCoordinate?
 
@@ -18,7 +18,7 @@ public struct HoleStrategyGeometry: Codable, Equatable, Sendable {
         holeID: HoleID,
         centreLine: [GeoCoordinate] = [],
         landingZones: [LandingZone] = [],
-        hazards: [CourseArea] = [],
+        hazards: [HoleArea] = [],
         greenCentre: GeoCoordinate,
         pinLocation: GeoCoordinate? = nil
     ) {

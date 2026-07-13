@@ -220,9 +220,9 @@ final class RoundEngineTests: XCTestCase {
         XCTAssertEqual(shot.feedback?.sentiment, .negative)
     }
     func testNextClubInfersPreviousShotLie() throws {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .fairway,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),
@@ -264,14 +264,14 @@ final class RoundEngineTests: XCTestCase {
         XCTAssertEqual(shots[0].inferredPlayableLie, .fairway)
         XCTAssertEqual(
             shots[0].lieSource,
-            .inferredFromCourseGeometry
+            .inferredFromHoleGeometry
         )
         XCTAssertEqual(shots[0].effectivePlayableLie, .fairway)
     }
     func testGolferCanCorrectInferredLie() throws {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .rough,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),

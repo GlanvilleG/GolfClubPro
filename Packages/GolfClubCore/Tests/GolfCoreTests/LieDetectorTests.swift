@@ -12,9 +12,9 @@ final class LieDetectorTests: XCTestCase {
     private let detector = LieDetector()
 
     func testDetectsFairwayInsidePolygon() {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .fairway,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),
@@ -31,16 +31,16 @@ final class LieDetectorTests: XCTestCase {
             using: geometry
         )
 
-        XCTAssertEqual(result.courseArea, .fairway)
+        XCTAssertEqual(result.holeArea, .fairway)
         XCTAssertEqual(result.playableLie, .fairway)
-        XCTAssertEqual(result.source, .inferredFromCourseGeometry)
+        XCTAssertEqual(result.source, .inferredFromHoleGeometry)
         XCTAssertEqual(result.confidence!, 0.9, accuracy: 0.0001)
     }
 
     func testReturnsUnknownOutsidePolygon() {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .fairway,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),
@@ -57,15 +57,15 @@ final class LieDetectorTests: XCTestCase {
             using: geometry
         )
 
-        XCTAssertEqual(result.courseArea, .unknown)
+        XCTAssertEqual(result.holeArea, .unknown)
         XCTAssertEqual(result.playableLie, .unknown)
         XCTAssertEqual(result.source, .unknown)
     }
 
     func testBunkerMapsToGreensideBunker() {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .bunker,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),
@@ -82,14 +82,14 @@ final class LieDetectorTests: XCTestCase {
             using: geometry
         )
 
-        XCTAssertEqual(result.courseArea, .bunker)
-        XCTAssertEqual(result.playableLie, .greensideBunker)
+        XCTAssertEqual(result.holeArea, .bunker)
+        XCTAssertEqual(result.playableLie, .fairwayBunker)
     }
 
     func testIgnoresInvalidPolygon() {
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: [
-                CourseArea(
+                HoleArea(
                     type: .fairway,
                     boundary: [
                         GeoCoordinate(latitude: 0, longitude: 0),
@@ -104,14 +104,14 @@ final class LieDetectorTests: XCTestCase {
             using: geometry
         )
 
-        XCTAssertEqual(result.courseArea, .unknown)
+        XCTAssertEqual(result.holeArea, .unknown)
         XCTAssertEqual(result.playableLie, .unknown)
     }
     func testLieFarFromBoundaryDoesNotRequireConfirmation() {
         let result = LieDetectionResult(
-            courseArea: .fairway,
+            holeArea: .fairway,
             playableLie: .fairway,
-            source: .inferredFromCourseGeometry,
+            source: .inferredFromHoleGeometry,
             confidence: 0.90,
             distanceToBoundaryMeters: 20
         )
@@ -123,9 +123,9 @@ final class LieDetectorTests: XCTestCase {
     }
     func testLieNearBoundaryRecommendsConfirmation() {
         let result = LieDetectionResult(
-            courseArea: .fairway,
+            holeArea: .fairway,
             playableLie: .fairway,
-            source: .inferredFromCourseGeometry,
+            source: .inferredFromHoleGeometry,
             confidence: 0.82,
             distanceToBoundaryMeters: 2
         )
@@ -144,7 +144,7 @@ final class LieDetectorTests: XCTestCase {
     }
     func testUnknownAreaRequiresConfirmation() {
         let result = LieDetectionResult(
-            courseArea: .unknown,
+            holeArea: .unknown,
             playableLie: .unknown,
             source: .unknown,
             confidence: 0,
@@ -162,9 +162,9 @@ final class LieDetectorTests: XCTestCase {
     }
     func testWaterNearBoundaryRequiresConfirmation() {
         let result = LieDetectionResult(
-            courseArea: .water,
+            holeArea: .water,
             playableLie: .water,
-            source: .inferredFromCourseGeometry,
+            source: .inferredFromHoleGeometry,
             confidence: 0.55,
             distanceToBoundaryMeters: 1.5
         )

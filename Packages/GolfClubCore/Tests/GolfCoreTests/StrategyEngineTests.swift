@@ -49,7 +49,7 @@ final class StrategyEngineTests: XCTestCase {
             label: "Safe fairway"
         )
 
-        let water = CourseArea(
+        let water = HoleArea(
             type: .water,
             boundary: [
                 GeoCoordinate(latitude: 4, longitude: 4),

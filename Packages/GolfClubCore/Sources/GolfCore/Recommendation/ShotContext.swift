@@ -96,7 +96,7 @@ public struct ShotContext:
 
     public var currentPosition: GeoCoordinate
     public var playableLie: PlayableLie
-    public var courseArea: CourseAreaType
+    public var courseArea: HoleAreaType
 
     public var availableClubs: [Club]
     public var recentShotHistory: [RecentShotSummary]
@@ -114,7 +114,7 @@ public struct ShotContext:
         hole: Hole,
         currentPosition: GeoCoordinate,
         playableLie: PlayableLie,
-        courseArea: CourseAreaType,
+        courseArea: HoleAreaType,
         availableClubs: [Club],
         recentShotHistory: [RecentShotSummary] = [],
         dispersionSummaries: [ClubDispersionSummary] = [],

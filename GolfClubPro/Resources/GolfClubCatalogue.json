@@ -5,12 +5,136 @@
         {
           "holes" : [
             {
+              "geometry" : {
+                "areas" : [
+                  {
+                    "boundary" : [
+                      {
+                        "latitude" : -39.93,
+                        "longitude" : 175.05
+                      },
+                      {
+                        "latitude" : -39.9292,
+                        "longitude" : 175.0506
+                      },
+                      {
+                        "latitude" : -39.9282,
+                        "longitude" : 175.0512
+                      },
+                      {
+                        "latitude" : -39.9275,
+                        "longitude" : 175.052
+                      },
+                      {
+                        "latitude" : -39.9278,
+                        "longitude" : 175.0524
+                      },
+                      {
+                        "latitude" : -39.9287,
+                        "longitude" : 175.0517
+                      },
+                      {
+                        "latitude" : -39.9296,
+                        "longitude" : 175.0509
+                      }
+                    ],
+                    "type" : "fairway"
+                  },
+                  {
+                    "boundary" : [
+                      {
+                        "latitude" : -39.92765,
+                        "longitude" : 175.0518
+                      },
+                      {
+                        "latitude" : -39.92745,
+                        "longitude" : 175.05192
+                      },
+                      {
+                        "latitude" : -39.9274,
+                        "longitude" : 175.05215
+                      },
+                      {
+                        "latitude" : -39.92755,
+                        "longitude" : 175.0523
+                      },
+                      {
+                        "latitude" : -39.92775,
+                        "longitude" : 175.05215
+                      },
+                      {
+                        "latitude" : -39.9278,
+                        "longitude" : 175.05195
+                      }
+                    ],
+                    "type" : "green"
+                  },
+                  {
+                    "boundary" : [
+                      {
+                        "latitude" : -39.9279,
+                        "longitude" : 175.05172
+                      },
+                      {
+                        "latitude" : -39.92778,
+                        "longitude" : 175.0518
+                      },
+                      {
+                        "latitude" : -39.92782,
+                        "longitude" : 175.05196
+                      },
+                      {
+                        "latitude" : -39.92796,
+                        "longitude" : 175.0519
+                      }
+                    ],
+                    "type" : "bunker"
+                  },
+                  {
+                    "boundary" : [
+                      {
+                        "latitude" : -39.9302,
+                        "longitude" : 175.0497
+                      },
+                      {
+                        "latitude" : -39.929,
+                        "longitude" : 175.0502
+                      },
+                      {
+                        "latitude" : -39.9279,
+                        "longitude" : 175.051
+                      },
+                      {
+                        "latitude" : -39.9272,
+                        "longitude" : 175.0517
+                      },
+                      {
+                        "latitude" : -39.9273,
+                        "longitude" : 175.0526
+                      },
+                      {
+                        "latitude" : -39.9282,
+                        "longitude" : 175.0522
+                      },
+                      {
+                        "latitude" : -39.9292,
+                        "longitude" : 175.0514
+                      },
+                      {
+                        "latitude" : -39.9301,
+                        "longitude" : 175.0507
+                      }
+                    ],
+                    "type" : "rough"
+                  }
+                ]
+              },
               "greenLocation" : {
                 "latitude" : -39.9275,
                 "longitude" : 175.052
               },
               "id" : {
-                "value" : "11111111-1111-1111-1111-111111111111"
+                "value" : "A5854F4B-AE98-48D4-B2F2-120AA1E91AC8"
               },
               "lengthMeters" : 350,
               "number" : 1,
@@ -23,7 +147,7 @@
             }
           ],
           "id" : {
-            "value" : "22222222-2222-2222-2222-222222222222"
+            "value" : "2332C564-58EC-4F5B-91AE-58F084E774E3"
           },
           "name" : "Main Course",
           "teeSets" : [
@@ -33,7 +157,7 @@
       ],
       "detectionRadiusMeters" : 1000,
       "id" : {
-        "value" : "33333333-3333-3333-3333-333333333301"
+        "value" : "E2742BF6-E8E3-4D02-8363-B3DDFAF58036"
       },
       "location" : {
         "latitude" : -39.93,

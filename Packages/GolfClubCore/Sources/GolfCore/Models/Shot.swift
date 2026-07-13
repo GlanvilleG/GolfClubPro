@@ -42,7 +42,7 @@ public struct Shot: Codable, Equatable, Sendable {
     public var plannedBearingDegrees: Double?
     public var plannedDistanceMeters: Double?
 
-    public var inferredCourseArea: CourseAreaType?
+    public var inferredCourseArea: HoleAreaType?
     public var inferredPlayableLie: PlayableLie?
     public var confirmedPlayableLie: PlayableLie?
     public var lieSource: LieSource?
@@ -67,7 +67,7 @@ public struct Shot: Codable, Equatable, Sendable {
         distanceMeters: Double? = nil,
         plannedBearingDegrees: Double? = nil,
         plannedDistanceMeters: Double? = nil,
-        inferredCourseArea: CourseAreaType? = nil,
+        inferredCourseArea:HoleAreaType? = nil,
         inferredPlayableLie: PlayableLie? = nil,
         confirmedPlayableLie: PlayableLie? = nil,
         lieSource: LieSource? = nil,

@@ -177,7 +177,7 @@ final class RecommendationEngineTests: XCTestCase {
         targetDistanceMeters: Double,
         clubs: [Club],
         lie: PlayableLie = .fairway,
-        courseArea: CourseAreaType = .fairway,
+        courseArea: HoleAreaType = .fairway,
         history: [RecentShotSummary] = []
     ) -> ShotContext {
         let player = Player(name: "Gerard")

@@ -75,7 +75,7 @@ public struct PersistentOfflineRoundCoordinator:
         currentLocation:
             GeoCoordinate? = nil,
         courseGeometry:
-            CourseGeometry? = nil,
+            HoleGeometry? = nil,
         in snapshot:
             ActiveRoundSnapshot
     ) async throws -> ActiveRoundSnapshot {

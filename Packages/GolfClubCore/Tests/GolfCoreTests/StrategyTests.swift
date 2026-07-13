@@ -162,7 +162,7 @@ final class StrategyTests: XCTestCase {
     // MARK: - Obstacle Evaluator
 
     func testObstacleEvaluatorDetectsWaterIntersection() {
-        let water = CourseArea(
+        let water = HoleArea(
             type: .water,
             boundary: squareBoundary(
                 minimumLatitude: 4,
@@ -186,7 +186,7 @@ final class StrategyTests: XCTestCase {
     }
 
     func testObstacleEvaluatorTreatsTreesAsBlocked() {
-        let trees = CourseArea(
+        let trees = HoleArea(
             type: .trees,
             boundary: squareBoundary(
                 minimumLatitude: 4,
@@ -209,7 +209,7 @@ final class StrategyTests: XCTestCase {
     }
 
     func testObstacleEvaluatorReturnsLowRiskForClearRoute() {
-        let bunker = CourseArea(
+        let bunker = HoleArea(
             type: .bunker,
             boundary: squareBoundary(
                 minimumLatitude: 20,
@@ -298,7 +298,7 @@ final class StrategyTests: XCTestCase {
             estimatedRisk: 0.15
         )
 
-        let water = CourseArea(
+        let water = HoleArea(
             type: .water,
             boundary: squareBoundary(
                 minimumLatitude: 4,

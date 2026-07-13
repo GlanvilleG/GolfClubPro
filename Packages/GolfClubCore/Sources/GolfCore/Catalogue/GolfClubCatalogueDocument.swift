@@ -14,12 +14,15 @@ public struct GolfClubCatalogueDocument:
 
     public var schemaVersion: Int
     public var golfClubs: [GolfClub]
-
+      
+    
     public init(
         schemaVersion: Int = 1,
-        golfClubs: [GolfClub]
+        golfClubs: [GolfClub],
+        
     ) {
         self.schemaVersion = schemaVersion
         self.golfClubs = golfClubs
+       
     }
 }

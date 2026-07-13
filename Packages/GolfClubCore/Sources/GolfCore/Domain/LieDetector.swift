@@ -9,279 +9,307 @@ import Foundation
 
 public struct LieDetector: Sendable {
 
-    public init() {}
+    private let geometryEngine:
+        CourseGeometryEngine
+
+    private let minimumAutomaticConfidence:
+        Double
+
+    private let requiredConfidenceThreshold:
+        Double
+
+    private let boundaryDistanceMeters:
+        Double
+
+    public init(
+        geometryEngine:
+            CourseGeometryEngine =
+                CourseGeometryEngine(),
+        minimumAutomaticConfidence:
+            Double = 0.75,
+        requiredConfidenceThreshold:
+            Double = 0.40,
+        boundaryDistanceMeters:
+            Double = 5
+    ) {
+        self.geometryEngine =
+            geometryEngine
+
+        self.minimumAutomaticConfidence =
+            Self.clamp(
+                minimumAutomaticConfidence
+            )
+
+        self.requiredConfidenceThreshold =
+            Self.clamp(
+                requiredConfidenceThreshold
+            )
+
+        self.boundaryDistanceMeters =
+            max(
+                0,
+                boundaryDistanceMeters
+            )
+    }
 
     public func detectLie(
         at coordinate: GeoCoordinate,
-        using geometry: CourseGeometry
+        using geometry: HoleGeometry
     ) -> LieDetectionResult {
-        for area in geometry.areas {
-            guard area.boundary.count >= 3 else {
-                continue
-            }
 
-            if contains(coordinate, in: area.boundary) {
-                let boundaryDistance = minimumDistanceToBoundaryMeters(
-                    from: coordinate,
-                    polygon: area.boundary
-                )
+        let geometryResult =
+            geometryEngine.evaluate(
+                location: coordinate,
+                geometry: geometry
+            )
 
-                return LieDetectionResult(
-                    courseArea: area.type,
-                    playableLie: playableLie(for: area.type),
-                    source: .inferredFromCourseGeometry,
-                    confidence: confidence(
-                        for: area.type,
-                        distanceToBoundaryMeters: boundaryDistance
-                    ),
-                    distanceToBoundaryMeters: boundaryDistance
-                )
-            }
-        }
+        let inferredLie =
+            playableLie(
+                for: geometryResult.primaryArea
+            )
+
+        let source: LieSource =
+            geometryResult.primaryArea == .unknown
+            ? .unknown
+            : .inferredFromHoleGeometry
+
+        let requirement =
+            confirmationRequirement(
+                geometryResult:
+                    geometryResult,
+                inferredLie:
+                    inferredLie
+            )
 
         return LieDetectionResult(
-            courseArea: .unknown,
-            playableLie: .unknown,
-            source: .unknown,
-            confidence: 0,
-            distanceToBoundaryMeters: nil
+            holeArea:
+                geometryResult.primaryArea,
+            playableLie:
+                inferredLie,
+            source:
+                source,
+            confidence:
+                geometryResult.confidence,
+            distanceToBoundaryMeters:
+                geometryResult
+                    .nearestBoundaryDistanceMeters,
+            confirmationRequirement:
+                requirement
         )
     }
 
     public func confirmationRequirement(
-        for result: LieDetectionResult,
-        confidenceThreshold: Double = 0.70,
-        boundaryThresholdMeters: Double = 5
+        for result: LieDetectionResult
     ) -> LieConfirmationRequirement {
-        var reasons: [LieConfirmationReason] = []
 
-        if result.courseArea == .unknown ||
-            result.playableLie == .unknown {
-            reasons.append(.unknownArea)
+        let reasons =
+            confirmationReasons(
+                holeArea:
+                    result.holeArea,
+                playableLie:
+                    result.playableLie,
+                confidence:
+                    result.confidence ?? 0,
+                distanceToBoundaryMeters:
+                    result
+                        .distanceToBoundaryMeters
+            )
+
+        return makeConfirmationRequirement(
+            inferredLie:
+                result.playableLie,
+            confidence:
+                result.confidence ?? 0,
+            reasons:
+                reasons
+        )
+    }
+
+    private func confirmationRequirement(
+        geometryResult: CourseGeometryResult,
+        inferredLie: PlayableLie
+    ) -> LieConfirmationRequirement {
+
+        let reasons =
+            confirmationReasons(
+                holeArea:
+                    geometryResult.primaryArea,
+                playableLie:
+                    inferredLie,
+                confidence:
+                    geometryResult.confidence,
+                distanceToBoundaryMeters:
+                    geometryResult
+                        .nearestBoundaryDistanceMeters
+            )
+
+        return makeConfirmationRequirement(
+            inferredLie:
+                inferredLie,
+            confidence:
+                geometryResult.confidence,
+            reasons:
+                reasons
+        )
+    }
+
+    private func confirmationReasons(
+        holeArea: HoleAreaType,
+        playableLie: PlayableLie,
+        confidence: Double,
+        distanceToBoundaryMeters:
+            Double?
+    ) -> [LieConfirmationReason] {
+
+        var reasons:
+            [LieConfirmationReason] = []
+
+        if holeArea == .unknown ||
+            playableLie == .unknown {
+
+            reasons.append(
+                .unknownArea
+            )
         }
 
-        if (result.confidence ?? 0) < confidenceThreshold {
-            reasons.append(.lowConfidence)
+        if confidence <
+            minimumAutomaticConfidence {
+
+            reasons.append(
+                .lowConfidence
+            )
         }
 
-        if let distance = result.distanceToBoundaryMeters,
-           distance <= boundaryThresholdMeters {
-            reasons.append(.nearBoundary)
+        if let distance =
+                distanceToBoundaryMeters,
+           distance <=
+                boundaryDistanceMeters {
+
+            reasons.append(
+                .nearBoundary
+            )
         }
 
-        if isSensitiveArea(result.courseArea) {
-            reasons.append(.sensitiveArea)
+        if isSensitiveArea(
+            holeArea
+        ) {
+            reasons.append(
+                .sensitiveArea
+            )
         }
 
-        if reasons.contains(.unknownArea) {
+        return Array(
+            Set(reasons)
+        )
+    }
+
+    private func makeConfirmationRequirement(
+        inferredLie: PlayableLie,
+        confidence: Double,
+        reasons: [LieConfirmationReason]
+    ) -> LieConfirmationRequirement {
+
+        guard !reasons.isEmpty else {
+            return .notRequired
+        }
+
+        let requiresConfirmation =
+            inferredLie == .unknown ||
+            confidence <
+                requiredConfidenceThreshold ||
+            reasons.contains(
+                .unknownArea
+            ) ||
+            reasons.contains(
+                .sensitiveArea
+            )
+
+        if requiresConfirmation {
             return .required(
-                inferredLie: result.playableLie,
-                reasons: reasons
+                inferredLie:
+                    inferredLie,
+                reasons:
+                    reasons
             )
         }
 
-        if reasons.contains(.sensitiveArea),
-           reasons.contains(.nearBoundary) ||
-            reasons.contains(.lowConfidence) {
-            return .required(
-                inferredLie: result.playableLie,
-                reasons: reasons
-            )
-        }
-
-        if !reasons.isEmpty {
-            return .recommended(
-                inferredLie: result.playableLie,
-                reasons: reasons
-            )
-        }
-
-        return .notRequired
+        return .recommended(
+            inferredLie:
+                inferredLie,
+            reasons:
+                reasons
+        )
     }
 
     private func playableLie(
-        for areaType: CourseAreaType
+        for area: HoleAreaType
     ) -> PlayableLie {
-        switch areaType {
+
+        switch area {
+
         case .tee:
             return .tee
+
         case .fairway:
             return .fairway
+
         case .rough:
             return .lightRough
+
         case .green:
             return .green
+
         case .fringe:
             return .fringe
+
         case .bunker:
-            return .greensideBunker
+            return .fairwayBunker
+
         case .water:
             return .water
+
         case .trees:
             return .trees
+
         case .outOfBounds:
             return .outOfBounds
+
         case .penaltyArea:
             return .penaltyArea
-        case .cartPath:
-            return .cartPath
-        case .nativeArea:
-            return .recovery
+
         case .unknown:
+            return .unknown
+
+        @unknown default:
             return .unknown
         }
     }
 
-    private func confidence(
-        for areaType: CourseAreaType,
-        distanceToBoundaryMeters: Double
-    ) -> Double {
-        let baseConfidence: Double
-
-        switch areaType {
-        case .fairway, .green, .tee:
-            baseConfidence = 0.90
-        case .rough, .fringe, .bunker:
-            baseConfidence = 0.82
-        case .trees, .nativeArea, .cartPath:
-            baseConfidence = 0.72
-        case .water, .outOfBounds, .penaltyArea:
-            baseConfidence = 0.70
-        case .unknown:
-            baseConfidence = 0
-        }
-
-        switch distanceToBoundaryMeters {
-        case ..<2:
-            return max(0, baseConfidence - 0.35)
-        case 2..<5:
-            return max(0, baseConfidence - 0.20)
-        case 5..<10:
-            return max(0, baseConfidence - 0.08)
-        default:
-            return baseConfidence
-        }
-    }
-
     private func isSensitiveArea(
-        _ areaType: CourseAreaType
+        _ area: HoleAreaType
     ) -> Bool {
-        switch areaType {
-        case .water, .outOfBounds, .penaltyArea:
+
+        switch area {
+        case .water,
+             .outOfBounds,
+             .penaltyArea:
             return true
+
         default:
             return false
         }
     }
 
-    private func contains(
-        _ point: GeoCoordinate,
-        in polygon: [GeoCoordinate]
-    ) -> Bool {
-        var isInside = false
-        var previousIndex = polygon.count - 1
-
-        for currentIndex in polygon.indices {
-            let current = polygon[currentIndex]
-            let previous = polygon[previousIndex]
-
-            let intersects =
-                ((current.latitude > point.latitude) !=
-                    (previous.latitude > point.latitude)) &&
-                (
-                    point.longitude <
-                    (previous.longitude - current.longitude) *
-                    (point.latitude - current.latitude) /
-                    (previous.latitude - current.latitude) +
-                    current.longitude
-                )
-
-            if intersects {
-                isInside.toggle()
-            }
-
-            previousIndex = currentIndex
-        }
-
-        return isInside
-    }
-
-    private func minimumDistanceToBoundaryMeters(
-        from point: GeoCoordinate,
-        polygon: [GeoCoordinate]
+    private static func clamp(
+        _ value: Double
     ) -> Double {
-        guard polygon.count >= 2 else {
-            return .infinity
-        }
-
-        var minimumDistance = Double.infinity
-
-        for index in polygon.indices {
-            let start = polygon[index]
-            let end = polygon[(index + 1) % polygon.count]
-
-            minimumDistance = min(
-                minimumDistance,
-                distanceToSegmentMeters(
-                    point: point,
-                    start: start,
-                    end: end
-                )
+        min(
+            1,
+            max(
+                0,
+                value
             )
-        }
-
-        return minimumDistance
-    }
-
-    private func distanceToSegmentMeters(
-        point: GeoCoordinate,
-        start: GeoCoordinate,
-        end: GeoCoordinate
-    ) -> Double {
-        let referenceLatitude =
-            point.latitude * .pi / 180
-
-        let metersPerLatitudeDegree = 111_320.0
-        let metersPerLongitudeDegree =
-            111_320.0 * cos(referenceLatitude)
-
-        let pointX =
-            point.longitude * metersPerLongitudeDegree
-        let pointY =
-            point.latitude * metersPerLatitudeDegree
-
-        let startX =
-            start.longitude * metersPerLongitudeDegree
-        let startY =
-            start.latitude * metersPerLatitudeDegree
-
-        let endX =
-            end.longitude * metersPerLongitudeDegree
-        let endY =
-            end.latitude * metersPerLatitudeDegree
-
-        let deltaX = endX - startX
-        let deltaY = endY - startY
-        let segmentLengthSquared =
-            deltaX * deltaX + deltaY * deltaY
-
-        guard segmentLengthSquared > 0 else {
-            return hypot(pointX - startX, pointY - startY)
-        }
-
-        let projection =
-            ((pointX - startX) * deltaX +
-             (pointY - startY) * deltaY) /
-            segmentLengthSquared
-
-        let clampedProjection = min(1, max(0, projection))
-
-        let closestX = startX + clampedProjection * deltaX
-        let closestY = startY + clampedProjection * deltaY
-
-        return hypot(
-            pointX - closestX,
-            pointY - closestY
         )
     }
 }
+

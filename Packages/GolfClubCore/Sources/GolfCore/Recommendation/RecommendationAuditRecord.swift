@@ -56,7 +56,7 @@ public struct RecommendationAuditRecord:
 
     public var currentPosition: GeoCoordinate
     public var playableLie: PlayableLie
-    public var courseArea: CourseAreaType
+    public var courseArea: HoleAreaType
 
     public var targetPoint: TargetPoint
     public var targetBearingDegrees: Double
@@ -99,7 +99,7 @@ public struct RecommendationAuditRecord:
         createdAt: Date = Date(),
         currentPosition: GeoCoordinate,
         playableLie: PlayableLie,
-        courseArea: CourseAreaType,
+        courseArea: HoleAreaType,
         targetPoint: TargetPoint,
         targetBearingDegrees: Double,
         targetDistanceMeters: Double,

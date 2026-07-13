@@ -9,13 +9,13 @@ import Foundation
 
 public struct ObstacleEvaluation: Codable, Equatable, Sendable {
     public var isBlocked: Bool
-    public var intersectedAreas: [CourseAreaType]
+    public var intersectedAreas: [HoleAreaType]
     public var riskScore: Double
     public var rationale: String
 
     public init(
         isBlocked: Bool,
-        intersectedAreas: [CourseAreaType],
+        intersectedAreas: [HoleAreaType],
         riskScore: Double,
         rationale: String
     ) {
@@ -33,7 +33,7 @@ public struct ObstacleEvaluator: Sendable {
     public func evaluate(
         from start: GeoCoordinate,
         to target: GeoCoordinate,
-        hazards: [CourseArea]
+        hazards: [HoleArea]
     ) -> ObstacleEvaluation {
         let intersected = hazards
             .filter { shotPathIntersectsArea(from: start, to: target, area: $0) }
@@ -51,7 +51,7 @@ public struct ObstacleEvaluator: Sendable {
         )
     }
 
-    private func riskWeight(for area: CourseAreaType) -> Double {
+    private func riskWeight(for area: HoleAreaType) -> Double {
         switch area {
         case .water, .outOfBounds:
             return 0.60
@@ -68,7 +68,7 @@ public struct ObstacleEvaluator: Sendable {
         }
     }
 
-    private func rationale(for areas: [CourseAreaType]) -> String {
+    private func rationale(for areas: [HoleAreaType]) -> String {
         guard !areas.isEmpty else {
             return "No mapped obstacle intersects the direct route."
         }
@@ -80,7 +80,7 @@ public struct ObstacleEvaluator: Sendable {
     private func shotPathIntersectsArea(
         from start: GeoCoordinate,
         to target: GeoCoordinate,
-        area: CourseArea
+        area: HoleArea
     ) -> Bool {
         guard area.boundary.count >= 3 else {
             return false

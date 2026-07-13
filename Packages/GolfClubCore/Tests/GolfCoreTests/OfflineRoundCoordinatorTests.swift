@@ -250,7 +250,7 @@ final class OfflineRoundCoordinatorTests:
 
         let snapshot = try makeSnapshot()
 
-        let geometry = CourseGeometry(
+        let geometry = HoleGeometry(
             areas: []
         )
 

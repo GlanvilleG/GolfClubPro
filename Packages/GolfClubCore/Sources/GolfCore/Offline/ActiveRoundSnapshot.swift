@@ -19,7 +19,7 @@ public struct ActiveRoundSnapshot:
 
     public var pendingEvents: [OfflineEvent]
 
-    public var cachedCourseGeometry: CourseGeometry?
+    public var cachedCourseGeometry: HoleGeometry?
     public var cachedStrategyGeometry: HoleStrategyGeometry?
     public var cachedWeatherSnapshot: WeatherSnapshot?
 
@@ -29,7 +29,7 @@ public struct ActiveRoundSnapshot:
         deviceID: DeviceID,
         localRevision: Int = 1,
         pendingEvents: [OfflineEvent] = [],
-        cachedCourseGeometry: CourseGeometry? = nil,
+        cachedCourseGeometry: HoleGeometry? = nil,
         cachedStrategyGeometry: HoleStrategyGeometry? = nil,
         cachedWeatherSnapshot: WeatherSnapshot? = nil
     ) {

@@ -1,12 +1,12 @@
 //
-//  CourseGeometry.swift
+//  HoleGeometry.swift
 //  GolfCore
 //
 //  Created by Dragon Development on 10/07/2026.
 //
 import Foundation
 
-public enum CourseAreaType: String, Codable, CaseIterable, Sendable {
+public enum HoleAreaType: String, Codable, CaseIterable, Sendable {
     case tee
     case fairway
     case rough
@@ -22,12 +22,12 @@ public enum CourseAreaType: String, Codable, CaseIterable, Sendable {
     case unknown
 }
 
-public struct CourseArea: Codable, Equatable, Sendable {
-    public var type: CourseAreaType
+public struct HoleArea: Codable, Equatable, Sendable {
+    public var type: HoleAreaType
     public var boundary: [GeoCoordinate]
 
     public init(
-        type: CourseAreaType,
+        type: HoleAreaType,
         boundary: [GeoCoordinate]
     ) {
         self.type = type
@@ -35,16 +35,17 @@ public struct CourseArea: Codable, Equatable, Sendable {
     }
 }
 
-public struct CourseGeometry: Codable, Equatable, Sendable {
-    public var areas: [CourseArea]
+public struct HoleGeometry: Codable, Equatable, Sendable {
 
-    public init(areas: [CourseArea] = []) {
+    public var areas: [HoleArea]
+
+    public init(areas: [HoleArea] = []) {
         self.areas = areas
     }
 }
 
 public enum LieSource: String, Codable, Sendable {
-    case inferredFromCourseGeometry
+    case inferredFromHoleGeometry
     case golferConfirmed
     case golferCorrected
     case unknown
@@ -55,8 +56,8 @@ public struct LieDetectionResult:
     Equatable,
     Sendable {
 
-    public var courseArea:
-        CourseAreaType
+    public var holeArea:
+        HoleAreaType
 
     public var playableLie:
         PlayableLie
@@ -74,7 +75,7 @@ public struct LieDetectionResult:
         LieConfirmationRequirement
 
     public init(
-        courseArea: CourseAreaType,
+        holeArea: HoleAreaType,
         playableLie: PlayableLie,
         source: LieSource,
         confidence: Double? = nil,
@@ -84,8 +85,8 @@ public struct LieDetectionResult:
             LieConfirmationRequirement =
                 .notRequired
     ) {
-        self.courseArea =
-            courseArea
+        self.holeArea =
+            holeArea
 
         self.playableLie =
             playableLie
@@ -103,3 +104,4 @@ public struct LieDetectionResult:
             confirmationRequirement
     }
 }
+

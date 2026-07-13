@@ -41,6 +41,7 @@ struct BundledGolfClubCatalogueLoader:
             forResource: resourceName,
             withExtension: "json"
         ) else {
+
             throw BundledGolfClubCatalogueLoaderError
                 .resourceNotFound(
                     "\(resourceName).json"
@@ -50,35 +51,21 @@ struct BundledGolfClubCatalogueLoader:
         let data: Data
 
         do {
+
             data = try Data(
                 contentsOf: url
             )
+
         } catch {
+
             throw BundledGolfClubCatalogueLoaderError
                 .unableToReadResource
         }
 
-        let document: GolfClubCatalogueDocument
+        let decoder =
+            GolfClubCatalogueDecoder()
 
-        do {
-            document = try JSONDecoder()
-                .decode(
-                    GolfClubCatalogueDocument.self,
-                    from: data
-                )
-        } catch {
-            throw BundledGolfClubCatalogueLoaderError
-                .decodingFailed
-        }
-
-        guard document.schemaVersion == 1 else {
-            throw BundledGolfClubCatalogueLoaderError
-                .unsupportedSchemaVersion(
-                    document.schemaVersion
-                )
-        }
-
-        return document
+        return try decoder.decode(data)
     }
 
     func makeCatalogue()
