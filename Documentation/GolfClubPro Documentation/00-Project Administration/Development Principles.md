@@ -58,5 +58,15 @@ optimize for:
 8. Move expensive work to the iPhone where appropriate.
 Every milestone should produce a working, testable application.
 
+### 12. Engineering Principle EP-002 - Engines own algorithms
+#### Going forward:
+
+* CourseSpatialIndex owns cached data.
+* HoleGeometryEngine owns polygon mathematics.
+* SpatialQueryEngine owns spatial reasoning.
+* RecommendationEngine owns golf decisions.
+* StrategyEngine owns tactical reasoning.
+
+No engine duplicates another engine’s responsibility.
 
 

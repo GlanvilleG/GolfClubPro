@@ -23,7 +23,7 @@ public struct HoleGeometryConfiguration:
 
     public var unknownConfidence:
         Double
-
+    
     public init(
         boundaryConfirmationDistanceMeters:
             Double = 5,
@@ -33,6 +33,7 @@ public struct HoleGeometryConfiguration:
             Double = 0.65,
         unknownConfidence:
             Double = 0.20
+        
     ) {
         self.boundaryConfirmationDistanceMeters =
             max(
@@ -80,11 +81,70 @@ public struct HoleGeometryEngine:
         self.configuration =
             configuration
     }
+    
+    public func nearestArea(
+        to location: GeoCoordinate,
+        geometry: HoleGeometry
+    ) -> (
+        area: HoleArea,
+        distanceMeters: Double
+    )?{
+        nearestAreaResult(
+            to: location,
+            geometry: geometry
+        )
+    }
+    
+    private func nearestAreaResult(
+        to location: GeoCoordinate,
+        geometry: HoleGeometry
+    ) -> (
+        area: HoleArea,
+        distanceMeters: Double
+    )? {
 
+        var nearest:
+            (area: HoleArea,
+             distanceMeters: Double)?
+
+        for area in geometry.areas {
+
+            guard area.boundary.count >= 3 else {
+                continue
+            }
+
+            guard let distance =
+                distanceToBoundary(
+                    from: location,
+                    of: area
+                )
+            else {
+                continue
+            }
+
+            if let current = nearest {
+
+                guard distance <
+                        current.distanceMeters
+                else {
+                    continue
+                }
+            }
+
+            nearest = (
+                area,
+                distance
+            )
+        }
+
+        return nearest
+    }
+    
     public func evaluate(
         location: GeoCoordinate,
         geometry: HoleGeometry
     ) -> HoleGeometryResult {
+
         let matches =
             geometry.areas.compactMap {
                 evaluate(
@@ -93,18 +153,21 @@ public struct HoleGeometryEngine:
                 )
             }
 
+        let nearestArea =
+            nearestAreaResult(
+                to: location,
+                geometry: geometry
+            )
+
+        let nearestBoundary =
+            nearestArea?.distanceMeters
+
         let containingMatches =
             matches.filter(
                 \.containsLocation
             )
 
         guard !containingMatches.isEmpty else {
-            let nearestBoundary =
-                matches
-                    .map(
-                        \.distanceToBoundaryMeters
-                    )
-                    .min()
 
             return HoleGeometryResult(
                 primaryArea: .unknown,
@@ -131,13 +194,6 @@ public struct HoleGeometryEngine:
         let primary =
             orderedMatches[0]
 
-        let nearestBoundary =
-            containingMatches
-                .map(
-                    \.distanceToBoundaryMeters
-                )
-                .min()
-
         let isNearBoundary =
             (
                 nearestBoundary ??
@@ -163,21 +219,25 @@ public struct HoleGeometryEngine:
 
         let confidence =
             requiresConfirmation
-            ? configuration.boundaryConfidence
+            ? configuration
+                .boundaryConfidence
             : configuration
                 .clearInteriorConfidence
 
         return HoleGeometryResult(
-            primaryArea: primary.areaType,
-            matches: matches,
+            primaryArea:
+                primary.areaType,
+            matches:
+                matches,
             nearestBoundaryDistanceMeters:
                 nearestBoundary,
-            confidence: confidence,
+            confidence:
+                confidence,
             requiresConfirmation:
                 requiresConfirmation
         )
     }
-
+    
     public func contains(
         _ location: GeoCoordinate,
         in area: HoleArea

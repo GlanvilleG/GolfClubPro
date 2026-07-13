@@ -24,9 +24,7 @@ GolfClubPro continuously processes GPS observations while a golfer moves around 
 - Strategy Engine
 
 A naïve implementation repeatedly searches collections of holes and associated geometry whenever new observations arrive.
-
 Although an individual course contains relatively few holes, these searches occur at a high frequency throughout an entire round and become increasingly expensive as additional spatial capabilities are introduced.
-
 Furthermore, multiple spatial services require access to the same course information, leading to duplicated lookup logic and inconsistent responsibilities.
 
 ---
@@ -34,9 +32,7 @@ Furthermore, multiple spatial services require access to the same course informa
 # Decision
 
 GolfClubPro will introduce a **CourseSpatialIndex** as the canonical in-memory representation of a loaded golf course.
-
 The index will be constructed once when a course is loaded and will provide constant-time lookup of all frequently accessed spatial information.
-
 All spatial services will obtain course information exclusively through the CourseSpatialIndex.
 
 ---
@@ -120,7 +116,6 @@ The implementation uses dictionaries internally to provide constant-time lookup 
 # Future Expansion
 
 The CourseSpatialIndex is designed to evolve without changing its public responsibilities.
-
 Planned additions include:
 
 ## Spatial Bounding Boxes
@@ -291,7 +286,6 @@ Rejected because all spatial computation during a round should remain fully offl
 # Implementation Guidance
 
 All future spatial services should depend upon the CourseSpatialIndex rather than directly traversing course collections.
-
 New spatial capabilities should extend the index rather than introducing additional lookup structures elsewhere in the system.
 
 ---

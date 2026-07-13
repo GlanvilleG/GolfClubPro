@@ -32,6 +32,7 @@
 		5AFC4F2D30022FEE002DF421 /* GolfCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5AFC4F2C30022FEE002DF421 /* GolfCore */; };
 		5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */; };
 		5AFC502430059041002DF421 /* ADR-017 – Spatial Index Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC502330059038002DF421 /* ADR-017 – Spatial Index Architecture.md */; };
+		5AFC502E3005A665002DF421 /* HoleAreaPrecedence.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC502D3005A65B002DF421 /* HoleAreaPrecedence.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		5AFC4F4230041B5D002DF421 /* check_architecture_boundaries.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_architecture_boundaries.sh; sourceTree = "<group>"; };
 		5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-016-Context-Centric-Domain-Architecture.md"; sourceTree = "<group>"; };
 		5AFC502330059038002DF421 /* ADR-017 – Spatial Index Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-017 – Spatial Index Architecture.md"; sourceTree = "<group>"; };
+		5AFC502D3005A65B002DF421 /* HoleAreaPrecedence.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = HoleAreaPrecedence.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -404,6 +406,7 @@
 		5ABC372E2FFDFC2700A78677 /* GolfClubPro Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				5AFC502D3005A65B002DF421 /* HoleAreaPrecedence.md */,
 				5AC12FBE2FFF507F0077FB46 /* 00-Project Administration */,
 				5ABC37702FFE1B9F00A78677 /* 01-Product Management */,
 				5ABC37762FFE1C0300A78677 /* 02-Architecture */,
@@ -688,6 +691,7 @@
 				5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
+				5AFC502E3005A665002DF421 /* HoleAreaPrecedence.md in Resources */,
 				5AFC502430059041002DF421 /* ADR-017 – Spatial Index Architecture.md in Resources */,
 				5AFC4DD730010D27002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md in Resources */,
 				5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */,
