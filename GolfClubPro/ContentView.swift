@@ -73,8 +73,18 @@ struct ContentView: View {
         try! AppDependencies.preview()
 
     let session = RoundSession(
-        coordinator:
-            dependencies.roundCoordinator
+        roundCoordinator:
+            dependencies.roundCoordinator,
+        orchestratorSnapshotStore:
+            dependencies.orchestratorSnapshotStore,
+        locationProvider:
+            dependencies.locationProvider,
+        golfClubSource: {
+            []
+        },
+        holeSource: {
+            []
+        }
     )
 
     ContentView()

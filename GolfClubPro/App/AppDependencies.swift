@@ -22,6 +22,7 @@ final class AppDependencies {
     let modelContainer: ModelContainer
     let snapshotStore: SwiftDataActiveRoundSnapshotStore
     let roundCoordinator: PersistentOfflineRoundCoordinator
+    let orchestratorSnapshotStore: InMemoryRoundOrchestratorSnapshotStore
     let locationProvider: AppleLocationProvider
 
     init(
@@ -40,7 +41,9 @@ final class AppDependencies {
             PersistentOfflineRoundCoordinator(
                 store: snapshotStore
             )
-
+        self.orchestratorSnapshotStore =
+            InMemoryRoundOrchestratorSnapshotStore()
+        
         self.locationProvider =
             AppleLocationProvider()
     }

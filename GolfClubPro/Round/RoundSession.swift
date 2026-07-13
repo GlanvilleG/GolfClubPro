@@ -8,26 +8,89 @@
 import Foundation
 import Observation
 import GolfCore
+import GolfPlatformApple
 
 @MainActor
 @Observable
 final class RoundSession {
 
-    private let coordinator:
+    // MARK: - Dependencies
+
+    private let roundCoordinator:
         PersistentOfflineRoundCoordinator
+
+    private let orchestratorSnapshotStore:
+        any RoundOrchestratorSnapshotStore
+
+    private let locationProvider:
+        AppleLocationProvider
+
+    private let golfClubSource:
+        () -> [GolfClub]
+
+    private let holeSource:
+        () -> [Hole]
+
+    // MARK: - Runtime Components
+
+    private var orchestrator:
+        RoundOrchestrator?
+
+    private var locationCoordinator:
+        GolfClubLocationCoordinator?
+
+    // MARK: - Observable State
 
     private(set) var activeSnapshot:
         ActiveRoundSnapshot?
 
+    private(set) var orchestratorState:
+        OrchestratorState = .idle
+
+    private(set) var latestOutput:
+        RoundOrchestratorOutput?
+
+    private(set) var pendingGolfClubID:
+        GolfClubID?
+
+    private(set) var pendingHoleID:
+        HoleID?
+
     private(set) var isLoading = false
+    private(set) var isLocationActive = false
     private(set) var errorMessage: String?
 
+    // MARK: - Initialisation
+
     init(
-        coordinator:
-            PersistentOfflineRoundCoordinator
+        roundCoordinator:
+            PersistentOfflineRoundCoordinator,
+        orchestratorSnapshotStore:
+            any RoundOrchestratorSnapshotStore,
+        locationProvider:
+            AppleLocationProvider,
+        golfClubSource:
+            @escaping () -> [GolfClub],
+        holeSource:
+            @escaping () -> [Hole]
     ) {
-        self.coordinator = coordinator
+        self.roundCoordinator =
+            roundCoordinator
+
+        self.orchestratorSnapshotStore =
+            orchestratorSnapshotStore
+
+        self.locationProvider =
+            locationProvider
+
+        self.golfClubSource =
+            golfClubSource
+
+        self.holeSource =
+            holeSource
     }
+
+    // MARK: - Derived State
 
     var activeRound: Round? {
         activeSnapshot?.round
@@ -41,7 +104,7 @@ final class RoundSession {
         return round.state != .roundCompleted
     }
 
-    var currentState: RoundState? {
+    var roundState: RoundState? {
         activeRound?.state
     }
 
@@ -49,11 +112,28 @@ final class RoundSession {
         activeRound?.currentHoleSession
     }
 
+    var pendingEventCount: Int {
+        activeSnapshot?.pendingEvents.count ?? 0
+    }
+
+    // MARK: - Round Lifecycle
+
     func restoreActiveRound() async {
         await perform {
-            self.activeSnapshot =
-                try await self.coordinator
-                    .restoreMostRecentActiveRound()
+            guard let snapshot =
+                    try await self.roundCoordinator
+                        .restoreMostRecentActiveRound()
+            else {
+                self.activeSnapshot = nil
+                self.orchestratorState = .idle
+                return
+            }
+
+            self.activeSnapshot = snapshot
+
+            try await self.installRuntime(
+                for: snapshot
+            )
         }
     }
 
@@ -64,165 +144,372 @@ final class RoundSession {
         deviceID: DeviceID
     ) async {
         await perform {
-            self.activeSnapshot =
-                try await self.coordinator.startRound(
-                    playerID: playerID,
-                    golfClubID: golfClubID,
-                    courseID: courseID,
-                    deviceID: deviceID
-                )
+            self.stopRuntime()
+
+            let snapshot =
+                try await self.roundCoordinator
+                    .startRound(
+                        playerID: playerID,
+                        golfClubID: golfClubID,
+                        courseID: courseID,
+                        deviceID: deviceID
+                    )
+
+            self.activeSnapshot = snapshot
+
+            try await self.installRuntime(
+                for: snapshot
+            )
         }
     }
+
+    func finishRound() async {
+        guard let snapshot = activeSnapshot else {
+            setNoActiveRoundError()
+            return
+        }
+
+        await perform {
+            let updated =
+                try await self.roundCoordinator
+                    .finishRound(
+                        in: snapshot
+                    )
+
+            self.activeSnapshot = updated
+            self.stopRuntime()
+            self.orchestratorState = .idle
+        }
+    }
+
+    // MARK: - Round Setup
 
     func confirmTeeSet(
         _ teeSetID: TeeSetID
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.confirmTeeSet(
-                teeSetID,
-                in: snapshot
+        guard let snapshot = activeSnapshot else {
+            setNoActiveRoundError()
+            return
+        }
+
+        await perform {
+            let updated =
+                try await self.roundCoordinator
+                    .confirmTeeSet(
+                        teeSetID,
+                        in: snapshot
+                    )
+
+            self.activeSnapshot = updated
+
+            try await self.installRuntime(
+                for: updated
             )
         }
+    }
+
+    // MARK: - Location Decisions
+
+    func confirmGolfClub(
+        _ golfClubID: GolfClubID
+    ) async {
+        guard let locationCoordinator else {
+            errorMessage =
+                "Location coordination is unavailable."
+            return
+        }
+
+        await locationCoordinator.confirmGolfClub(
+            golfClubID
+        )
+
+        await refreshRuntimeState()
+    }
+
+    func rejectGolfClub() async {
+        guard let locationCoordinator else {
+            return
+        }
+
+        await locationCoordinator.rejectGolfClub()
+        await refreshRuntimeState()
     }
 
     func confirmHole(
         _ holeID: HoleID
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.confirmHole(
-                holeID,
-                in: snapshot
-            )
+        guard let locationCoordinator else {
+            errorMessage =
+                "Location coordination is unavailable."
+            return
         }
+
+        await locationCoordinator.confirmHole(
+            holeID
+        )
+
+        await refreshRuntimeState()
     }
 
-    func announceClub(
-        _ clubID: ClubID,
-        currentLocation: GeoCoordinate? = nil,
-        courseGeometry: CourseGeometry? = nil
-    ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.announceClub(
-                clubID,
-                currentLocation: currentLocation,
-                courseGeometry: courseGeometry,
-                in: snapshot
-            )
+    func rejectHole() async {
+        guard let locationCoordinator else {
+            return
         }
+
+        await locationCoordinator.rejectHole()
+        await refreshRuntimeState()
+    }
+
+    // MARK: - Club Selection
+
+    func announceClub(
+        _ clubID: ClubID
+    ) async {
+        await process(
+            .clubSelected(clubID)
+        )
     }
 
     func changeClub(
         to clubID: ClubID
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.changeClub(
-                to: clubID,
-                in: snapshot
-            )
-        }
+        await process(
+            .clubChanged(clubID)
+        )
     }
 
-    func markShotHit() async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.markShotHit(
-                in: snapshot
-            )
-        }
+    // MARK: - Swing Workflow
+
+    func addressDetected() async {
+        await process(
+            .addressDetected
+        )
     }
+
+    func swingDetected(
+        _ observation: SwingObservation
+    ) async {
+        await process(
+            .swingDetected(observation)
+        )
+    }
+
+    func impactDetected(
+        _ observation: ImpactObservation
+    ) async {
+        await process(
+            .impactDetected(observation)
+        )
+    }
+
+    func golferDepartedShotOrigin() async {
+        await process(
+            .golferDepartedShotOrigin
+        )
+    }
+
+    func confirmShot() async {
+        await process(
+            .shotConfirmedByGolfer
+        )
+    }
+
+    func rejectAsPracticeSwing() async {
+        await process(
+            .practiceSwingConfirmedByGolfer
+        )
+    }
+
+    func candidateSwingTimedOut() async {
+        await process(
+            .candidateSwingTimeout
+        )
+    }
+
+    // MARK: - Shot Feedback
 
     func recordShotFeedback(
         transcript: String
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator
-                .recordShotFeedback(
-                    transcript: transcript,
-                    in: snapshot
-                )
-        }
+        await process(
+            .voiceFeedbackReceived(
+                transcript
+            )
+        )
     }
+
+    // MARK: - Lie
 
     func confirmLie(
         _ playableLie: PlayableLie
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.confirmLie(
-                playableLie,
-                in: snapshot
-            )
-        }
+        await process(
+            .lieConfirmed(playableLie)
+        )
     }
 
     func correctLie(
         _ playableLie: PlayableLie
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.correctLie(
-                playableLie,
-                in: snapshot
-            )
-        }
+        await process(
+            .lieCorrected(playableLie)
+        )
     }
+
+    // MARK: - Putting
 
     func recordPutts(
         _ putts: Int
     ) async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.recordPutts(
-                putts,
-                in: snapshot
-            )
-        }
+        await process(
+            .puttsRecorded(putts)
+        )
     }
 
-    func leaveHolePending() async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator
-                .leaveHolePending(
-                    in: snapshot
-                )
-        }
+    // MARK: - Location Lifecycle
+
+    func startLocationUpdates() {
+        locationProvider.requestAuthorization()
+        locationProvider.startUpdates()
+        locationCoordinator?.start()
+
+        isLocationActive = true
     }
 
-    func completeCurrentHole() async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator
-                .completeCurrentHole(
-                    in: snapshot
-                )
-        }
+    func stopLocationUpdates() {
+        locationCoordinator?.stop()
+        locationProvider.stopUpdates()
+
+        isLocationActive = false
     }
 
-    func finishRound() async {
-        await updateSnapshot { snapshot in
-            try await self.coordinator.finishRound(
-                in: snapshot
-            )
-        }
-    }
+    // MARK: - Errors
 
     func clearError() {
         errorMessage = nil
     }
 
-    private func updateSnapshot(
-        operation: @escaping (
-            ActiveRoundSnapshot
-        ) async throws -> ActiveRoundSnapshot
+    // MARK: - Runtime Installation
+
+    private func installRuntime(
+        for snapshot: ActiveRoundSnapshot
+    ) async throws {
+        stopRuntime()
+
+        let orchestrator =
+            try await RoundOrchestrator.restoring(
+                activeSnapshot: snapshot,
+                coordinator: roundCoordinator,
+                snapshotStore:
+                    orchestratorSnapshotStore
+            )
+
+        let locationCoordinator =
+            GolfClubLocationCoordinator(
+                observationStream: {
+                    self.locationProvider
+                        .observations()
+                },
+                golfClubSource:
+                    golfClubSource,
+                holeSource:
+                    holeSource,
+                orchestrator:
+                    orchestrator
+            )
+
+        locationCoordinator.onOutput = {
+            [weak self] output in
+
+            guard let self else {
+                return
+            }
+
+            self.latestOutput = output
+
+            Task { @MainActor in
+                await self.refreshRuntimeState()
+            }
+        }
+
+        locationCoordinator.onError = {
+            [weak self] error in
+
+            self?.errorMessage =
+                String(describing: error)
+        }
+
+        self.orchestrator = orchestrator
+        self.locationCoordinator =
+            locationCoordinator
+
+        await refreshRuntimeState()
+
+        startLocationUpdates()
+    }
+
+    private func stopRuntime() {
+        locationCoordinator?.stop()
+        locationCoordinator = nil
+
+        locationProvider.stopUpdates()
+        isLocationActive = false
+
+        orchestrator = nil
+
+        pendingGolfClubID = nil
+        pendingHoleID = nil
+    }
+
+    // MARK: - Event Processing
+
+    private func process(
+        _ event: RoundOrchestratorEvent
     ) async {
-        guard let snapshot = activeSnapshot else {
-            errorMessage = "No active round is available."
+        guard let orchestrator else {
+            errorMessage =
+                "The round runtime is unavailable."
             return
         }
 
         await perform {
-            self.activeSnapshot =
-                try await operation(snapshot)
+            let output =
+                try await orchestrator.process(
+                    event
+                )
+
+            self.latestOutput = output
+
+            await self.refreshRuntimeState()
         }
     }
 
+    private func refreshRuntimeState()
+        async {
+        guard let orchestrator else {
+            return
+        }
+
+        activeSnapshot =
+            await orchestrator.currentSnapshot()
+
+        orchestratorState =
+            await orchestrator.currentState()
+
+        pendingGolfClubID =
+            await orchestrator
+                .currentPendingGolfClubID()
+
+        pendingHoleID =
+            await orchestrator
+                .currentPendingHoleID()
+    }
+
+    // MARK: - Operation Handling
+
     private func perform(
-        operation: @escaping () async throws -> Void
+        _ operation:
+            @escaping () async throws -> Void
     ) async {
         isLoading = true
         errorMessage = nil
@@ -237,5 +524,10 @@ final class RoundSession {
             errorMessage =
                 String(describing: error)
         }
+    }
+
+    private func setNoActiveRoundError() {
+        errorMessage =
+            "No active round is available."
     }
 }

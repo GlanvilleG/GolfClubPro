@@ -12,7 +12,8 @@ import GolfCore
 @main
 struct GolfClubProApp: App {
 
-    private let dependencies: AppDependencies
+    private let dependencies:
+        AppDependencies
 
     @State private var roundSession:
         RoundSession
@@ -22,12 +23,26 @@ struct GolfClubProApp: App {
             let dependencies =
                 try AppDependencies.live()
 
-            self.dependencies = dependencies
+            self.dependencies =
+                dependencies
 
             _roundSession = State(
                 initialValue: RoundSession(
-                    coordinator:
-                        dependencies.roundCoordinator
+                    roundCoordinator:
+                        dependencies
+                            .roundCoordinator,
+                    orchestratorSnapshotStore:
+                        dependencies
+                            .orchestratorSnapshotStore,
+                    locationProvider:
+                        dependencies
+                            .locationProvider,
+                    golfClubSource: {
+                        []
+                    },
+                    holeSource: {
+                        []
+                    }
                 )
             )
         } catch {
