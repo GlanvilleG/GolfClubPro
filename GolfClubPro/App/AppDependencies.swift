@@ -22,7 +22,7 @@ final class AppDependencies {
     let modelContainer: ModelContainer
     let snapshotStore: SwiftDataActiveRoundSnapshotStore
     let roundCoordinator: PersistentOfflineRoundCoordinator
-    let orchestratorSnapshotStore: InMemoryRoundOrchestratorSnapshotStore
+    let orchestratorSnapshotStore: SwiftDataRoundOrchestratorSnapshotStore
     let locationProvider: AppleLocationProvider
 
     init(
@@ -42,7 +42,9 @@ final class AppDependencies {
                 store: snapshotStore
             )
         self.orchestratorSnapshotStore =
-            InMemoryRoundOrchestratorSnapshotStore()
+            SwiftDataRoundOrchestratorSnapshotStore(
+                modelContainer: modelContainer
+            )
         
         self.locationProvider =
             AppleLocationProvider()
@@ -50,7 +52,9 @@ final class AppDependencies {
 
     static func live() throws -> AppDependencies {
         let modelContainer = try ModelContainer(
-            for: ActiveRoundSnapshotRecord.self
+            for:
+                ActiveRoundSnapshotRecord.self,
+                RoundOrchestratorSnapshotRecord.self
         )
 
         return AppDependencies(
@@ -64,7 +68,9 @@ final class AppDependencies {
         )
 
         let modelContainer = try ModelContainer(
-            for: ActiveRoundSnapshotRecord.self,
+            for:
+                ActiveRoundSnapshotRecord.self,
+                RoundOrchestratorSnapshotRecord.self,
             configurations: configuration
         )
 

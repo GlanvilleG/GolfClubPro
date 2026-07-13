@@ -169,12 +169,19 @@ final class RoundSession {
             return
         }
 
+        let roundID = snapshot.round.id
+
         await perform {
             let updated =
                 try await self.roundCoordinator
                     .finishRound(
                         in: snapshot
                     )
+
+            try await self.orchestratorSnapshotStore
+                .delete(
+                    roundID: roundID
+                )
 
             self.activeSnapshot = updated
             self.stopRuntime()

@@ -72,6 +72,7 @@ struct ContentView: View {
     let dependencies =
         try! AppDependencies.preview()
 
+    
     let session = RoundSession(
         roundCoordinator:
             dependencies.roundCoordinator,
