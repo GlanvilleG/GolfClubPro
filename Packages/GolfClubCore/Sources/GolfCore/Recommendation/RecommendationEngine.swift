@@ -83,7 +83,15 @@ public struct RecommendationEngine: Sendable {
     ) {
         self.strategyEngine = strategyEngine
     }
-
+    
+    public func recommend(
+        using context: RecommendationContext
+    ) throws -> RecommendationResult {
+        try recommend(
+            for: context.shotContext
+        )
+    }
+    
     public func recommend(
         for context: ShotContext
     ) throws -> RecommendationResult {
