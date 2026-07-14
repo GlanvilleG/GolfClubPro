@@ -21,6 +21,8 @@ public struct ClubRecommendation:
     public var distanceDifferenceMeters: Double
     public var confidence: Double
     public var reasons: [String]
+    
+    
 
     public init(
         clubID: ClubID,
@@ -85,6 +87,7 @@ public struct RecommendationEngine: Sendable {
     private let strategyEngine: StrategyEngine
     private let spatialRiskEvaluator: SpatialRiskEvaluator
     private let clubScoringEngine: ClubScoringEngine
+    private let recommendationSorter: RecommendationSorter
  
     public init(
         strategyEngine:
@@ -95,9 +98,11 @@ public struct RecommendationEngine: Sendable {
                 SpatialRiskEvaluator(),
         clubScoringEngine:
             ClubScoringEngine =
-                ClubScoringEngine()
+                ClubScoringEngine(),
+        recommendationSorter:
+            RecommendationSorter =
+                RecommendationSorter()
     ) {
-
         self.strategyEngine =
             strategyEngine
 
@@ -107,6 +112,8 @@ public struct RecommendationEngine: Sendable {
         self.clubScoringEngine =
             clubScoringEngine
 
+        self.recommendationSorter =
+            recommendationSorter
     }
     
     public func recommend(
@@ -144,36 +151,26 @@ public struct RecommendationEngine: Sendable {
                 )
         }
 
-        let recommendations =
+        let scoredCandidates =
             context.availableClubs
                 .filter {
                     $0.type != .putter
                 }
                 .compactMap { club in
                     clubScoringEngine.score(
-                        club:
-                            club,
+                        club: club,
                         targetDistanceMeters:
                             shotPlan.targetDistanceMeters,
-                        context:
-                            context,
-                        shotPlan:
-                            shotPlan,
-                        spatialRisk:
-                            spatialRisk
+                        context: context,
+                        shotPlan: shotPlan,
+                        spatialRisk: spatialRisk
                     )
                 }
-                .sorted { lhs, rhs in
-                    if lhs.score == rhs.score {
-                        return lhs
-                            .distanceDifferenceMeters <
-                            rhs
-                            .distanceDifferenceMeters
-                    }
 
-                    return lhs.score >
-                        rhs.score
-                }
+        let recommendations =
+            recommendationSorter.sort(
+                scoredCandidates
+            )
 
         let preferred =
             recommendations.first
@@ -375,7 +372,7 @@ public struct RecommendationEngine: Sendable {
         return min(15, max(-15, offset))
     }
     
-    ///TEMP - Keep a copy of angular angularDifferenceDegrees() for calculateAimOffsetDegrees(...)  -> move to a shared utility so ClubScoringEngine() can access a the same.
+    ///TEMP - Keep a copy of angular angularDifferenceDegrees() for calculateAimOffsetDegrees(...)  -> move to a shared utility so ClubScoringEngine() can access  the same logic.
     ///
     private func angularDifferenceDegrees(
         _ first: Double,
