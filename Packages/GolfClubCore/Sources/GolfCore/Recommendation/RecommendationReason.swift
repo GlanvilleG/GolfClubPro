@@ -14,12 +14,17 @@ public enum RecommendationReason:
 
     case distanceFit
     case lieSuitability
+
+    case uncertainPosition
+    case lowConfidence
+
     case hazardAvoidance
     case boundaryRisk
     case routeSafety
-    case lowConfidence
+
     case recovery
     case layup
+
     case aggressiveOption
     case conservativeOption
 }

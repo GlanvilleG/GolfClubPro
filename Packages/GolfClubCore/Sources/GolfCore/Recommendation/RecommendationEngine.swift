@@ -77,24 +77,47 @@ public enum RecommendationEngineError:
 public struct RecommendationEngine: Sendable {
 
     private let strategyEngine: StrategyEngine
-
+    private let spatialRiskEvaluator: SpatialRiskEvaluator
+ 
     public init(
-        strategyEngine: StrategyEngine = StrategyEngine()
+        strategyEngine:
+            StrategyEngine =
+                StrategyEngine(),
+        spatialRiskEvaluator:
+            SpatialRiskEvaluator =
+                SpatialRiskEvaluator()
     ) {
-        self.strategyEngine = strategyEngine
+        self.strategyEngine =
+            strategyEngine
+
+        self.spatialRiskEvaluator =
+            spatialRiskEvaluator
     }
     
     public func recommend(
         using context: RecommendationContext
     ) throws -> RecommendationResult {
-        try recommend(
-            for: context.shotContext
+
+        let spatialRisk =
+            spatialRiskEvaluator.evaluate(
+                analysis:
+                    context.spatialAnalysis,
+                spatialContext:
+                    context.spatialContext
+            )
+
+        return try recommend(
+            for: context.shotContext,
+            spatialRisk:
+                spatialRisk
         )
     }
-    
-    public func recommend(
-        for context: ShotContext
+    private func recommend(
+        for context: ShotContext,
+        spatialRisk:
+            SpatialRiskAssessment
     ) throws -> RecommendationResult {
+    
         guard !context.availableClubs.isEmpty else {
             throw RecommendationEngineError.noAvailableClubs
         }
@@ -266,7 +289,12 @@ public struct RecommendationEngine: Sendable {
         _ club: Club,
         targetDistanceMeters: Double,
         context: ShotContext,
-        shotPlan: ShotPlan
+        shotPlan: ShotPlan,
+        spatialRiskPenalty:
+            Double = 0,
+        spatialReasons:
+            [RecommendationReason] = []
+        
     ) -> ClubRecommendation? {
         let baseCarry =
             historicalCarry(
@@ -330,19 +358,21 @@ public struct RecommendationEngine: Sendable {
             context.environment.wind == nil ? 0.03
             : 0
         
-        let finalScore = min(
-            1,
-            max(
-                0,
-                distanceScore * 0.60 +
-                lieScore * 0.25 +
-                shotPlan.confidence * 0.15 -
-                historyPenalty -
-                dispersionPenalty -
-                routeRiskPenalty -
-                missingWeatherPenalty
+        let finalScore =
+            min(
+                1,
+                max(
+                    0,
+                    distanceScore * 0.60 +
+                    lieScore * 0.25 +
+                    shotPlan.confidence * 0.15 -
+                    historyPenalty -
+                    dispersionPenalty -
+                    routeRiskPenalty -
+                    missingWeatherPenalty -
+                    spatialRiskPenalty
+                )
             )
-        )
 
         let confidence = confidenceForClub(
             club: club,
