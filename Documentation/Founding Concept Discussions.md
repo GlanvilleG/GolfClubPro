@@ -6,7 +6,11 @@
 The Rules of Golf have long recognised that a player may receive strategic advice from a human caddie. As artificial intelligence becomes increasingly capable, an important question emerges:
 
 > Can a digital caddie fulfil the same advisory role as a human caddie while remaining consistent with the principles of the game?
-
+What is GolfClubPro becoming?
+My answer would be:
+```markdown
+GolfClubPro is an intelligent golfing platform built around a continuously evolving Digital Twin of the golfer, interacting with a continuously evolving Digital Twin of the golf course, to provide explainable, context-aware, personalised decision support before, during and after every round.
+```
 This discussion explores the current Rules of Golf, the role of human caddies, and how AI-powered digital caddies could improve the game while respecting its traditions.
 
 ---

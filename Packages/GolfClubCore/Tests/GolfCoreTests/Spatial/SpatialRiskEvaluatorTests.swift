@@ -38,8 +38,36 @@ final class SpatialRiskEvaluatorTests:
             result.reasons.isEmpty
         )
     }
-
+   
     func testUnknownAreaAddsPositionUncertaintyReason() {
+        let result =
+            evaluator.evaluate(
+                analysis:
+                    SpatialAnalysis(
+                        insideMappedArea:
+                            false
+                    ),
+                spatialContext:
+                    makeSpatialContext(
+                        requiresConfirmation:
+                            false
+                    )
+            )
+
+        XCTAssertTrue(
+            result.reasons.contains(
+                .uncertainPosition
+            )
+        )
+
+        XCTAssertFalse(
+            result.reasons.contains(
+                .lowConfidence
+            )
+        )
+    }
+    
+    func testUnknownAreaAndConfirmationAddBothReasons() {
         let result =
             evaluator.evaluate(
                 analysis:
@@ -60,12 +88,13 @@ final class SpatialRiskEvaluatorTests:
             )
         )
 
-        XCTAssertFalse(
+        XCTAssertTrue(
             result.reasons.contains(
                 .lowConfidence
             )
         )
     }
+    
     func testRequiresConfirmationAddsLowConfidenceReason()
     {
         let result =

@@ -66,10 +66,7 @@ final class RecommendationContextTests:
     private func makeShotContext()
         -> ShotContext {
 
-        // Reuse the established test fixture or factory
-        // currently used by RecommendationEngineTests.
-        fatalError(
-            "Replace with the existing ShotContext test factory."
-        )
+        GolfCoreTestFactory
+            .makeShotContext()
     }
 }

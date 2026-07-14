@@ -302,3 +302,24 @@ Implemented:
 Next milestone:
 
 GolfClubLocationCoordinator
+# Stable Foundation Components
+Stable Foundation Components
+
+Mathematics
+-----------
+✓ WelfordAccumulator
+
+Geometry
+--------
+✓ DistanceCalculator
+✓ PolygonGeometry
+✓ GeometryProjection
+
+Spatial
+-------
+✓ CourseSpatialIndex
+✓ HoleGeometryEngine
+
+Identifiers
+-----------
+✓ Strongly Typed IDs

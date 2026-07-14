@@ -7,6 +7,9 @@
 
 import Foundation
 
+// Disambiguate RecommendationDecision if multiple modules define it
+//private typealias CoreRecommendationDecision = RecommendationDecision
+
 public struct ClubRecommendation:
     Codable,
     Equatable,
@@ -41,30 +44,33 @@ public struct RecommendationResult:
     Equatable,
     Sendable {
 
-    public var shotPlan: ShotPlan
-    public var preferredClub: ClubRecommendation?
-    public var alternatives: [ClubRecommendation]
-    public var aimOffsetDegrees: Double
-    public var explanation: String
-    public var auditRecord: RecommendationAuditRecord? = nil
+    public let decision:
+        RecommendationDecision
+
+    public let explanation:
+        String
+
+    public let auditRecord:
+        RecommendationAuditRecord?
 
     public init(
-        shotPlan: ShotPlan,
-        preferredClub: ClubRecommendation?,
-        alternatives: [ClubRecommendation],
-        aimOffsetDegrees: Double,
-        explanation: String,
-        auditRecord: RecommendationAuditRecord? = nil
+        decision:
+            RecommendationDecision,
+        explanation:
+            String,
+        auditRecord:
+            RecommendationAuditRecord? = nil
     ) {
-        self.shotPlan = shotPlan
-        self.preferredClub = preferredClub
-        self.alternatives = alternatives
-        self.aimOffsetDegrees = aimOffsetDegrees
-        self.explanation = explanation
-        self.auditRecord = auditRecord
+        self.decision =
+            decision
+
+        self.explanation =
+            explanation
+
+        self.auditRecord =
+            auditRecord
     }
 }
-
 public enum RecommendationEngineError:
     Error,
     Equatable,
@@ -95,101 +101,132 @@ public struct RecommendationEngine: Sendable {
     }
     
     public func recommend(
-        using context: RecommendationContext
+        for context: ShotContext
     ) throws -> RecommendationResult {
-
-        let spatialRisk =
-            spatialRiskEvaluator.evaluate(
-                analysis:
-                    context.spatialAnalysis,
-                spatialContext:
-                    context.spatialContext
-            )
-
-        return try recommend(
-            for: context.shotContext,
+        try recommend(
+            for: context,
             spatialRisk:
-                spatialRisk
+                SpatialRiskAssessment.none
         )
     }
+
     private func recommend(
         for context: ShotContext,
-        spatialRisk:
-            SpatialRiskAssessment
+        spatialRisk: SpatialRiskAssessment
     ) throws -> RecommendationResult {
-    
         guard !context.availableClubs.isEmpty else {
             throw RecommendationEngineError.noAvailableClubs
         }
 
         let shotPlan: ShotPlan
 
-        if let existingPlan = context.currentShotPlan {
-            shotPlan = existingPlan
+        if let existingPlan =
+            context.currentShotPlan {
+
+            shotPlan =
+                existingPlan
         } else {
-            shotPlan = try strategyEngine.makeShotPlan(
-                from: context.currentPosition,
-                using: context.strategyGeometry
-            )
+            shotPlan =
+                try strategyEngine.makeShotPlan(
+                    from:
+                        context.currentPosition,
+                    using:
+                        context.strategyGeometry
+                )
         }
 
-        let recommendations = context.availableClubs
-            .filter { $0.type != .putter }
-            .compactMap {
-                scoreClub(
-                    $0,
-                    targetDistanceMeters:
-                        shotPlan.targetDistanceMeters,
-                    context: context,
-                    shotPlan: shotPlan
-                )
-            }
-            .sorted { lhs, rhs in
-                if lhs.score == rhs.score {
-                    return lhs.distanceDifferenceMeters <
-                        rhs.distanceDifferenceMeters
+        let recommendations =
+            context.availableClubs
+                .filter {
+                    $0.type != .putter
+                }
+                .compactMap { club in
+                    scoreClub(
+                        club,
+                        targetDistanceMeters:
+                            shotPlan
+                                .targetDistanceMeters,
+                        context:
+                            context,
+                        shotPlan:
+                            shotPlan,
+                        spatialRiskPenalty:
+                            spatialRisk.penalty,
+                        spatialReasons:
+                            spatialRisk.reasons
+                    )
+                }
+                .sorted { lhs, rhs in
+                    if lhs.score == rhs.score {
+                        return lhs
+                            .distanceDifferenceMeters <
+                            rhs
+                            .distanceDifferenceMeters
+                    }
+
+                    return lhs.score >
+                        rhs.score
                 }
 
-                return lhs.score > rhs.score
-            }
+        let preferred =
+            recommendations.first
 
-        let preferred = recommendations.first
-        let alternatives = Array(
-            recommendations.dropFirst().prefix(2)
-        )
-
-        let aimOffset = calculateAimOffsetDegrees(
-            context: context
-        )
-
-        let explanation = makeExplanation(
-            preferred: preferred,
-            shotPlan: shotPlan,
-            context: context,
-            aimOffsetDegrees: aimOffset
-        )
-
-        let auditRecord: RecommendationAuditRecord?
-
-        if context.player.recommendationAuditEnabled {
-            auditRecord = makeAuditRecord(
-                context: context,
-                shotPlan: shotPlan,
-                preferred: preferred,
-                alternatives: alternatives,
-                aimOffsetDegrees: aimOffset,
-                explanation: explanation,
-                candidates: recommendations
+        let alternatives =
+            Array(
+                recommendations
+                    .dropFirst()
+                    .prefix(2)
             )
+
+        let aimOffset =
+            calculateAimOffsetDegrees(
+                context: context
+            )
+
+        let explanation =
+            makeExplanation(
+                preferred: preferred,
+                shotPlan: shotPlan,
+                context: context,
+                aimOffsetDegrees:
+                    aimOffset
+            )
+
+        let auditRecord:
+            RecommendationAuditRecord?
+
+        if context.player
+            .recommendationAuditEnabled {
+
+            auditRecord =
+                makeAuditRecord(
+                    context: context,
+                    shotPlan: shotPlan,
+                    preferred: preferred,
+                    alternatives:
+                        alternatives,
+                    aimOffsetDegrees:
+                        aimOffset,
+                    explanation:
+                        explanation,
+                    candidates:
+                        recommendations
+                )
         } else {
             auditRecord = nil
         }
 
+        let decision =
+            RecommendationDecision(
+                shotPlan: shotPlan,
+                preferredClub: preferred,
+                alternatives: alternatives,
+                aimOffsetDegrees:
+                    aimOffset
+            )
+
         return RecommendationResult(
-            shotPlan: shotPlan,
-            preferredClub: preferred,
-            alternatives: alternatives,
-            aimOffsetDegrees: aimOffset,
+            decision: decision,
             explanation: explanation,
             auditRecord: auditRecord
         )
@@ -1000,3 +1037,4 @@ public struct RecommendationEngine: Sendable {
         )
     }
 }
+

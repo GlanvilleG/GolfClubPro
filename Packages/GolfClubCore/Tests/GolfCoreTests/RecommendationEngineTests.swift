@@ -38,7 +38,7 @@ final class RecommendationEngineTests: XCTestCase {
         let result = try engine.recommend(for: context)
 
         XCTAssertEqual(
-            result.preferredClub?.clubID,
+            result.decision.preferredClub?.clubID,
             matchedClub.id
         )
     }
@@ -68,7 +68,7 @@ final class RecommendationEngineTests: XCTestCase {
         )
 
         let preferredClub = try XCTUnwrap(
-            result.preferredClub
+            result.decision.preferredClub
         )
 
         XCTAssertEqual(
@@ -106,7 +106,7 @@ final class RecommendationEngineTests: XCTestCase {
         let result = try engine.recommend(for: context)
 
         XCTAssertEqual(
-            result.preferredClub?.adjustedCarryMeters ?? 0,
+            result.decision.preferredClub?.adjustedCarryMeters ?? 0,
             145,
             accuracy: 0.001
         )
@@ -134,7 +134,7 @@ final class RecommendationEngineTests: XCTestCase {
 
         let result = try engine.recommend(for: context)
 
-        XCTAssertLessThan(result.aimOffsetDegrees, 0)
+        XCTAssertLessThan(result.decision.aimOffsetDegrees, 0)
     }
 
     func testNoClubsThrowsError() {
@@ -169,7 +169,7 @@ final class RecommendationEngineTests: XCTestCase {
 
         XCTAssertFalse(result.explanation.isEmpty)
         XCTAssertFalse(
-            result.preferredClub?.reasons.isEmpty ?? true
+            result.decision.preferredClub?.reasons.isEmpty ?? true
         )
     }
 
@@ -289,7 +289,7 @@ final class RecommendationEngineTests: XCTestCase {
         let result = try engine.recommend(for: context)
 
         XCTAssertEqual(
-            result.preferredClub?.clubID,
+            result.decision.preferredClub?.clubID,
             consistentClub.id
         )
     }
@@ -324,7 +324,7 @@ final class RecommendationEngineTests: XCTestCase {
         let result = try engine.recommend(for: context)
 
         XCTAssertLessThan(
-            result.aimOffsetDegrees,
+            result.decision.aimOffsetDegrees,
             0
         )
     }
@@ -380,8 +380,8 @@ final class RecommendationEngineTests: XCTestCase {
             )
 
         XCTAssertGreaterThan(
-            liveResult.preferredClub?.confidence ?? 0,
-            staleResult.preferredClub?.confidence ?? 0
+            liveResult.decision.preferredClub?.confidence ?? 0,
+            staleResult.decision.preferredClub?.confidence ?? 0
         )
     }
     func testUnavailableWeatherStillProducesRecommendation()
@@ -407,7 +407,7 @@ final class RecommendationEngineTests: XCTestCase {
             )
 
         XCTAssertEqual(
-            result.preferredClub?.clubID,
+            result.decision.preferredClub?.clubID,
             club.id
         )
 

@@ -6,12 +6,8 @@
 //
 import Foundation
 
-public enum RecommendationDecision:
-    String,
-    Codable,
-    CaseIterable,
-    Sendable {
-
+// MARK: - Recommendation Decision
+public enum GolferRecommendationDecision: String, Codable, CaseIterable, Sendable {
     case accepted
     case rejected
     case modified
@@ -74,7 +70,7 @@ public struct RecommendationAuditRecord:
 
     public var explanation: String
 
-    public var golferDecision: RecommendationDecision
+    public var golferDecision: GolferRecommendationDecision
     public var selectedClubID: ClubID?
     public var actualShotID: ShotID?
     
@@ -111,7 +107,7 @@ public struct RecommendationAuditRecord:
         riskLevel: ShotRiskLevel,
         recommendationConfidence: Double,
         explanation: String,
-        golferDecision: RecommendationDecision =
+        golferDecision: GolferRecommendationDecision =
             .notRecorded,
         selectedClubID: ClubID? = nil,
         actualShotID: ShotID? = nil,

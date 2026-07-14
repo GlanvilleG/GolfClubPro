@@ -68,5 +68,18 @@ Every milestone should produce a working, testable application.
 * StrategyEngine owns tactical reasoning.
 
 No engine duplicates another engine’s responsibility.
-
-
+### 13. EP-003 — Learn from Facts, Recommend from Models
+The project should separate measurement from decision-making.
+Shot recorded
+        │
+        ▼
+ClubPerformanceEngine
+        │
+        ▼
+Player Model
+        │
+        ▼
+RecommendationEngine
+        │
+        ▼
+AI Coach
