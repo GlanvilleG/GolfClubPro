@@ -41,38 +41,6 @@ public struct ClubRecommendation:
     }
 }
 
-public struct RecommendationResult:
-    Codable,
-    Equatable,
-    Sendable {
-
-    public let decision:
-        RecommendationDecision
-
-    public let explanation:
-        String
-
-    public let auditRecord:
-        RecommendationAuditRecord?
-
-    public init(
-        decision:
-            RecommendationDecision,
-        explanation:
-            String,
-        auditRecord:
-            RecommendationAuditRecord? = nil
-    ) {
-        self.decision =
-            decision
-
-        self.explanation =
-            explanation
-
-        self.auditRecord =
-            auditRecord
-    }
-}
 public enum RecommendationEngineError:
     Error,
     Equatable,
@@ -82,13 +50,24 @@ public enum RecommendationEngineError:
     case unableToCreateShotPlan
 }
 
-public struct RecommendationEngine: Sendable {
+public struct RecommendationEngine:
+    Sendable {
 
-    private let strategyEngine: StrategyEngine
-    private let spatialRiskEvaluator: SpatialRiskEvaluator
-    private let clubScoringEngine: ClubScoringEngine
-    private let recommendationSorter: RecommendationSorter
- 
+    private let strategyEngine:
+        StrategyEngine
+
+    private let spatialRiskEvaluator:
+        SpatialRiskEvaluator
+
+    private let clubScoringEngine:
+        ClubScoringEngine
+
+    private let recommendationSorter:
+        RecommendationSorter
+
+    private let explanationBuilder:
+        RecommendationExplanationBuilder
+
     public init(
         strategyEngine:
             StrategyEngine =
@@ -101,7 +80,10 @@ public struct RecommendationEngine: Sendable {
                 ClubScoringEngine(),
         recommendationSorter:
             RecommendationSorter =
-                RecommendationSorter()
+                RecommendationSorter(),
+        explanationBuilder:
+            RecommendationExplanationBuilder =
+                RecommendationExplanationBuilder()
     ) {
         self.strategyEngine =
             strategyEngine
@@ -114,11 +96,15 @@ public struct RecommendationEngine: Sendable {
 
         self.recommendationSorter =
             recommendationSorter
+
+        self.explanationBuilder =
+            explanationBuilder
     }
-    
+
     public func recommend(
         for context: ShotContext
     ) throws -> RecommendationResult {
+
         try recommend(
             for: context,
             spatialRisk:
@@ -128,16 +114,19 @@ public struct RecommendationEngine: Sendable {
 
     private func recommend(
         for context: ShotContext,
-        spatialRisk: SpatialRiskAssessment
+        spatialRisk:
+            SpatialRiskAssessment
     ) throws -> RecommendationResult {
+
         guard !context.availableClubs.isEmpty else {
-            throw RecommendationEngineError.noAvailableClubs
+            throw RecommendationEngineError
+                .noAvailableClubs
         }
 
         let shotPlan: ShotPlan
 
         if let existingPlan =
-            context.currentShotPlan {
+                context.currentShotPlan {
 
             shotPlan =
                 existingPlan
@@ -160,10 +149,14 @@ public struct RecommendationEngine: Sendable {
                     clubScoringEngine.score(
                         club: club,
                         targetDistanceMeters:
-                            shotPlan.targetDistanceMeters,
-                        context: context,
-                        shotPlan: shotPlan,
-                        spatialRisk: spatialRisk
+                            shotPlan
+                                .targetDistanceMeters,
+                        context:
+                            context,
+                        shotPlan:
+                            shotPlan,
+                        spatialRisk:
+                            spatialRisk
                     )
                 }
 
@@ -187,13 +180,26 @@ public struct RecommendationEngine: Sendable {
                 context: context
             )
 
-        let explanation =
-            makeExplanation(
-                preferred: preferred,
-                shotPlan: shotPlan,
-                context: context,
+        let decision =
+            RecommendationDecision(
+                shotPlan:
+                    shotPlan,
+                preferredClub:
+                    preferred,
+                alternatives:
+                    alternatives,
                 aimOffsetDegrees:
                     aimOffset
+            )
+
+        let explanation =
+            explanationBuilder.build(
+                decision:
+                    decision,
+                context:
+                    context,
+                spatialRisk:
+                    spatialRisk
             )
 
         let auditRecord:
@@ -204,15 +210,18 @@ public struct RecommendationEngine: Sendable {
 
             auditRecord =
                 makeAuditRecord(
-                    context: context,
-                    shotPlan: shotPlan,
-                    preferred: preferred,
+                    context:
+                        context,
+                    shotPlan:
+                        shotPlan,
+                    preferred:
+                        preferred,
                     alternatives:
                         alternatives,
                     aimOffsetDegrees:
                         aimOffset,
                     explanation:
-                        explanation,
+                        explanation.summary,
                     candidates:
                         recommendations
                 )
@@ -220,19 +229,13 @@ public struct RecommendationEngine: Sendable {
             auditRecord = nil
         }
 
-        let decision =
-            RecommendationDecision(
-                shotPlan: shotPlan,
-                preferredClub: preferred,
-                alternatives: alternatives,
-                aimOffsetDegrees:
-                    aimOffset
-            )
-
         return RecommendationResult(
-            decision: decision,
-            explanation: explanation,
-            auditRecord: auditRecord
+            decision:
+                decision,
+            explanation:
+                explanation,
+            auditRecord:
+                auditRecord
         )
     }
     private func makeAuditRecord(
@@ -393,58 +396,4 @@ public struct RecommendationEngine: Sendable {
         return difference
     }
     
-    private func makeExplanation(
-        preferred: ClubRecommendation?,
-        shotPlan: ShotPlan,
-        context: ShotContext,
-        aimOffsetDegrees: Double
-    ) -> String {
-        guard let preferred else {
-            return "No suitable club recommendation is available."
-        }
-
-        let directionDescription: String
-
-        if aimOffsetDegrees < -0.5 {
-            directionDescription =
-                "Aim \(Int(abs(aimOffsetDegrees).rounded())) degrees left of the planned target."
-        } else if aimOffsetDegrees > 0.5 {
-            directionDescription =
-                "Aim \(Int(aimOffsetDegrees.rounded())) degrees right of the planned target."
-        } else {
-            directionDescription =
-                "Aim directly at the planned target."
-        }
-
-        let weatherDescription: String
-
-        switch context.environment.weatherAvailability {
-        case .live:
-            weatherDescription =
-                "Live weather data was used."
-
-        case .cached:
-            weatherDescription =
-                "Recent cached weather data was used."
-
-        case .stale:
-            weatherDescription =
-                "Weather data is stale, so treat the recommendation cautiously."
-
-        case .unavailable:
-            weatherDescription =
-                "Live weather was unavailable."
-        }
-        
-        return """
-        Recommended club confidence is \(Int((preferred.confidence * 100).rounded())) percent. \
-        The adjusted carry is \(Int(preferred.adjustedCarryMeters.rounded())) metres. \
-        \(directionDescription) \
-        \(weatherDescription) \
-        \(shotPlan.rationale)
-        """
-    }
-
-  
 }
-
