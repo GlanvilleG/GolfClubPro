@@ -153,6 +153,8 @@ enum GolfCoreTestFactory {
 
         return snapshot
     }
+    
+    
 
     static func makeWeatherSnapshot(
         observedAt: Date,
