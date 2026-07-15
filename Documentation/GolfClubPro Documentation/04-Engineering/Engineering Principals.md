@@ -77,6 +77,46 @@ Small components are easier to verify, reuse, optimise, and replace independentl
     * StrategyEngine
     * future WindAdjustmentEngine
 
+## Production and Test Structure
+
+The repository shall maintain a mirrored structure between production code and its corresponding test code wherever practical.
+Each production bounded context shall have a matching test bounded context.
+Example:
+
+```
+GolfCore
+│
+├── Human
+│   ├── Coaching
+│   ├── Model
+│   ├── Learning
+│   └── Performance
+│
+GolfCoreTests
+│
+├── Human
+│   ├── Coaching
+│   ├── Model
+│   ├── Learning
+│   └── Performance
+```
+
+Benefits include:
+
+- predictable navigation
+- simplified maintenance
+- clear subsystem ownership
+- improved discoverability
+- scalable repository organisation
+
+Every production class should have a corresponding test class where appropriate.
+Test files shall use the naming convention:
+
+```
+<ClassName>Tests.swift
+```
+The test hierarchy shall mirror the production hierarchy rather than grouping tests by implementation type.
+
 ## Coding Principles
 
 CP-001 Prefer Explicit Domain States

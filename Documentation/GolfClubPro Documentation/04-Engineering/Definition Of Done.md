@@ -81,6 +81,9 @@ A Sprint is complete only when every section below has been satisfied.
 - Behaviour-based tests preferred over implementation tests.
 - Edge cases covered.
 - No flaky tests.
+- Test directory hierarchy mirrors the production directory hierarchy.
+- Every new production class includes a corresponding test class where appropriate.
+- Test names follow the `<ClassName>Tests.swift` convention.
 
 ---
 
@@ -121,6 +124,7 @@ Before completion:
 - Commit message follows project conventions.
 - Git tag created (milestone releases).
 - GitHub push completed.
+- Repository structure shall remain organised by bounded context rather than technical implementation, with production and test hierarchies remaining aligned.
 
 ---
 
