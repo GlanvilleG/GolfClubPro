@@ -67,6 +67,9 @@ public struct RecommendationEngine:
 
     private let explanationBuilder:
         RecommendationExplanationBuilder
+    
+    private let auditBuilder:
+        RecommendationAuditBuilder
 
     public init(
         strategyEngine:
@@ -83,8 +86,11 @@ public struct RecommendationEngine:
                 RecommendationSorter(),
         explanationBuilder:
             RecommendationExplanationBuilder =
-                RecommendationExplanationBuilder()
-    ) {
+                RecommendationExplanationBuilder(),
+        auditBuilder:
+            RecommendationAuditBuilder =
+                RecommendationAuditBuilder()
+        ) {
         self.strategyEngine =
             strategyEngine
 
@@ -99,6 +105,9 @@ public struct RecommendationEngine:
 
         self.explanationBuilder =
             explanationBuilder
+            
+        self.auditBuilder =
+                auditBuilder
     }
 
     public func recommend(
@@ -202,34 +211,19 @@ public struct RecommendationEngine:
                     spatialRisk
             )
 
-        let auditRecord:
-            RecommendationAuditRecord?
+        let auditRecord =
+            auditBuilder.build(
+                decision:
+                    decision,
+                explanation:
+                    explanation,
+                context:
+                    context,
+                candidates:
+                    recommendations
+            )
 
-        if context.player
-            .recommendationAuditEnabled {
-
-            auditRecord =
-                makeAuditRecord(
-                    context:
-                        context,
-                    shotPlan:
-                        shotPlan,
-                    preferred:
-                        preferred,
-                    alternatives:
-                        alternatives,
-                    aimOffsetDegrees:
-                        aimOffset,
-                    explanation:
-                        explanation.summary,
-                    candidates:
-                        recommendations
-                )
-        } else {
-            auditRecord = nil
-        }
-
-        return RecommendationResult(
+       return RecommendationResult(
             decision:
                 decision,
             explanation:
@@ -238,98 +232,9 @@ public struct RecommendationEngine:
                 auditRecord
         )
     }
-    private func makeAuditRecord(
-        context: ShotContext,
-        shotPlan: ShotPlan,
-        preferred: ClubRecommendation?,
-        alternatives: [ClubRecommendation],
-        aimOffsetDegrees: Double,
-        explanation: String,
-        candidates: [ClubRecommendation]
-    ) -> RecommendationAuditRecord {
-        RecommendationAuditRecord(
-            playerID: context.player.id,
-            roundID: context.roundID,
-            holeID: context.hole.id,
-            currentPosition:
-                context.currentPosition,
-            playableLie:
-                context.playableLie,
-            courseArea:
-                context.courseArea,
-            targetPoint:
-                shotPlan.aimPoint,
-            targetBearingDegrees:
-                shotPlan.targetBearingDegrees,
-            targetDistanceMeters:
-                shotPlan.targetDistanceMeters,
-            preferredClubID:
-                preferred?.clubID,
-            alternativeClubIDs:
-                alternatives.map(\.clubID),
-            candidateClubs:
-                candidates.map {
-                    RecommendationCandidateSnapshot(
-                        clubID: $0.clubID,
-                        score: $0.score,
-                        adjustedCarryMeters:
-                            $0.adjustedCarryMeters,
-                        confidence:
-                            $0.confidence
-                    )
-                },
-            aimOffsetDegrees:
-                aimOffsetDegrees,
-            riskLevel:
-                shotPlan.riskLevel,
-            recommendationConfidence:
-                preferred?.confidence ?? 0,
-            explanation:
-                explanation,
-            weatherObservedAt:
-                context.environment
-                    .weatherSnapshot?
-                    .observedAt,
-
-            weatherAvailability:
-                context.environment
-                    .weatherAvailability,
-
-            weatherSource:
-                context.environment
-                    .weatherSnapshot?
-                    .source ?? .unknown,
-
-            windSpeedMetersPerSecond:
-                context.environment
-                    .wind?
-                    .speedMetersPerSecond,
-
-            windDirectionDegrees:
-                context.environment
-                    .wind?
-                    .directionDegrees,
-
-            windGustMetersPerSecond:
-                context.environment
-                    .weatherSnapshot?
-                    .windGustMetersPerSecond,
-
-            temperatureCelsius:
-                context.environment
-                    .temperatureCelsius,
-
-            humidityPercent:
-                context.environment
-                    .humidityPercent,
-
-            pressureHPa:
-                context.environment
-                    .pressureHPa
-        )
-    }
     
    
+    
     private func calculateAimOffsetDegrees(
         context: ShotContext
     ) -> Double {

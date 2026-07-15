@@ -28,6 +28,10 @@ public struct RecommendationExplanationBuilder:
                 makePrimaryReasons(
                     decision: decision
                 ),
+            environmentalConditions:
+                makeEnvironmentalConditions(
+                    context: context
+                ),
             warnings:
                 makeWarnings(
                     spatialRisk: spatialRisk
@@ -48,6 +52,127 @@ public struct RecommendationExplanationBuilder:
         )
     }
 
+    private func makeEnvironmentalConditions(
+        context: ShotContext
+    ) -> [ExplanationItem] {
+
+        var items:
+            [ExplanationItem] = []
+
+        switch context.environment.weatherAvailability {
+
+        case .live:
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Live weather data",
+                    detail:
+                        "Current weather conditions were used.",
+                    severity:
+                        .information
+                )
+            )
+
+        case .cached:
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Cached weather",
+                    detail:
+                        "Recent cached weather data was used.",
+                    severity:
+                        .advisory
+                )
+            )
+
+        case .stale:
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Stale weather",
+                    detail:
+                        "Weather data may no longer represent current conditions.",
+                    severity:
+                        .caution
+                )
+            )
+
+        case .unavailable:
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Weather unavailable",
+                    detail:
+                        "No live weather information was available.",
+                    severity:
+                        .caution
+                )
+            )
+        }
+
+        if let wind =
+            context.environment.wind {
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Wind adjustment",
+                    detail:
+                        String(
+                            format: "%.1f m/s from %.0f°",
+                            wind.speedMetersPerSecond,
+                            wind.directionDegrees
+                        ),
+                    severity:
+                        .information
+                )
+            )
+        }
+
+        if let elevation =
+            context.environment
+                .elevationChangeMeters {
+
+            let direction =
+                elevation >= 0
+                ? "uphill"
+                : "downhill"
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Elevation adjustment",
+                    detail:
+                        "\(Int(abs(elevation).rounded())) metres \(direction)",
+                    severity:
+                        .information
+                )
+            )
+        }
+
+        if let temperature =
+            context.environment
+                .temperatureCelsius {
+
+            items.append(
+                ExplanationItem(
+                    title:
+                        "Temperature",
+                    detail:
+                        "\(Int(temperature.rounded())) °C",
+                    severity:
+                        .information
+                )
+            )
+        }
+
+        return items
+    }
+    
     private func makeSummary(
         decision: RecommendationDecision,
         context: ShotContext
@@ -183,29 +308,23 @@ public struct RecommendationExplanationBuilder:
                 "Confirm the lie and target before selecting a club."
         }
 
-        switch context.environment
-            .weatherAvailability {
+        switch decision.shotPlan.riskLevel {
 
-        case .live:
-            if context.environment.wind != nil {
-                return
-                    "Allow for the live wind conditions before committing to the shot."
-            }
-
+        case .low:
             return
-                "Commit to the selected target and maintain normal tempo."
+                "Commit to the selected target."
 
-        case .cached:
+        case .moderate:
             return
-                "Cached weather was used; confirm that conditions have not changed."
+                "Maintain good tempo and commit to the intended line."
 
-        case .stale:
+        case .high:
             return
-                "Weather information is stale; reassess the wind before playing."
+                "Prioritise solid contact before distance."
 
-        case .unavailable:
+        case .extreme:
             return
-                "Wind data is unavailable; verify conditions before committing."
+                "Recovery to a safe position is the priority."
         }
     }
 

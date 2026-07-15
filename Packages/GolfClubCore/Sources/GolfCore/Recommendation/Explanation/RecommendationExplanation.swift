@@ -61,6 +61,9 @@ public struct RecommendationExplanation:
     public let primaryReasons:
         [ExplanationItem]
 
+    public let environmentalConditions:
+        [ExplanationItem]
+
     public let warnings:
         [ExplanationItem]
 
@@ -77,6 +80,8 @@ public struct RecommendationExplanation:
         summary: String,
         primaryReasons:
             [ExplanationItem] = [],
+        environmentalConditions:
+            [ExplanationItem] = [],
         warnings:
             [ExplanationItem] = [],
         confidenceStatement:
@@ -91,6 +96,9 @@ public struct RecommendationExplanation:
 
         self.primaryReasons =
             primaryReasons
+
+        self.environmentalConditions =
+            environmentalConditions
 
         self.warnings =
             warnings

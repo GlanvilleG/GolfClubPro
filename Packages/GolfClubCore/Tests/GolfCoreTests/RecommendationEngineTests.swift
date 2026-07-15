@@ -384,7 +384,7 @@ final class RecommendationEngineTests: XCTestCase {
             staleResult.decision.preferredClub?.confidence ?? 0
         )
     }
-    func testUnavailableWeatherStillProducesRecommendation()
+    func testUnavailableWeatherCreatesEnvironmentalCondition()
         throws {
 
         let club = Club(
@@ -411,12 +411,16 @@ final class RecommendationEngineTests: XCTestCase {
                 club.id
             )
 
-            XCTAssertEqual(
-                result.explanation.nextShotFocus,
-                "Wind data is unavailable; verify conditions before committing."
+            XCTAssertTrue(
+                result.explanation
+                    .environmentalConditions
+                    .contains {
+                        $0.detail ==
+                            "No live weather information was available."
+                    }
             )
     }
-    func testCachedWeatherIsMentionedInExplanation()
+    func testCachedWeatherCreatesEnvironmentalCondition()
         throws {
 
         let club = Club(
@@ -454,9 +458,17 @@ final class RecommendationEngineTests: XCTestCase {
 
             XCTAssertTrue(
                 result.explanation
-                    .nextShotFocus?
-                    .contains("Cached weather")
-                    ?? false
+                    .environmentalConditions
+                    .contains(
+                        ExplanationItem(
+                            title:
+                                "Cached weather",
+                            detail:
+                                "Recent cached weather data was used.",
+                            severity:
+                                .advisory
+                        )
+                    )
             )
     }
 }

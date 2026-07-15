@@ -1,5 +1,5 @@
 
-## Architecture Refinement Sprint
+# Architecture Refinement Sprint
 
 ### Pass 1 — Repository Cleanup
 
@@ -72,4 +72,118 @@ The objective is that every class name immediately communicates its responsibili
 - Updated roadmap and milestone status
 - Aligned Domain Model with current DDD responsibilities
 
+# Sprint 8 — Recommendation Engine Refactor
 
+### Stage 1 — Recommendation Domain Separation
+
+- Introduced `RecommendationDecision` as the immutable representation of the recommendation outcome.
+- Refactored `RecommendationResult` to encapsulate:
+  - `RecommendationDecision`
+  - `RecommendationExplanation`
+  - `RecommendationAuditRecord`
+- Separated recommendation decision making from presentation concerns.
+- Established Recommendation as a deterministic domain subsystem.
+
+### Stage 2 — Club Scoring Engine
+
+- Extracted club evaluation logic into `ClubScoringEngine`.
+- Removed scoring responsibilities from `RecommendationEngine`.
+- Centralised:
+  - carry adjustments
+  - lie adjustments
+  - environmental adjustments
+  - confidence calculation
+  - historical performance
+  - dispersion analysis
+- Added comprehensive unit test coverage.
+
+### Stage 3 — Recommendation Sorting
+
+- Introduced `RecommendationSorter`.
+- Centralised recommendation ordering.
+- Removed sorting behaviour from `RecommendationEngine`.
+- Added deterministic recommendation ordering tests.
+
+### Stage 4 — Structured Recommendation Explanations
+
+- Introduced `RecommendationExplanation`.
+- Introduced `ExplanationItem`.
+- Introduced `ExplanationSeverity`.
+- Replaced monolithic explanation strings with structured immutable domain objects.
+- Separated:
+  - summary
+  - primary reasons
+  - environmental conditions
+  - warnings
+  - confidence statements
+  - course management advice
+  - next shot focus
+- Added `RecommendationExplanationBuilder`.
+
+### Stage 5 — Environmental Explanation Model
+
+- Introduced structured environmental explanation collection.
+- Added support for:
+  - live weather
+  - cached weather
+  - stale weather
+  - unavailable weather
+  - wind adjustments
+  - elevation adjustments
+  - temperature reporting
+- Updated tests to validate domain objects instead of rendered strings.
+
+### Stage 6 — Recommendation Audit Builder
+
+- Introduced `RecommendationAuditBuilder`.
+- Removed audit construction responsibility from `RecommendationEngine`.
+- Builder now owns audit enablement decisions.
+- Preserved audit record compatibility through structured explanation summaries.
+- Added independent audit builder tests.
+
+### Stage 7 — Recommendation Pipeline Stabilisation
+
+- RecommendationEngine now acts as a deterministic orchestration pipeline.
+- Recommendation responsibilities now separated into:
+  - StrategyEngine
+  - ClubScoringEngine
+  - RecommendationSorter
+  - RecommendationExplanationBuilder
+  - RecommendationAuditBuilder
+- RecommendationEngine now contains minimal business logic.
+- Established stable Recommendation subsystem boundaries.
+
+### Stage 8 — Recommendation Architecture
+
+- Published ADR-020 – AI Shot Coaching Architecture.
+- Published ADR-021 – Human Playing Characteristics.
+- Published ADR-022 – Recommendation Pipeline Architecture.
+- Recommendation subsystem formally declared presentation independent.
+- Recommendation subsystem formally separated from:
+  - Coaching
+  - HumanModel
+  - Analytics
+  - User Interface
+
+### Stage 9 — Testing
+
+- Added RecommendationExplanationBuilder tests.
+- Added RecommendationSorter tests.
+- Added RecommendationAuditBuilder tests.
+- Updated Recommendation tests to validate structured domain models.
+- All GolfCore tests passing following Recommendation subsystem refactor.
+
+### Stage 10 — Future Direction
+
+Recommendation subsystem architecture is now considered stable.
+
+Future development will extend the platform through downstream consumers rather than modifying RecommendationEngine.
+
+Planned future work includes:
+
+- Shot Coaching Engine
+- Playing Characteristics
+- HumanModel
+- Adaptive Learning
+- AI Coach
+- Recommendation Metrics

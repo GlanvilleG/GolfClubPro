@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */; };
+		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
+		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
 		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
@@ -88,6 +91,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-022 – Recommendation Pipeline Architecture.md"; sourceTree = "<group>"; };
+		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
+		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
 		5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfClubPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,19 +391,6 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
-				5AFC50313005C824002DF421 /* ADR-019–Player Performance Learning Architecture.md */,
-				5AFC502F3005B1C8002DF421 /* ADR-018-Recommendation Context Architecture.md */,
-				5AFC502330059038002DF421 /* ADR-017–Spatial Index Architecture.md */,
-				5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */,
-				5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */,
-				5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */,
-				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
-				5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */,
-				5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */,
-				5AFC4DB730008EFF002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md */,
-				5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */,
-				5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */,
-				5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */,
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
 				5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */,
@@ -405,6 +398,22 @@
 				5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */,
 				5ABC379D2FFE21C000A78677 /* ADR-005-SwiftData-Persistence.md */,
 				5ABC379F2FFE21DD00A78677 /* ADR-006-Watch First Architecture.md */,
+				5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */,
+				5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */,
+				5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */,
+				5AFC4DB730008EFF002DF421 /* ADR-010-Strategic-Route-and-Target-Planning.md */,
+				5AFC4DB930009B32002DF421 /* ADR-011-AI-Caddy-Architecture.md */,
+				5AFC4DBB3000ED23002DF421 /* ADR-012-Weather-Integration.md */,
+				5AFC4DBD3000F94B002DF421 /* ADR-013-Offline-First-Architecture.md */,
+				5AFC4DD630010D22002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md */,
+				5AFC4E9030021EB3002DF421 /* ADR-015-Apple-Platform-Integration.md */,
+				5AFC501F3004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md */,
+				5AFC502330059038002DF421 /* ADR-017–Spatial Index Architecture.md */,
+				5AFC502F3005B1C8002DF421 /* ADR-018-Recommendation Context Architecture.md */,
+				5AFC50313005C824002DF421 /* ADR-019–Player Performance Learning Architecture.md */,
+				5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */,
+				5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */,
+				5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */,
 			);
 			path = Decisions;
 			sourceTree = "<group>";
@@ -700,6 +709,9 @@
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
 				5AFC502E3005A665002DF421 /* HoleAreaPrecedence.md in Resources */,
 				5AFC502430059041002DF421 /* ADR-017–Spatial Index Architecture.md in Resources */,
+				5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */,
+				5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */,
+				5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */,
 				5AFC4DD730010D27002DF421 /* ADR-014-Intelligent-Round-Orchestrator.md in Resources */,
 				5AFC4DBC3000ED28002DF421 /* ADR-012-Weather-Integration.md in Resources */,
 				5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */,
