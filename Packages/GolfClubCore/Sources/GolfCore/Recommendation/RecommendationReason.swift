@@ -27,4 +27,6 @@ public enum RecommendationReason:
 
     case aggressiveOption
     case conservativeOption
+    
+    case playerPattern
 }

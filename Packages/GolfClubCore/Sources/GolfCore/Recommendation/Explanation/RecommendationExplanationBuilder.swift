@@ -443,6 +443,16 @@ public struct RecommendationExplanationBuilder:
                 severity:
                     .information
             )
+                
+        case .playerPattern:
+             return ExplanationItem(
+                 title:
+                     "Player pattern adjustment",
+                 detail:
+                     "The recommendation has been adjusted using the golfer's historical shot tendencies and performance profile.",
+                 severity:
+                    .information
+                    )
         }
     }
 }
