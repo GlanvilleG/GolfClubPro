@@ -197,6 +197,17 @@ public struct CaddyExplanationEngine:
                 severity:
                     .information
             )
+            
+        case .weatherInfluence:
+            
+            return ExplanationItem(
+                title:
+                    "Weather influence",
+                detail:
+                    "The recommendation is affected by the current weather conditions.",
+                severity:
+                        .information
+            )
         }
     }
 

@@ -29,4 +29,6 @@ public enum RecommendationReason:
     case conservativeOption
     
     case playerPattern
+    
+    case weatherInfluence
 }

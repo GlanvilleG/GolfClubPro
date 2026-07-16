@@ -453,6 +453,16 @@ public struct RecommendationExplanationBuilder:
                  severity:
                     .information
                     )
+            
+        case .weatherInfluence:
+            return ExplanationItem(
+                title:
+                    "Weather influence",
+                detail:
+                    "The recommendation has been adjusted for the current weather conditions.",
+                severity:
+                        .information
+            )
         }
     }
 }
