@@ -18,6 +18,9 @@ public struct ShotSituationEngine:
     private let pitchThresholdMeters:
         Double
 
+    private let shortIronThresholdMeters:
+        Double
+
     private let longApproachThresholdMeters:
         Double
 
@@ -28,6 +31,8 @@ public struct ShotSituationEngine:
             Double = 25,
         pitchThresholdMeters:
             Double = 90,
+        shortIronThresholdMeters:
+            Double = 130,
         longApproachThresholdMeters:
             Double = 170
     ) {
@@ -39,6 +44,9 @@ public struct ShotSituationEngine:
 
         self.pitchThresholdMeters =
             pitchThresholdMeters
+        
+        self.shortIronThresholdMeters =
+            shortIronThresholdMeters
 
         self.longApproachThresholdMeters =
             longApproachThresholdMeters
@@ -283,7 +291,7 @@ public struct ShotSituationEngine:
         }
 
         if targetDistanceMeters >
-            pitchThresholdMeters {
+            shortIronThresholdMeters {
 
             return ShotSituationAssessment(
                 situation:

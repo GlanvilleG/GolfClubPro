@@ -588,7 +588,118 @@ final class ShotSituationEngineTests:
             )
         )
     }
-    
+    func testShortIronBoundary()
+    throws {
+
+        let club =
+            Club(
+                name:
+                    "9 Iron",
+                type:
+                    .iron,
+                averageCarryMeters:
+                    120
+            )
+
+        let context =
+            GolfCoreTestFactory.makeShotContext(
+                targetDistanceMeters:
+                    105,
+                clubs:
+                    [club],
+                lie:
+                    .fairway
+            )
+
+        let decision =
+            try makeDecision(
+                context:
+                    context,
+                clubID:
+                    club.id
+            )
+
+        let result =
+            engine.classify(
+                recommendation:
+                    decision,
+                context:
+                    context
+            )
+
+        XCTAssertEqual(
+            result.situation,
+            .shortIronApproach
+        )
+
+        XCTAssertEqual(
+            result.confidence,
+            0.85
+        )
+
+        XCTAssertTrue(
+            result.rationale.contains(
+                "short-iron approach range"
+            )
+        )
+    }
+
+
+    func testMidIronBoundary()
+    throws {
+
+        let club =
+            Club(
+                name:
+                    "6 Iron",
+                type:
+                    .iron,
+                averageCarryMeters:
+                    140
+            )
+
+        let context =
+            GolfCoreTestFactory.makeShotContext(
+                targetDistanceMeters:
+                    160,
+                clubs:
+                    [club],
+                lie:
+                    .fairway
+            )
+
+        let decision =
+            try makeDecision(
+                context:
+                    context,
+                clubID:
+                    club.id
+            )
+
+        let result =
+            engine.classify(
+                recommendation:
+                    decision,
+                context:
+                    context
+            )
+
+        XCTAssertEqual(
+            result.situation,
+            .midIronApproach
+        )
+
+        XCTAssertEqual(
+            result.confidence,
+            0.85
+        )
+
+        XCTAssertTrue(
+            result.rationale.contains(
+                "mid-iron approach range"
+            )
+        )
+    }
     func testReturnsUnknownWhenNoPreferredClub()
         throws {
 

@@ -13,41 +13,68 @@ public struct PlayerPerformanceModel:
     Sendable {
 
     public let playerID:
-        PlayerID
+           PlayerID
 
-    public var clubs:
-        [ClubPerformance]
+       public var clubs:
+           [ClubPerformance]
 
-    public var characteristics:
-        PlayerCharacteristics
+       public var characteristics:
+           PlayerCharacteristics
 
-    public var metadata:
-        PerformanceMetadata
+       public var summary:
+           OverallPerformanceSummary
+
+       public var metadata:
+           PerformanceMetadata
+
+       public var dispersionProfiles:
+           [ShotDispersionProfile]
+
+       public var errorPatternProfiles:
+           [ShotErrorPatternProfile]
 
     public init(
-        playerID: PlayerID,
-        clubs:
-            [ClubPerformance] = [],
-        characteristics:
-            PlayerCharacteristics =
-                PlayerCharacteristics(),
-        metadata:
-            PerformanceMetadata =
-                PerformanceMetadata()
-    ) {
-        self.playerID =
-            playerID
+           playerID:
+               PlayerID,
+           clubs:
+               [ClubPerformance] = [],
+           characteristics:
+               PlayerCharacteristics =
+                   PlayerCharacteristics(),
+           summary:
+               OverallPerformanceSummary =
+                   OverallPerformanceSummary(),
+           metadata:
+               PerformanceMetadata =
+                   PerformanceMetadata(),
+           dispersionProfiles:
+               [ShotDispersionProfile] = [],
+           errorPatternProfiles:
+               [ShotErrorPatternProfile] = []
+       ) {
 
-        self.clubs =
-            clubs
+           self.playerID =
+               playerID
 
-        self.characteristics =
-            characteristics
+           self.clubs =
+               clubs
 
-        self.metadata =
-            metadata
-    }
-}
+           self.characteristics =
+               characteristics
+
+           self.summary =
+               summary
+
+           self.metadata =
+               metadata
+
+           self.dispersionProfiles =
+               dispersionProfiles
+
+           self.errorPatternProfiles =
+               errorPatternProfiles
+       }
+   }
 public extension PlayerPerformanceModel {
 
     func performance(
@@ -64,6 +91,72 @@ public extension PlayerPerformanceModel {
 
         clubs.reduce(0) {
             $0 + $1.shotCount
+        }
+    }
+}
+public extension PlayerPerformanceModel {
+
+    func dispersionProfile(
+        for clubID:
+            ClubID
+    ) -> ShotDispersionProfile? {
+
+        dispersionProfiles.first {
+            $0.clubID == clubID
+        }
+    }
+
+    func errorPatternProfile(
+        for clubID:
+            ClubID
+    ) -> ShotErrorPatternProfile? {
+
+        errorPatternProfiles.first {
+            $0.clubID == clubID
+        }
+    }
+}
+public extension PlayerPerformanceModel {
+
+    mutating func setDispersionProfile(
+        _ profile:
+            ShotDispersionProfile
+    ) {
+        if let index =
+            dispersionProfiles.firstIndex(
+                where: {
+                    $0.clubID ==
+                        profile.clubID
+                }
+            ) {
+
+            dispersionProfiles[index] =
+                profile
+        } else {
+            dispersionProfiles.append(
+                profile
+            )
+        }
+    }
+
+    mutating func setErrorPatternProfile(
+        _ profile:
+            ShotErrorPatternProfile
+    ) {
+        if let index =
+            errorPatternProfiles.firstIndex(
+                where: {
+                    $0.clubID ==
+                        profile.clubID
+                }
+            ) {
+
+            errorPatternProfiles[index] =
+                profile
+        } else {
+            errorPatternProfiles.append(
+                profile
+            )
         }
     }
 }

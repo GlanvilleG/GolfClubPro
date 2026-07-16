@@ -33,8 +33,15 @@ public struct ShotOutcomeEvaluator:
             PlannedShotOutcome,
         actual:
             ActualShotOutcome
-    ) -> ShotOutcomeAssessment {
+    ) throws -> ShotOutcomeAssessment {
 
+        guard planned.shotID ==
+                actual.shotID
+        else {
+            throw ShotOutcomeEvaluationError
+                .shotIdentityMismatch
+        }
+        
         let targetAchieved =
             planned.landingArea.contains(
                 actual.landingLocation

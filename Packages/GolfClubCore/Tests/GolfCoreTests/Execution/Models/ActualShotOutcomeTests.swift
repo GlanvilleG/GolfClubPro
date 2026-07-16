@@ -12,8 +12,8 @@ final class ActualShotOutcomeTests:
 
     func testCreatesActualShotOutcome() {
 
-        let shotID =
-            ShotID()
+        let shot =
+            makeShot()
 
         let location =
             GeoCoordinate(
@@ -25,8 +25,8 @@ final class ActualShotOutcomeTests:
 
         let outcome =
             ActualShotOutcome(
-                shotID:
-                    shotID,
+                shot:
+                    shot,
                 landingLocation:
                     location,
                 distanceMeters:
@@ -35,7 +35,7 @@ final class ActualShotOutcomeTests:
 
         XCTAssertEqual(
             outcome.shotID,
-            shotID
+            shot.id
         )
 
         XCTAssertEqual(
@@ -45,10 +45,13 @@ final class ActualShotOutcomeTests:
     }
     func testNegativeDistanceIsClamped() {
 
+        let shot =
+        makeShot()
+        
         let outcome =
             ActualShotOutcome(
-                shotID:
-                    ShotID(),
+                shot:
+                    shot,
                 landingLocation:
                     GeoCoordinate(
                         latitude:
@@ -76,10 +79,13 @@ final class ActualShotOutcomeTests:
                     0
             )
 
+        let shot =
+        makeShot()
+        
         let outcome =
             ActualShotOutcome(
-                shotID:
-                    ShotID(),
+                shot:
+                    shot,
                 landingLocation:
                     GeoCoordinate(
                         latitude:
@@ -104,10 +110,13 @@ final class ActualShotOutcomeTests:
                 longitude: 0
             )
 
+        let shot =
+        makeShot()
+        
         let outcome =
             ActualShotOutcome(
-                shotID:
-                    ShotID(),
+                shot:
+                    shot,
                 landingLocation:
                     GeoCoordinate(
                         latitude: 0.001,
@@ -125,10 +134,13 @@ final class ActualShotOutcomeTests:
     func testSupportsCodable()
     throws {
 
+        let shot =
+        makeShot()
+        
         let original =
             ActualShotOutcome(
-                shotID:
-                    ShotID(),
+                shot:
+                    shot,
                 landingLocation:
                     GeoCoordinate(
                         latitude:
@@ -157,5 +169,39 @@ final class ActualShotOutcomeTests:
             original
         )
     }
-    
+    private func makeShot(
+        id:
+            ShotID = ShotID()
+    ) -> Shot {
+
+        Shot(
+            id:
+                id,
+            roundID:
+                RoundID(),
+            holeID:
+                HoleID(),
+            clubID:
+                ClubID()
+        )
+    }
+    private func makeActualOutcome(
+        shot:
+            Shot
+    ) -> ActualShotOutcome {
+
+        ActualShotOutcome(
+            shot:
+                shot,
+            landingLocation:
+                GeoCoordinate(
+                    latitude:
+                        0,
+                    longitude:
+                        0
+                ),
+            distanceMeters:
+                180
+        )
+    }
 }

@@ -6,8 +6,6 @@
 //
 import Foundation
 
-import Foundation
-
 public struct ActualShotOutcome:
     Codable,
     Equatable,
@@ -26,8 +24,8 @@ public struct ActualShotOutcome:
         Date
 
     public init(
-        shotID:
-            ShotID,
+        shot:
+            Shot,
         landingLocation:
             GeoCoordinate,
         distanceMeters:
@@ -35,8 +33,9 @@ public struct ActualShotOutcome:
         recordedAt:
             Date = Date()
     ) {
+
         self.shotID =
-            shotID
+            shot.id
 
         self.landingLocation =
             landingLocation

@@ -1,5 +1,5 @@
 //
-//  HumanModelTests..swift
+//  HumanModelTests.swift
 //  GolfClubCore
 //
 //  Created by Dragon Development on 15/07/2026.
@@ -58,7 +58,7 @@ final class HumanModelTests:
 
     func testSupportsLeftHandedPlayer() {
         let characteristics =
-            PlayingCharacteristics(
+            PlayerCharacteristics(
                 dominantHand: .left
             )
 
@@ -106,7 +106,7 @@ final class HumanModelTests:
                     playerID:
                         PlayerID(),
                     playingCharacteristics:
-                        PlayingCharacteristics(),
+                        PlayerCharacteristics(),
                     coachingPreferences:
                         CoachingPreferences(),
                     equipmentPreferences:

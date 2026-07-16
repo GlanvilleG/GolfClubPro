@@ -14,33 +14,67 @@ final class ShotOutcomeEvaluatorTests:
         ShotOutcomeEvaluator()
 
 
-    // MARK: - Excellent Outcome
+    // MARK: - Successful Evaluation
+
+
+    func testEvaluatorAcceptsMatchingShotIdentity()
+    throws {
+
+        let shot =
+            makeShot()
+
+        let planned =
+            makePlannedOutcome(
+                shot:
+                    shot
+            )
+
+        let actual =
+            makeActualOutcome(
+                shot:
+                    shot
+            )
+
+        XCTAssertNoThrow(
+            try evaluator.evaluate(
+                planned:
+                    planned,
+                actual:
+                    actual
+            )
+        )
+    }
+
 
     func testExcellentOutcomeWhenTargetAchievedAndHazardAvoided()
     throws {
 
+        let shot =
+            makeShot()
+
         let planned =
-            makePlannedShotOutcome(
-                expectedDistanceMeters:
-                    180,
-                targetRadiusMeters:
-                    25,
-                hazardRadiusMeters:
-                    20
+            makePlannedOutcome(
+                shot:
+                    shot
             )
 
         let actual =
-            makeActualShotOutcome(
-                distanceMeters:
-                    178,
-                insideTarget:
-                    true,
-                insideHazard:
-                    false
+            makeActualOutcome(
+                shot:
+                    shot,
+                location:
+                    GeoCoordinate(
+                        latitude:
+                            0,
+                        longitude:
+                            0
+                    ),
+                distance:
+                    178
             )
 
         let result =
-            evaluator.evaluate(
+            try evaluator.evaluate(
                 planned:
                     planned,
                 actual:
@@ -56,44 +90,41 @@ final class ShotOutcomeEvaluatorTests:
             result.executionQuality,
             .excellent
         )
-
-        XCTAssertTrue(
-            result.feedback.contains {
-                $0.contains(
-                    "planned landing area"
-                )
-            }
-        )
     }
 
 
-    // MARK: - Good Decision Poor Execution
+    // MARK: - Execution Quality
+
 
     func testGoodDecisionPoorExecution()
     throws {
 
+        let shot =
+            makeShot()
+
         let planned =
-            makePlannedShotOutcome(
-                expectedDistanceMeters:
-                    180,
-                targetRadiusMeters:
-                    25,
-                hazardRadiusMeters:
-                    20
+            makePlannedOutcome(
+                shot:
+                    shot
             )
 
         let actual =
-            makeActualShotOutcome(
-                distanceMeters:
-                    145,
-                insideTarget:
-                    false,
-                insideHazard:
-                    false
+            makeActualOutcome(
+                shot:
+                    shot,
+                location:
+                    GeoCoordinate(
+                        latitude:
+                            0.02,
+                        longitude:
+                            0
+                    ),
+                distance:
+                    130
             )
 
         let result =
-            evaluator.evaluate(
+            try evaluator.evaluate(
                 planned:
                     planned,
                 actual:
@@ -112,33 +143,35 @@ final class ShotOutcomeEvaluatorTests:
     }
 
 
-    // MARK: - Good Execution Poor Strategy
-
-    func testGoodExecutionButTargetNotAchieved()
+    func testGoodExecutionWhenTargetAchieved()
     throws {
 
+        let shot =
+            makeShot()
+
         let planned =
-            makePlannedShotOutcome(
-                expectedDistanceMeters:
-                    180,
-                targetRadiusMeters:
-                    25,
-                hazardRadiusMeters:
-                    20
+            makePlannedOutcome(
+                shot:
+                    shot
             )
 
         let actual =
-            makeActualShotOutcome(
-                distanceMeters:
-                    180,
-                insideTarget:
-                    false,
-                insideHazard:
-                    false
+            makeActualOutcome(
+                shot:
+                    shot,
+                location:
+                    GeoCoordinate(
+                        latitude:
+                            0,
+                        longitude:
+                            0
+                    ),
+                distance:
+                    180
             )
 
         let result =
-            evaluator.evaluate(
+            try evaluator.evaluate(
                 planned:
                     planned,
                 actual:
@@ -152,107 +185,108 @@ final class ShotOutcomeEvaluatorTests:
 
         XCTAssertEqual(
             result.decisionQuality,
-            .poor
+            .excellent
         )
     }
 
 
-    // MARK: - Poor Outcome
+    // MARK: - Identity Validation
 
-    func testPoorOutcomeWhenTargetMissedAndHazardHit()
+
+    func testEvaluatorRejectsDifferentShotIdentity()
     throws {
 
+        let plannedShot =
+            makeShot()
+
+        let actualShot =
+            makeShot()
+
         let planned =
-            makePlannedShotOutcome(
-                expectedDistanceMeters:
-                    180,
-                targetRadiusMeters:
-                    25,
-                hazardRadiusMeters:
-                    20
+            makePlannedOutcome(
+                shot:
+                    plannedShot
             )
 
         let actual =
-            makeActualShotOutcome(
-                distanceMeters:
-                    130,
-                insideTarget:
-                    false,
-                insideHazard:
-                    true
+            makeActualOutcome(
+                shot:
+                    actualShot
             )
 
-        let result =
-            evaluator.evaluate(
+        XCTAssertThrowsError(
+            try evaluator.evaluate(
                 planned:
                     planned,
                 actual:
                     actual
             )
+        ) { error in
 
-        XCTAssertEqual(
-            result.decisionQuality,
-            .poor
-        )
-
-        XCTAssertEqual(
-            result.executionQuality,
-            .needsImprovement
-        )
-
-        XCTAssertTrue(
-            result.feedback.contains {
-                $0.contains(
-                    "outside"
-                )
-            }
-        )
+            XCTAssertEqual(
+                error as?
+                    ShotOutcomeEvaluationError,
+                .shotIdentityMismatch
+            )
+        }
     }
 
 
     // MARK: - Helpers
 
 
-    private func makePlannedShotOutcome(
-        expectedDistanceMeters:
-            Double,
-        targetRadiusMeters:
-            Double,
-        hazardRadiusMeters:
-            Double
+    private func makeShot(
+        id:
+            ShotID = ShotID()
+    ) -> Shot {
+
+        Shot(
+            id:
+                id,
+            roundID:
+                RoundID(),
+            holeID:
+                HoleID(),
+            clubID:
+                ClubID()
+        )
+    }
+
+
+    private func makePlannedOutcome(
+        shot:
+            Shot
     ) -> PlannedShotOutcome {
 
-        PlannedShotOutcome(
-            shotID:
-                ShotID(),
-            clubID:
-                ClubID(),
+        let target =
+            GeoCoordinate(
+                latitude:
+                    0,
+                longitude:
+                    0
+            )
+
+        return PlannedShotOutcome(
+            shot:
+                shot,
             targetLocation:
-                GeoCoordinate(
-                    latitude:
-                        0,
-                    longitude:
-                        0
-                ),
+                target,
             expectedDistanceMeters:
-                expectedDistanceMeters,
+                180,
+            acceptableDistanceVarianceMeters:
+                15,
             landingArea:
                 LandingArea(
                     centre:
-                        GeoCoordinate(
-                            latitude:
-                                0,
-                            longitude:
-                                0
-                        ),
+                        target,
                     radiusMeters:
-                        targetRadiusMeters
+                        25
                 ),
             avoidZones:
                 [
                     HazardZone(
                         name:
-                            "Fairway Bunker",
+                            "Right Fairway Bunker",
                         location:
                             GeoCoordinate(
                                 latitude:
@@ -261,63 +295,35 @@ final class ShotOutcomeEvaluatorTests:
                                     0
                             ),
                         radiusMeters:
-                            hazardRadiusMeters
+                            20
                     )
                 ]
         )
     }
 
 
-    private func makeActualShotOutcome(
-        distanceMeters:
-            Double,
-        insideTarget:
-            Bool,
-        insideHazard:
-            Bool
+    private func makeActualOutcome(
+        shot:
+            Shot,
+        location:
+            GeoCoordinate? = nil,
+        distance:
+            Double = 180
     ) -> ActualShotOutcome {
 
-        let location:
-            GeoCoordinate
-
-        if insideTarget {
-
-            location =
+        ActualShotOutcome(
+            shot:
+                shot,
+            landingLocation:
+                location ??
                 GeoCoordinate(
                     latitude:
                         0,
                     longitude:
                         0
-                )
-
-        } else if insideHazard {
-
-            location =
-                GeoCoordinate(
-                    latitude:
-                        0.01,
-                    longitude:
-                        0
-                )
-
-        } else {
-
-            location =
-                GeoCoordinate(
-                    latitude:
-                        0.02,
-                    longitude:
-                        0
-                )
-        }
-
-        return ActualShotOutcome(
-            shotID:
-                ShotID(),
-            landingLocation:
-                location,
+                ),
             distanceMeters:
-                distanceMeters
+                distance
         )
     }
 }

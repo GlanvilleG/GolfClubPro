@@ -7,7 +7,4 @@
    <FileRef
       location = "group:BundledGolfClubCatalogueLoader.txt">
    </FileRef>
-   <FileRef
-      location = "group:File.txt">
-   </FileRef>
 </Workspace>

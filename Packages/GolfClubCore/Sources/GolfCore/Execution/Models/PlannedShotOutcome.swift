@@ -33,10 +33,8 @@ public struct PlannedShotOutcome:
         [HazardZone]
 
     public init(
-        shotID:
-            ShotID,
-        clubID:
-            ClubID,
+        shot:
+            Shot,
         targetLocation:
             GeoCoordinate,
         expectedDistanceMeters:
@@ -48,11 +46,12 @@ public struct PlannedShotOutcome:
         avoidZones:
             [HazardZone] = []
     ) {
+
         self.shotID =
-            shotID
+            shot.id
 
         self.clubID =
-            clubID
+            shot.clubID
 
         self.targetLocation =
             targetLocation
