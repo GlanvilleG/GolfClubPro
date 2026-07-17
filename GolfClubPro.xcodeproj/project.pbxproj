@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A8BAD393009CA9900F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */; };
 		5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */; };
 		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
 		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-023-Multi-Pipeline Product Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-022 – Recommendation Pipeline Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */,
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
 				5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */,
@@ -706,6 +709,7 @@
 				5AFC4E9130021EB7002DF421 /* ADR-015-Apple-Platform-Integration.md in Resources */,
 				5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
+				5A8BAD393009CA9900F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
 				5AFC502E3005A665002DF421 /* HoleAreaPrecedence.md in Resources */,
 				5AFC502430059041002DF421 /* ADR-017–Spatial Index Architecture.md in Resources */,
