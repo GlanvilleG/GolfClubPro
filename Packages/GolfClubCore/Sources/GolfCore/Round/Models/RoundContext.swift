@@ -1,9 +1,10 @@
-//
+///
 //  RoundContext.swift
 //  GolfClubCore
 //
 //  Created by Dragon Development on 17/07/2026.
 //
+
 import Foundation
 
 public struct RoundContext:
@@ -26,9 +27,10 @@ public struct RoundContext:
     public let shot:
         ShotContext
 
-    public let weather:
-        WeatherCondition?
-
+    /// Immutable snapshot of transient information required
+    /// by the recommendation pipeline.
+    public let recommendationInputs:
+        RecommendationInputs
 
     public init(
         round:
@@ -41,8 +43,8 @@ public struct RoundContext:
             HoleContext,
         shot:
             ShotContext,
-        weather:
-            WeatherCondition?
+        recommendationInputs:
+            RecommendationInputs = RecommendationInputs()
     ) {
 
         self.round =
@@ -60,7 +62,7 @@ public struct RoundContext:
         self.shot =
             shot
 
-        self.weather =
-            weather
+        self.recommendationInputs =
+            recommendationInputs
     }
 }

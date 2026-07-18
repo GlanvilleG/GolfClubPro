@@ -33,22 +33,22 @@ public struct RoundContextBuilder: Sendable {
         environment: EnvironmentalContext =
             EnvironmentalContext()
     ) throws -> RoundContext {
-
+        
         let hole = try resolveActiveHole(
             round: round,
             course: course
         )
-
+        
         guard let holeSession = round.currentHoleSession else {
             throw RoundContextBuilderError.noActiveHole
         }
-
+        
         let holeContext = try buildHoleContext(
             hole: hole,
             holeSession: holeSession,
             currentLocation: currentLocation
         )
-
+        
         let shotContext = shotContextBuilder.build(
             player: player,
             roundID: round.id,
@@ -63,17 +63,22 @@ public struct RoundContextBuilder: Sendable {
             currentShotPlan: currentShotPlan,
             environment: environment
         )
-
+        
+        let recommendationInputs = RecommendationInputs(
+            candidateLandingZones: [],
+            playerPerformance: nil,
+            weatherCondition: weather
+        )
+        
         return RoundContext(
             round: round,
             player: player,
             course: course,
             hole: holeContext,
             shot: shotContext,
-            weather: weather
+            recommendationInputs: recommendationInputs
         )
     }
-
     private func resolveActiveHole(
         round:
         Round,

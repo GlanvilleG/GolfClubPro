@@ -280,6 +280,12 @@ public struct LieDetector: Sendable {
         case .unknown:
             return .unknown
 
+        case .cartPath:
+            return .cartPath
+            
+        case .nativeArea:
+            return .pineStraw
+            
         @unknown default:
             return .unknown
         }

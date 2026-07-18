@@ -94,13 +94,11 @@ public struct CaddyInstructionEngine:
 
         if adjustment > 1 {
 
-            return
-            "Adjust target \(Int(adjustment))m"
+            return "Adjust target \(Int(adjustment))m"
         }
 
 
-        return
-        "Play standard target"
+        return "Play standard target"
     }
 
 
@@ -113,8 +111,7 @@ public struct CaddyInstructionEngine:
     ) -> String {
 
 
-        return
-        explanation.summary
+        return explanation.summary
     }
 
 

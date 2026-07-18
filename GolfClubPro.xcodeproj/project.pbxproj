@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5A8BAD393009CA9900F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */; };
+		5A8BAD3F300B989300F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */; };
+		5A8BAD43300BBA9C00F42B0A /* ADR-026-AI Recommendation Pipeline.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */; };
 		5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */; };
 		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
 		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
@@ -93,6 +95,8 @@
 
 /* Begin PBXFileReference section */
 		5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-023-Multi-Pipeline Product Architecture.md"; sourceTree = "<group>"; };
+		5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-025-Provider Independence Through Immutable Decision Snapshotsmd"; sourceTree = "<group>"; };
+		5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-026-AI Recommendation Pipeline.md"; sourceTree = "<group>"; };
 		5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-022 – Recommendation Pipeline Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
@@ -393,6 +397,8 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */,
+				5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */,
 				5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */,
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
@@ -701,7 +707,9 @@
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
 				5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
+				5A8BAD3F300B989300F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd in Resources */,
 				5ABC37A42FFE229900A78677 /* README.md in Resources */,
+				5A8BAD43300BBA9C00F42B0A /* ADR-026-AI Recommendation Pipeline.md in Resources */,
 				5AFC50303005B1D0002DF421 /* ADR-018-Recommendation Context Architecture.md in Resources */,
 				5ABC379E2FFE21D800A78677 /* ADR-005-SwiftData-Persistence.md in Resources */,
 				5AC130492FFFA16D0077FB46 /* ADR-001-Repository-Structure.md in Resources */,

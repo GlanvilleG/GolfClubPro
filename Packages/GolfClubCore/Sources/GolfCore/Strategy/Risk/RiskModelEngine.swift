@@ -93,26 +93,22 @@ public struct RiskModelEngine:
 
         case .low:
 
-            return
-            "Proceed with normal target."
+            return "Proceed with normal target."
 
 
         case .moderate:
 
-            return
-            "Consider additional margin."
+            return "Consider additional margin."
 
 
         case .high:
 
-            return
-            "Select a safer landing area."
+            return "Select a safer landing area."
 
 
         case .extreme:
 
-            return
-            "Avoid this target area."
+            return "Avoid this target area."
         }
     }
 }

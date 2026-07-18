@@ -23,7 +23,7 @@ public struct ShotPlanner: Sendable {
             to: target.location
         )
 
-        let bearing = bearingDegrees(
+        let bearing = BearingCalculator.bearingDegrees(
             from: currentPosition,
             to: target.location
         )
@@ -50,27 +50,29 @@ public struct ShotPlanner: Sendable {
         )
     }
 
-    private func bearingDegrees(
-        from start: GeoCoordinate,
-        to end: GeoCoordinate
-    ) -> Double {
-        let startLatitude = start.latitude * .pi / 180
-        let endLatitude = end.latitude * .pi / 180
-        let longitudeDelta =
-            (end.longitude - start.longitude) * .pi / 180
-
-        let y = sin(longitudeDelta) * cos(endLatitude)
-
-        let x =
-            cos(startLatitude) * sin(endLatitude) -
-            sin(startLatitude) *
-            cos(endLatitude) *
-            cos(longitudeDelta)
-
-        let bearing = atan2(y, x) * 180 / .pi
-
-        return (bearing + 360).truncatingRemainder(dividingBy: 360)
-    }
+    
+    // TEST
+ //   private func bearingDegrees(
+ //       from start: GeoCoordinate,
+ //       to end: GeoCoordinate
+ //   ) -> Double {
+ //       let startLatitude = start.latitude * .pi / 180
+ //       let endLatitude = end.latitude * .pi / 180
+ //       let longitudeDelta =
+ //           (end.longitude - start.longitude) * .pi / 180
+//
+//        let y = sin(longitudeDelta) * cos(endLatitude)
+//
+//        let x =
+//            cos(startLatitude) * sin(endLatitude) -
+//            sin(startLatitude) *
+//            cos(endLatitude) *
+//            cos(longitudeDelta)
+//
+//        let bearing = atan2(y, x) * 180 / .pi
+//
+//        return (bearing + 360).truncatingRemainder(dividingBy: 360)
+//    }
 
     private func riskLevel(
         for riskScore: Double
