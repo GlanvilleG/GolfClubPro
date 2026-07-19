@@ -34,6 +34,9 @@ public struct ShotDispersionProfile:
 
     public var confidence:
         Double
+    
+    public var distanceBiasMeters:
+        Double
 
     public init(
         clubID:
@@ -51,6 +54,8 @@ public struct ShotDispersionProfile:
         shotShape:
             ShotShape = .straight,
         confidence:
+            Double = 0,
+        distanceBiasMeters:
             Double = 0
     ) {
         self.clubID =
@@ -70,6 +75,9 @@ public struct ShotDispersionProfile:
 
         self.lateralBiasMeters =
             lateralBiasMeters
+        
+        self.distanceBiasMeters =
+            distanceBiasMeters
 
         self.distanceStandardDeviationMeters =
             max(
@@ -94,6 +102,7 @@ public struct ShotDispersionProfile:
                     confidence
                 )
             )
+        
     }
 }
 public extension ShotDispersionProfile {
@@ -122,5 +131,17 @@ public extension ShotDispersionProfile {
         Bool {
 
         lateralBiasMeters > 1
+    }
+}
+public extension ShotDispersionProfile {
+
+    var isConsistentlyShort: Bool {
+
+        distanceBiasMeters < -1
+    }
+
+    var isConsistentlyLong: Bool {
+
+        distanceBiasMeters > 1
     }
 }

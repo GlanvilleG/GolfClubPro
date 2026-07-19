@@ -23,21 +23,26 @@ public struct RecommendationPipeline:
     private let caddyRecommendationEngine:
         CaddyRecommendationEngine
 
+    private let dispersionEngine:
+        DispersionEngine
+    
+    private let holeAreaAssessmentEngine:
+        HoleAreaAssessmentEngine
+
     public init(
         strategicOptionEngine:
-            StrategicOptionEngine =
-                StrategicOptionEngine(),
+            StrategicOptionEngine = StrategicOptionEngine(),
         adaptiveCoachingEngine:
-            AdaptiveCoachingEngine =
-                AdaptiveCoachingEngine(),
+            AdaptiveCoachingEngine = AdaptiveCoachingEngine(),
         weatherAdjustmentEngine:
-            WeatherAdjustmentEngine =
-                WeatherAdjustmentEngine(),
+            WeatherAdjustmentEngine = WeatherAdjustmentEngine(),
         caddyRecommendationEngine:
-            CaddyRecommendationEngine =
-                CaddyRecommendationEngine()
+            CaddyRecommendationEngine = CaddyRecommendationEngine(),
+        dispersionEngine:
+            DispersionEngine = DispersionEngine(),
+        holeAreaAssessmentEngine:
+            HoleAreaAssessmentEngine = HoleAreaAssessmentEngine()
     ) {
-
         self.strategicOptionEngine =
             strategicOptionEngine
 
@@ -49,6 +54,12 @@ public struct RecommendationPipeline:
 
         self.caddyRecommendationEngine =
             caddyRecommendationEngine
+
+        self.dispersionEngine =
+            dispersionEngine
+
+        self.holeAreaAssessmentEngine =
+            holeAreaAssessmentEngine
     }
 
     public func execute(
@@ -76,7 +87,18 @@ public struct RecommendationPipeline:
                     candidateLandingZones:
                         inputs.candidateLandingZones
                 )
-
+        
+        let shotDispersion =
+            dispersionEngine.calculate(
+                target:
+                    strategicOption.target,
+                clubID:
+                    strategicOption.clubID,
+                performance:
+                    inputs.playerPerformance
+            )
+        
+        // Geomtery
         let shotBearingDegrees =
             BearingCalculator
                 .bearingDegrees(
@@ -85,17 +107,38 @@ public struct RecommendationPipeline:
                     to:
                         strategicOption.target
                 )
+        let holeAssessment =
+            holeAreaAssessmentEngine.assess(
+                areas:
+                    inputs.holeAreas,
+                shotDispersion:
+                    shotDispersion,
+                shotBearingDegrees:
+                    shotBearingDegrees
+            )
 
+        let decisionContext =
+            RecommendationDecisionContext(
+                strategicOption:
+                    strategicOption,
+                shotDispersion:
+                    shotDispersion,
+                holeAssessment:
+                    holeAssessment
+            )
+        
+      
         let clubDistanceMeters =
             try selectedClubDistance(
                 clubID:
-                    strategicOption.clubID,
+                    decisionContext.strategicOption.clubID,
                 target:
-                    strategicOption.target,
+                    decisionContext.strategicOption.target,
                 shotContext:
                     shotContext
             )
-
+        
+        // Player Intelligence
         let adaptiveAdjustment =
             adaptiveAdjustment(
                 strategicOption:
@@ -105,7 +148,8 @@ public struct RecommendationPipeline:
                 performance:
                     inputs.playerPerformance
             )
-
+        
+        // Environment
         let weatherAdjustment =
             weatherAdjustment(
                 clubDistanceMeters:
@@ -126,7 +170,8 @@ public struct RecommendationPipeline:
                     weatherAdjustment:
                         weatherAdjustment
                 )
-
+        
+        
         return RecommendationPipelineResult(
             strategicOption:
                 strategicOption,
@@ -226,6 +271,7 @@ public struct RecommendationPipeline:
                     clubDistanceMeters,
                 shotBearingDegrees:
                     shotBearingDegrees,
+                
                 weather:
                     weather
             )

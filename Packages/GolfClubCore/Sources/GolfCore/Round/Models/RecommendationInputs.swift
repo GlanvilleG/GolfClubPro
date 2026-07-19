@@ -21,6 +21,10 @@ public struct RecommendationInputs:
     public let candidateLandingZones:
         [LandingZoneEvaluation]
 
+    /// Course areas relevant to the current hole and shot.
+    public let holeAreas:
+        [HoleArea]
+
     /// Learned player-performance information used for
     /// adaptive target adjustment.
     public let playerPerformance:
@@ -34,14 +38,18 @@ public struct RecommendationInputs:
     public init(
         candidateLandingZones:
             [LandingZoneEvaluation] = [],
+        holeAreas:
+            [HoleArea] = [],
         playerPerformance:
             PlayerPerformanceModel? = nil,
         weatherCondition:
             WeatherCondition? = nil
     ) {
-
         self.candidateLandingZones =
             candidateLandingZones
+
+        self.holeAreas =
+            holeAreas
 
         self.playerPerformance =
             playerPerformance
