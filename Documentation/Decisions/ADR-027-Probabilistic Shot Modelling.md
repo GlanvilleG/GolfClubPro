@@ -291,6 +291,7 @@ Older observations may be weighted less heavily than recent performance to refle
 
 Future enhancements may include:
 
+
 - Gaussian mixture models
 - Bayesian shot prediction
 - Monte Carlo hole simulations
@@ -356,3 +357,4 @@ The implementation of this ADR is expected to introduce new domain models and en
 ## Architectural Principle
 
 > **Golf is a game of probabilities, not certainties. GolfClubPro models the likelihood of outcomes, enabling AI recommendations that reflect how golfers actually play rather than how they intend to play.**
+
