@@ -340,6 +340,24 @@ These trade-offs are accepted because they significantly improve recommendation 
 
 ---
 
+# Notes
+StrategicDecisionMetrics
+    Internal optimisation information used to rank candidate options.
+
+RiskRewardAnalysis
+    Stable domain analysis describing the selected option for downstream use.
+    
+Optimisation:
+- plannedCarryMeters
+- optionScore
+- decisionConfidence
+
+Analysis:
+- expectedReward
+- expectedRisk
+- netValue
+- balance    
+
 # Future Work
 
 The implementation of this ADR is expected to introduce new domain models and engines, including:

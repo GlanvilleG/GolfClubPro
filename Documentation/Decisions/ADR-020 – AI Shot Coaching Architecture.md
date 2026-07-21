@@ -177,3 +177,30 @@ These costs are acceptable.
 **Accepted**
 
 Shot Coaching is established as an independent subsystem and shall never become part of RecommendationEngine.
+
+class RecommendationEngine {
+    // MARK: - Properties
+    var recommendations: [Recommendation] = []
+    var explanations: [RecommendationExplanation] = []
+    
+    // MARK: - Methods
+    
+    func generateRecommendations(for user: User) {
+        // Logic to generate recommendations
+        // ...
+    }
+    
+    func presentRecommendation(_ recommendation: Recommendation) -> String {
+        // Convert structured explanation to human-readable string
+        // ...
+        return ""
+    }
+    
+    // ADR ALIGNMENT UPDATE 20-07-2026
+    
+    /// ## Structured Explanations and Rendering
+    ///
+    /// Recommendation explanations should be constructed as structured domain objects (e.g., RecommendationExplanation)
+    /// and only rendered into human-readable strings for persistence or presentation. The structured form remains
+    /// the source of truth for reasoning and auditing.
+}

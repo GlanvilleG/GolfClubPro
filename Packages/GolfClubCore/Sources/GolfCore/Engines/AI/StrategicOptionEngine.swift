@@ -35,33 +35,69 @@ public struct StrategicOptionEngine: Sendable {
 
         for landingZone in candidateLandingZones {
 
-            guard let club = selectClub(
-                from: shotContext.currentPosition,
-                to: landingZone.location,
-                availableClubs: shotContext.availableClubs
-            ) else {
+            let plannedCarryMeters =
+                DistanceCalculator.distanceMeters(
+                    from:
+                        shotContext.currentPosition,
+                    to:
+                        landingZone.location
+                )
+
+            guard let club =
+                selectClub(
+                    requiredCarryMeters:
+                        plannedCarryMeters,
+                    availableClubs:
+                        shotContext.availableClubs
+                )
+            else {
                 continue
             }
 
-            let risk = riskEngine.evaluate(
-                landingZone: landingZone
-            )
+            let risk =
+                riskEngine.evaluate(
+                    landingZone:
+                        landingZone
+                )
 
-            let optionScore = rankingScore(
-                landingZone: landingZone,
-                risk: risk
-            )
+            let optionScore =
+                rankingScore(
+                    landingZone:
+                        landingZone,
+                    risk:
+                        risk
+                )
 
-            let option = StrategicOption(
-                target: landingZone.location,
-                clubID: club.id,
-                landingZone: landingZone,
-                risk: risk
-            )
+            let metrics =
+                StrategicDecisionMetrics(
+                    plannedCarryMeters:
+                        plannedCarryMeters,
+                    optionScore:
+                        optionScore,
+                    decisionConfidence:
+                        .full
+                )
+
+            let option =
+                StrategicOption(
+                    target:
+                        landingZone.location,
+                    clubID:
+                        club.id,
+                    landingZone:
+                        landingZone,
+                    risk:
+                        risk,
+                    metrics:
+                        metrics
+                )
 
             if optionScore < bestScore {
-                bestScore = optionScore
-                bestOption = option
+                bestScore =
+                    optionScore
+
+                bestOption =
+                    option
             }
         }
 
@@ -74,39 +110,46 @@ public struct StrategicOptionEngine: Sendable {
 }
 private extension StrategicOptionEngine {
     
-    func selectClub(
-        from currentPosition: GeoCoordinate,
-        to landingZone: GeoCoordinate,
-        availableClubs: [Club]
+    private func selectClub(
+        requiredCarryMeters:
+            Double,
+        availableClubs:
+            [Club]
     ) -> Club? {
-        
-        let requiredCarryMeters =
-        DistanceCalculator.distanceMeters(
-            from: currentPosition,
-            to: landingZone
-        )
-        
-        let measurableClubs = availableClubs.filter {
-            $0.averageCarryMeters != nil &&
-            $0.type != .putter
-        }
-        
-        return measurableClubs.min { firstClub, secondClub in
-            
+
+        let measurableClubs =
+            availableClubs.filter {
+                $0.averageCarryMeters != nil &&
+                $0.type != .putter
+            }
+
+        return measurableClubs.min {
+            firstClub,
+            secondClub in
+
             guard
-                let firstCarry = firstClub.averageCarryMeters,
-                let secondCarry = secondClub.averageCarryMeters
+                let firstCarry =
+                    firstClub.averageCarryMeters,
+                let secondCarry =
+                    secondClub.averageCarryMeters
             else {
                 return false
             }
-            
+
             let firstDifference =
-            abs(firstCarry - requiredCarryMeters)
-            
+                abs(
+                    firstCarry -
+                    requiredCarryMeters
+                )
+
             let secondDifference =
-            abs(secondCarry - requiredCarryMeters)
-            
-            return firstDifference < secondDifference
+                abs(
+                    secondCarry -
+                    requiredCarryMeters
+                )
+
+            return firstDifference <
+                secondDifference
         }
     }
     

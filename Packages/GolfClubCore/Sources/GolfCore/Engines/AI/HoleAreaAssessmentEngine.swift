@@ -47,7 +47,7 @@ public struct HoleAreaAssessmentEngine:
 
         guard !candidateAreas.isEmpty else {
             return HoleAssessment(
-                areas: [],
+                areaAssessments: [],
                 overallRisk:
                     .negligible
             )
@@ -68,7 +68,7 @@ public struct HoleAreaAssessmentEngine:
 
         guard totalWeight > 0 else {
             return HoleAssessment(
-                areas: [],
+                areaAssessments: [],
                 overallRisk:
                     .negligible
             )
@@ -126,7 +126,7 @@ public struct HoleAreaAssessmentEngine:
                 .negligible
 
         return HoleAssessment(
-            areas:
+            areaAssessments:
                 assessments,
             overallRisk:
                 overallRisk

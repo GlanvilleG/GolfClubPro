@@ -29,6 +29,9 @@ public struct StrategicOption:
 
     public let risk:
         RiskAssessment
+    
+    public let metrics:
+        StrategicDecisionMetrics
 
 
     public init(
@@ -39,7 +42,9 @@ public struct StrategicOption:
         landingZone:
             LandingZoneEvaluation,
         risk:
-            RiskAssessment
+            RiskAssessment,
+        metrics:
+            StrategicDecisionMetrics = .unavailable
     ) {
 
         self.target =
@@ -53,5 +58,8 @@ public struct StrategicOption:
 
         self.risk =
             risk
+        
+        self.metrics = metrics
+        
     }
 }

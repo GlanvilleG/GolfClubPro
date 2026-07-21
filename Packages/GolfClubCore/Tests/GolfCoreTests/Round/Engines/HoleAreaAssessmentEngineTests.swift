@@ -46,7 +46,7 @@ struct HoleAreaAssessmentEngineTests {
         
         let assessment =
         try #require(
-            result.areas.first
+            result.areaAssessments.first
         )
         
         #expect(
@@ -101,7 +101,8 @@ struct HoleAreaAssessmentEngineTests {
             )
         
         #expect(
-            result.areas.isEmpty
+            result.areaAssessments
+                .isEmpty
         )
         
         #expect(

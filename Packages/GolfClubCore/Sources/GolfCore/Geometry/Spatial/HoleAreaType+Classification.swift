@@ -61,3 +61,31 @@ public extension HoleAreaType {
         }
     }
 }
+public extension HoleAreaType {
+
+    var isStrategicallyAdverse:
+        Bool {
+
+        switch self {
+
+        case .bunker,
+             .water,
+             .trees,
+             .outOfBounds,
+             .penaltyArea,
+             .nativeArea:
+
+            return true
+
+        case .tee,
+             .fairway,
+             .rough,
+             .green,
+             .fringe,
+             .cartPath,
+             .unknown:
+
+            return false
+        }
+    }
+}

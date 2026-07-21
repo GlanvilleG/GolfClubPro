@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5A8BAD393009CA9900F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */; };
-		5A8BAD3F300B989300F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */; };
 		5A8BAD43300BBA9C00F42B0A /* ADR-026-AI Recommendation Pipeline.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */; };
 		5A8BAD45300CAAEE00F42B0A /* ADR-027-Probabilistic Shot Modelling.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD44300CAAD900F42B0A /* ADR-027-Probabilistic Shot Modelling.md */; };
+		5A8BAD4B300DAE0400F42B0A /* ADR-028-Recommendation Decision Aggregate.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAD4A300DADF700F42B0A /* ADR-028-Recommendation Decision Aggregate.md */; };
 		5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */; };
 		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
 		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
@@ -24,6 +24,7 @@
 		5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */; };
 		5AC1304D2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */; };
 		5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */; };
+		5ACDCDC3300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ACDCDC2300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md */; };
 		5AFC4D2230003E79002DF421 /* ADR-007-Round-Engine-State-Machine.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */; };
 		5AFC4DB230005A7A002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */; };
 		5AFC4DB430005FE6002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */; };
@@ -96,9 +97,9 @@
 
 /* Begin PBXFileReference section */
 		5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-023-Multi-Pipeline Product Architecture.md"; sourceTree = "<group>"; };
-		5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-025-Provider Independence Through Immutable Decision Snapshotsmd"; sourceTree = "<group>"; };
 		5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-026-AI Recommendation Pipeline.md"; sourceTree = "<group>"; };
 		5A8BAD44300CAAD900F42B0A /* ADR-027-Probabilistic Shot Modelling.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-027-Probabilistic Shot Modelling.md"; sourceTree = "<group>"; };
+		5A8BAD4A300DADF700F42B0A /* ADR-028-Recommendation Decision Aggregate.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-028-Recommendation Decision Aggregate.md"; sourceTree = "<group>"; };
 		5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-022 – Recommendation Pipeline Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 		5AC1304A2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-002-Documentation-Strategy.md"; sourceTree = "<group>"; };
 		5AC1304C2FFFA1910077FB46 /* ADR-003-Domain-Driven-Design.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-003-Domain-Driven-Design.md"; sourceTree = "<group>"; };
 		5AC131502FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-004-Strongly-Typed-Identifiers.md"; sourceTree = "<group>"; };
+		5ACDCDC2300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-025 – Provider Independence Through Immutable Decision Snapshots.md"; sourceTree = "<group>"; };
 		5AFC4D2130003E5B002DF421 /* ADR-007-Round-Engine-State-Machine.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-007-Round-Engine-State-Machine.md"; sourceTree = "<group>"; };
 		5AFC4DB130005A75002DF421 /* ADR-008-GPS-and-Golf-Club-Detection.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-008-GPS-and-Golf-Club-Detection.md"; sourceTree = "<group>"; };
 		5AFC4DB330005FD2002DF421 /* ADR-009-Course-Geometry-and-Lie-Detection.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-009-Course-Geometry-and-Lie-Detection.md"; sourceTree = "<group>"; };
@@ -399,9 +401,10 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5A8BAD4A300DADF700F42B0A /* ADR-028-Recommendation Decision Aggregate.md */,
 				5A8BAD44300CAAD900F42B0A /* ADR-027-Probabilistic Shot Modelling.md */,
 				5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */,
-				5A8BAD3E300B988B00F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd */,
+				5ACDCDC2300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md */,
 				5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */,
 				5ABC37212FFDFC2700A78677 /* ADR-000-template.md */,
 				5AC130482FFFA16D0077FB46 /* ADR-001-Repository-Structure.md */,
@@ -709,8 +712,9 @@
 				5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */,
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
 				5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */,
+				5A8BAD4B300DAE0400F42B0A /* ADR-028-Recommendation Decision Aggregate.md in Resources */,
+				5ACDCDC3300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,
-				5A8BAD3F300B989300F42B0A /* ADR-025-Provider Independence Through Immutable Decision Snapshotsmd in Resources */,
 				5ABC37A42FFE229900A78677 /* README.md in Resources */,
 				5A8BAD43300BBA9C00F42B0A /* ADR-026-AI Recommendation Pipeline.md in Resources */,
 				5AFC50303005B1D0002DF421 /* ADR-018-Recommendation Context Architecture.md in Resources */,

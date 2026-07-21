@@ -28,6 +28,9 @@ public struct RecommendationPipeline:
     
     private let holeAreaAssessmentEngine:
         HoleAreaAssessmentEngine
+    
+    private let riskRewardAnalysisEngine:
+        RiskRewardAnalysisEngine
 
     public init(
         strategicOptionEngine:
@@ -41,7 +44,10 @@ public struct RecommendationPipeline:
         dispersionEngine:
             DispersionEngine = DispersionEngine(),
         holeAreaAssessmentEngine:
-            HoleAreaAssessmentEngine = HoleAreaAssessmentEngine()
+            HoleAreaAssessmentEngine = HoleAreaAssessmentEngine(),
+        riskRewardAnalysisEngine:
+            RiskRewardAnalysisEngine =
+                RiskRewardAnalysisEngine()
     ) {
         self.strategicOptionEngine =
             strategicOptionEngine
@@ -60,6 +66,9 @@ public struct RecommendationPipeline:
 
         self.holeAreaAssessmentEngine =
             holeAreaAssessmentEngine
+        
+        self.riskRewardAnalysisEngine =
+            riskRewardAnalysisEngine
     }
 
     public func execute(
@@ -98,6 +107,10 @@ public struct RecommendationPipeline:
                     inputs.playerPerformance
             )
         
+        let riskRewardAnalysis =
+            riskRewardAnalysisEngine.analyse(
+                option: strategicOption
+            )
         // Geomtery
         let shotBearingDegrees =
             BearingCalculator

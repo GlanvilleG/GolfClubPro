@@ -1,4 +1,3 @@
-
 # ADR-025: Provider Independence Through Immutable Decision Snapshots
 
 - **Status:** Accepted
@@ -205,33 +204,13 @@ ADR-023 — Multi-Pipeline Product Architecture
 ADR-024 — Immutable Pipeline Contexts
 
 
+// ADR ALIGNMENT UPDATE 20-07-2026
 
+## Current Immutable Snapshots (Examples)
 
+- RecommendationInputs (candidate landing zones, hole areas, player performance, weather)
+- ShotContext / RoundContext (authoritative round/shot state)
+- WeatherCondition (normalized provider-independent weather)
+- Decision-Time Models (StrategicOption, ShotDispersionModel, HoleAssessment)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Instant
-
-
-
-```text
+These examples illustrate the intended provider-independent boundary between external services and decision engines.
