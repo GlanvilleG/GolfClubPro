@@ -70,6 +70,9 @@ public struct RecommendationEngine:
     
     private let auditBuilder:
         RecommendationAuditBuilder
+    
+    private let explainabilityEngine:
+        ExplainabilityEngine
 
     public init(
         strategyEngine:
@@ -89,7 +92,10 @@ public struct RecommendationEngine:
                 RecommendationExplanationBuilder(),
         auditBuilder:
             RecommendationAuditBuilder =
-                RecommendationAuditBuilder()
+                RecommendationAuditBuilder(),
+        explainabilityEngine:
+            ExplainabilityEngine =
+                ExplainabilityEngine()
         ) {
         self.strategyEngine =
             strategyEngine
@@ -108,6 +114,9 @@ public struct RecommendationEngine:
             
         self.auditBuilder =
                 auditBuilder
+            
+        self.explainabilityEngine =
+                explainabilityEngine
     }
 
     public func recommend(
@@ -201,15 +210,26 @@ public struct RecommendationEngine:
                     aimOffset
             )
 
-        let explanation =
-            explanationBuilder.build(
-                decision:
-                    decision,
-                context:
-                    context,
-                spatialRisk:
-                    spatialRisk
-            )
+        // Start Explanations being removed from the Engine - Code change Var -> Let - DEBUG
+        let narrativeExplanation = explanationBuilder.build(
+            decision: decision,
+            context: context,
+            spatialRisk: spatialRisk
+        )
+        // End DEBUG
+        
+        let structured = explainabilityEngine.explain(decision: decision)
+
+        let explanation = RecommendationExplanation(
+            summary: narrativeExplanation.summary,
+            primaryReasons: narrativeExplanation.primaryReasons,
+            environmentalConditions: narrativeExplanation.environmentalConditions,
+            warnings: narrativeExplanation.warnings,
+            confidenceStatement: narrativeExplanation.confidenceStatement,
+            courseManagementAdvice: narrativeExplanation.courseManagementAdvice,
+            nextShotFocus: narrativeExplanation.nextShotFocus,
+            evidence: structured.evidence
+        )
 
         let auditRecord =
             auditBuilder.build(

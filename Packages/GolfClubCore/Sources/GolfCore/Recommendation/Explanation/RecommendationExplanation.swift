@@ -5,7 +5,42 @@
 //  Created by Dragon Development on 15/07/2026.
 //
 
-import Foundation
+public struct ExplanationEvidence: Codable, Equatable, Sendable {
+    public enum Kind: String, Codable, Equatable, Sendable {
+        case strategicOption
+        case dispersion
+        case holeAssessment
+        case preferredClub
+        case alternatives
+        case aim
+        case weather
+        case riskReward
+        case context
+        case metadata
+        case confidence
+        case other
+    }
+
+    public let kind: Kind
+    public let code: String
+    public let title: String
+    public let details: [String: String]
+    public let order: Int
+
+    public init(
+        kind: Kind,
+        code: String,
+        title: String,
+        details: [String: String] = [:],
+        order: Int
+    ) {
+        self.kind = kind
+        self.code = code
+        self.title = title
+        self.details = details
+        self.order = order
+    }
+}
 
 public enum ExplanationSeverity:
     String,
@@ -76,6 +111,8 @@ public struct RecommendationExplanation:
     public let nextShotFocus:
         String?
 
+    public let evidence: [ExplanationEvidence]
+
     public init(
         summary: String,
         primaryReasons:
@@ -89,7 +126,8 @@ public struct RecommendationExplanation:
         courseManagementAdvice:
             String? = nil,
         nextShotFocus:
-            String? = nil
+            String? = nil,
+        evidence: [ExplanationEvidence] = []
     ) {
         self.summary =
             summary
@@ -111,5 +149,7 @@ public struct RecommendationExplanation:
 
         self.nextShotFocus =
             nextShotFocus
+
+        self.evidence = evidence
     }
 }
