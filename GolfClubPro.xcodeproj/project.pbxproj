@@ -15,6 +15,7 @@
 		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
 		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
 		5AB5BFDD30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */; };
+		5AB5BFDF3011CCFF000359F7 /* ADR-032-Player-Performance-Intelligence-Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AB5BFDE3011CCFF000359F7 /* ADR-032-Player-Performance-Intelligence-Architecture.md */; };
 		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
@@ -105,6 +106,7 @@
 		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
 		5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-031 – Environmental Intelligence Architecture.md"; sourceTree = "<group>"; };
+		5AB5BFDE3011CCFF000359F7 /* ADR-032-Player-Performance-Intelligence-Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-032-Player-Performance-Intelligence-Architecture.md"; sourceTree = "<group>"; };
 		5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfClubPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -403,6 +405,7 @@
 		5ABC37222FFDFC2700A78677 /* Decisions */ = {
 			isa = PBXGroup;
 			children = (
+				5AB5BFDE3011CCFF000359F7 /* ADR-032-Player-Performance-Intelligence-Architecture.md */,
 				5A8BAD4A300DADF700F42B0A /* ADR-028-Recommendation Decision Aggregate.md */,
 				5A8BAD44300CAAD900F42B0A /* ADR-027-Probabilistic Shot Modelling.md */,
 				5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */,
@@ -728,6 +731,7 @@
 				5AFC4E9130021EB7002DF421 /* ADR-015-Apple-Platform-Integration.md in Resources */,
 				5AFC4DBA30009B37002DF421 /* ADR-011-AI-Caddy-Architecture.md in Resources */,
 				5ABC37A02FFE21F400A78677 /* ADR-006-Watch First Architecture.md in Resources */,
+				5AB5BFDF3011CCFF000359F7 /* ADR-032-Player-Performance-Intelligence-Architecture.md in Resources */,
 				5A8BAD393009CA9900F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md in Resources */,
 				5AC1304B2FFFA1810077FB46 /* ADR-002-Documentation-Strategy.md in Resources */,
 				5AFC502E3005A665002DF421 /* HoleAreaPrecedence.md in Resources */,

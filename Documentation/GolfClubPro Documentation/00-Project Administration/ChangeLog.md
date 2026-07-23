@@ -526,3 +526,171 @@ Extend the recommendation architecture so GolfClubPro evaluates probable shot ou
 - Updated throwing tests to support `#require`.
 - Confirmed successful compile.
 - Confirmed all existing and new tests pass.
+
+## [Sprint 10.2.0] – Recommendation Framework Foundation
+
+### Added
+- Introduced the initial Recommendation Pipeline architecture.
+- Added RecommendationContext as the canonical input to recommendation processing.
+- Implemented deterministic recommendation workflow.
+- Established RecommendationDecision as the golfer-facing recommendation model.
+- Added initial recommendation unit tests.
+
+### Changed
+- Refactored recommendation generation into a staged pipeline.
+- Improved separation between recommendation logic and presentation.
+
+### Documentation
+- Updated architecture documentation to describe recommendation flow.
+
+---
+
+## [Sprint 10.2.1] – Spatial Analysis & Shot Planning
+
+### Added
+- Introduced ShotPlan as the canonical shot planning model.
+- Added TargetPoint and RouteStrategy support.
+- Implemented spatial shot planning components.
+- Added SpatialRiskAssessment support.
+
+### Changed
+- Recommendation pipeline now performs structured shot planning prior to club scoring.
+- Improved internal pipeline separation between planning and recommendation.
+
+### Tests
+- Added ShotPlan validation tests.
+- Added spatial planning regression tests.
+
+---
+
+## [Sprint 10.2.2] – Strategic Analysis & Club Scoring
+
+### Added
+- Implemented StrategicOptionEngine.
+- Implemented RiskRewardAnalysisEngine.
+- Added RiskRewardAnalysis and RiskAssessment domain models.
+- Added StrategicDecisionMetrics support.
+- Implemented ClubScoringEngine.
+
+### Changed
+- Recommendation pipeline now evaluates strategic options before club selection.
+- Improved deterministic confidence calculations.
+- Refined club scoring using risk and strategic analysis.
+
+### Tests
+- Added strategic option tests.
+- Added risk/reward regression tests.
+- Added club scoring validation tests.
+
+---
+
+## [Sprint 10.3A] – Architecture Reconciliation
+
+### Added
+- Established architecture reconciliation baseline.
+- Completed recommendation subsystem inventory.
+- Documented engine responsibilities.
+- Documented recommendation execution pipeline.
+- Audited domain models and recommendation responsibilities.
+
+### Changed
+- Confirmed RecommendationDecision as the golfer-facing decision object.
+- Identified documentation drift between implementation and ADRs.
+- Updated architectural baseline to align documentation with production code.
+
+### Documentation
+- Architecture review completed.
+- Recommendation pipeline documented from implementation.
+- Technical debt and future refactoring items identified.
+
+---
+
+## [Sprint 10.3B] – Recommendation Architecture Alignment
+
+### Added
+- Completed recommendation architecture alignment.
+- Reconciled Recommendation Pipeline with production implementation.
+- Improved engine responsibility boundaries.
+- Standardised recommendation domain terminology.
+- Expanded recommendation test support.
+
+### Changed
+- Updated ADRs to reflect implemented architecture.
+- Eliminated obsolete architectural assumptions.
+- Refined RecommendationContext ownership.
+- Improved separation between planning, analysis and recommendation.
+
+### Tests
+- Updated recommendation test factories.
+- Removed obsolete test assumptions.
+- Expanded recommendation regression coverage.
+
+---
+
+## [Sprint 10.5] – Environmental & Risk Intelligence
+
+### Added
+- Introduced Environmental Intelligence layer.
+- Added EnvironmentalContextEngine.
+- Added immutable EnvironmentalAssessment model.
+- Added environmental confidence evaluation.
+- Added environmental pipeline integration.
+- Added deterministic environmental analysis.
+- Introduced course condition assessment.
+- Introduced environmental risk assessment.
+- Expanded hazard intelligence.
+
+### Changed
+- Recommendation engines now consume environmental assessments rather than raw environmental data.
+- Consolidated weather interpretation into a single architectural component.
+- Eliminated duplicate environmental calculations across recommendation engines.
+- Expanded confidence calculations to include environmental certainty.
+
+### Tests
+- Added environmental integration tests.
+- Added weather regression tests.
+- Added environmental confidence validation.
+- Added pipeline integration tests.
+
+### Documentation
+- Added ADR-031 – Environmental Intelligence Architecture.
+- Updated Recommendation Pipeline documentation.
+- Updated Architecture.md.
+- Updated Environmental Intelligence documentation.
+
+---
+
+## [Sprint 10.6] – Player Performance Intelligence
+
+### Added
+- Introduced PlayerPerformanceEngine.
+- Added Player Intelligence layer.
+- Added PlayerPerformanceProfile.
+- Added ClubPerformanceProfile.
+- Added PerformanceTrend analysis.
+- Added deterministic player analytics.
+- Added historical performance aggregation.
+- Added club-specific performance statistics.
+- Added player confidence profiling.
+- Added recommendation pipeline integration for player intelligence.
+
+### Changed
+- Recommendation engines now consume Player Intelligence rather than analysing historical rounds directly.
+- Consolidated historical player analytics into a dedicated engine.
+- Expanded recommendation confidence using player history and statistical consistency.
+- Improved separation between analytics and recommendation decision logic.
+
+### Tests
+- Added PlayerPerformanceEngine unit tests.
+- Added club statistics validation tests.
+- Added trend analysis tests.
+- Added recommendation integration tests.
+- Expanded regression coverage.
+
+### Documentation
+- Added ADR-032 – Player Performance Intelligence Architecture.
+- Updated Recommendation Pipeline documentation.
+- Updated Player Domain Model.
+- Updated Architecture.md.
+
+

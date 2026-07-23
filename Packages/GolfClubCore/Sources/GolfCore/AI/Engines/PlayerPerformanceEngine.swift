@@ -119,7 +119,8 @@ public struct ConfidenceProfile: Sendable, Equatable, Codable {
     }
 }
 
-// Lightweight placeholders to compile alongside PlayerIntelligence.swift types
+// MARK: - Lightweight placeholders to compile alongside shared PlayerIntelligence models
+
 public struct CompletedShot: Sendable, Equatable, Codable {
     public let clubID: ClubID
     public let carryMeters: Double
@@ -157,150 +158,171 @@ public struct CompletedRound: Sendable, Equatable, Codable {
 
 /// Provides completed shot data for a player asynchronously.
 public protocol ShotHistoryProvider: Sendable {
-    /// Fetches completed shots for the given player ID.
-    /// - Parameter playerID: The player identifier.
-    /// - Returns: An array of completed shots.
-    /// - Throws: Errors encountered during fetching.
     func fetchCompletedShots(for playerID: PlayerID) async throws -> [CompletedShot]
 }
 
 /// Provides completed round data for a player asynchronously.
 public protocol RoundHistoryProvider: Sendable {
-    /// Fetches completed rounds for the given player ID.
-    /// - Parameter playerID: The player identifier.
-    /// - Returns: An array of completed rounds.
-    /// - Throws: Errors encountered during fetching.
     func fetchCompletedRounds(for playerID: PlayerID) async throws -> [CompletedRound]
 }
 
+// MARK: - PlayerPerformanceEngine
 
-
-/// PlayerPerformanceEngine is responsible for analyzing player shot and round history
-/// to produce PlayerIntelligence. It does not access persistence directly and is engine-agnostic.
-/// Input data must be provided via ShotHistoryProvider and RoundHistoryProvider protocols.
-///
-/// Responsibilities:
-/// - Fetching player shot and round data using provided protocols.
-/// - Producing a conservative, minimal PlayerIntelligence based on available data.
-///
-/// Non-Responsibilities:
-/// - Persistence or data storage is out of scope and must be implemented externally.
-/// - Does not perform advanced or non-deterministic analysis.
-///
-
-
-
+/// Deterministically analyzes player shots/rounds to produce immutable PlayerIntelligence.
+/// - Provider-based (no persistence here)
+/// - Deterministic and explainable
+/// - No ML
+/// - Optional filtering of recovery/penalty/punch-out shots using ShotOutcomeClassifier
 public struct PlayerPerformanceEngine: Sendable {
+
     private let clock: @Sendable () -> Date
 
-    /// Initializes the engine with a clock function.
-    /// - Parameter clock: A function returning the current date/time (defaults to Date()).
-    public init(clock: @escaping @Sendable () -> Date = { @Sendable in Date() }) {
+    // Internal toggle: filter penalty/recovery/punch-out before analytics
+    private let filterRecoveryAndPenaltyShots: Bool
+
+    /// Initializes the engine with a clock and optional filtering toggle.
+    /// - Parameters:
+    ///   - clock: Deterministic time source (defaults to Date()).
+    ///   - filterRecoveryAndPenaltyShots: If true, ShotOutcomeClassifier removes penalty/recovery/punch-out shots from analytics.
+    public init(
+        clock: @escaping @Sendable () -> Date = { @Sendable in Date() },
+        filterRecoveryAndPenaltyShots: Bool = false
+    ) {
         self.clock = clock
+        self.filterRecoveryAndPenaltyShots = filterRecoveryAndPenaltyShots
     }
 
-    /// Analyzes a player's performance given dispersion profiles and history providers.
-    /// - Parameters:
-    ///   - playerID: The player identifier.
-    ///   - dispersionProfiles: The shot dispersion profiles to consider.
-    ///   - shotHistory: The provider for completed shots.
-    ///   - roundHistory: The provider for completed rounds.
-    /// - Returns: A PlayerIntelligence summarizing conservative performance results.
-    /// - Throws: Errors thrown by the history providers.
+    /// Analyze player performance into immutable PlayerIntelligence.
+    /// Deterministic, provider-based, and explainable.
     public func analyze(
-          playerID: PlayerID,
-          dispersionProfiles: [ShotDispersionProfile],
-          shotHistory: ShotHistoryProvider,
-          roundHistory: RoundHistoryProvider
-      ) async throws -> PlayerIntelligence {
-          
-        let now = clock() // or your injected clock time
-        // Flatten all shots from all rounds
+        playerID: PlayerID,
+        dispersionProfiles: [ShotDispersionProfile],
+        shotHistory: ShotHistoryProvider,
+        roundHistory: RoundHistoryProvider
+    ) async throws -> PlayerIntelligence {
+
+        let now = clock()
+
+        // Fetch history
         let rounds = try await roundHistory.fetchCompletedRounds(for: playerID)
         let shots  = try await shotHistory.fetchCompletedShots(for: playerID)
         let recentRoundsConsidered = min(rounds.count, 5)
-        
-        // Group shots by club and compute carry consistency for each club
-          var clubProfiles: [ClubID: ClubPerformanceProfile] = [:]
-        
-        let shotsByClub = Dictionary(grouping: shots, by: { $0.clubID })
-        
-          for (club, clubShots) in shotsByClub {
+
+        // Optional filtering via ShotOutcomeClassifier
+        let effectiveShots: [CompletedShot]
+        if filterRecoveryAndPenaltyShots {
+            let classifier = ShotOutcomeClassifier()
+            effectiveShots = shots.filter { shot in
+                let outcome = classifier.classify(
+                    carryMeters: shot.carryMeters,
+                    totalMeters: shot.totalMeters
+                    // Hints can be supplied later when available
+                )
+                switch outcome {
+                case .penalty, .punchOut, .recovery:
+                    return false
+                default:
+                    return true
+                }
+            }
+        } else {
+            effectiveShots = shots
+        }
+
+        // Group by club for per-club DistanceProfile
+        let shotsByClub = Dictionary(grouping: effectiveShots, by: { $0.clubID })
+        var clubProfiles: [ClubID: ClubPerformanceProfile] = [:]
+        clubProfiles.reserveCapacity(shotsByClub.count)
+
+        for (club, clubShots) in shotsByClub {
+            guard !clubShots.isEmpty else { continue }
+
+            // Carry values for consistency and median
             let carries = clubShots.map { $0.carryMeters }
+
+            // Deterministic carry-consistency proxy:
+            // Normalize std dev with 30m cap and invert so higher = more consistent.
             let meanCarry = carries.reduce(0, +) / Double(carries.count)
             let variance = carries.reduce(0) { $0 + pow($1 - meanCarry, 2) } / Double(carries.count)
             let stdDev = sqrt(variance)
-            // carryConsistency is 1 - normalized stdDev, clamped 0-1; assuming max std dev ~30m
-            let consistency = max(0, min(1, 1 - stdDev / 30))
-            
-            
-              
-            let sampleCount = Int(clubShots.count)
+            let carryConsistency = max(0, min(1, 1 - stdDev / 30))
+
+            // Median carry when sampleSize >= 5
+            let medianCarry: Double? = {
+                let cs = carries.sorted()
+                guard cs.count >= 5 else { return nil }
+                if cs.count % 2 == 1 {
+                    return cs[cs.count/2]
+                } else {
+                    let upper = cs.count/2
+                    let lower = upper - 1
+                    return (cs[lower] + cs[upper]) / 2
+                }
+            }()
+
+            let evidenceBuilder = PerformanceEvidenceBuilder()
+            let evidence = evidenceBuilder.clubEvidence(
+                clubID: club,
+                medianCarryMeters: medianCarry,
+                sampleSize: clubShots.count,
+                carryConsistency: carryConsistency,
+                missDirection: .centred // placeholder until canonical miss direction is threaded
+            )
             
             let distance = DistanceProfile(
-                averageCarryMeters: nil,
-                medianCarryMeters: nil,
-                averageTotalMeters: nil,
-                carryConsistency: consistency,
-                distanceConsistency: nil,
-                sampleSize: sampleCount // provide the sample size you computed for this club
-            )
-            let profile = ClubPerformanceProfile(
-                clubID: club, // the ClubID you’re iterating over
-                observationCount: sampleCount,
-                lastAnalyzed: now,
-                distance: distance,
-                typicalMissDirection: .centred, // or .left/.right based on your logic
-                dispersionConfidence: 0.0, // or a computed value
-                outlierCount: 0,
-                explainableEvidence: []
+                averageCarryMeters: nil,       // Can be added when available
+                medianCarryMeters: medianCarry,
+                averageTotalMeters: nil,       // Can be added when available
+                carryConsistency: carryConsistency,
+                distanceConsistency: nil,      // Placeholder for future total-distance consistency
+                sampleSize: clubShots.count
             )
 
-              clubProfiles[club] = profile
-              
-            //DEBUG End
-          //  clubProfiles[club] = ClubPerformanceProfile(distance: .init(carryConsistency: consistency))
+            // Typical miss direction and dispersion confidence will be refined once we thread in canonical dispersion.
+            let profile = ClubPerformanceProfile(
+                clubID: club,
+                observationCount: clubShots.count,
+                lastAnalyzed: now,
+                distance: distance,
+                typicalMissDirection: .centred,
+                dispersionConfidence: 0.0,
+                outlierCount: 0,
+                explainableEvidence: evidence
+            )
+
+            clubProfiles[club] = profile
         }
-        
-        // Extract carryConsistency values for all clubs to compute overallConsistency
+
+        // Overall consistency = average of per-club carryConsistency (0...1)
         let consistencies = clubProfiles.values.compactMap { $0.distance.carryConsistency }
-        // overallConsistency is average of per-club consistencies, clamped 0-1
-        let overallConsistency = consistencies.isEmpty ? 0 : max(0, min(1, consistencies.reduce(0, +) / Double(consistencies.count)))
-          
-          
-          
-        // Compute recent distance trend across all shots
-        // Thresholds and windows used below:
-        // - recentWindow: last 10 shots
-        // - tolerance for trend detection: 2 meters
+        let overallConsistency = consistencies.isEmpty
+            ? 0
+            : max(0, min(1, consistencies.reduce(0, +) / Double(consistencies.count)))
+
+        // Distance trend (recent vs lifetime) — last 10 shots, tolerance = 2m
         let recentWindow = 10
-        let recentCarries = Array(shots.suffix(recentWindow).map { $0.carryMeters })
-        let lifetimeCarries = shots.map { $0.carryMeters }
-        
+        let recentCarries = Array(effectiveShots.suffix(recentWindow).map { $0.carryMeters })
+        let lifetimeCarries = effectiveShots.map { $0.carryMeters }
+
         func mean(_ xs: [Double]) -> Double? {
             guard !xs.isEmpty else { return nil }
             return xs.reduce(0, +) / Double(xs.count)
         }
-        
-        let recentMean = mean(recentCarries)
-        let lifetimeMean = mean(lifetimeCarries)
-        
+
         var trends: [PerformanceTrend] = []
-        if let r = recentMean, let l = lifetimeMean {
+        if let r = mean(recentCarries), let l = mean(lifetimeCarries) {
             let delta = r - l
             let tolerance = 2.0 // meters
-            let direction: TrendDirection
-            if delta > tolerance { direction = .improving }
-            else if delta < -tolerance { direction = .declining }
-            else { direction = .stable }
-            
-            // Confidence: scale with recent sample coverage and dispersion of recent window
+            let direction: TrendDirection =
+                delta > tolerance ? .improving :
+                (delta < -tolerance ? .declining : .stable)
+
+            // Confidence: coverage of recent window + inverse window range (30m clamp)
             let coverage = min(1, Double(min(recentCarries.count, recentWindow)) / Double(recentWindow))
-            // Use a simple inverse range as a rough consistency proxy for the window
             let windowRange = (recentCarries.max() ?? 0) - (recentCarries.min() ?? 0)
-            let rangeFactor = max(0, min(1, 1 - min(1, windowRange / 30))) // 30m clamp for range effect
+            let rangeFactor = max(0, min(1, 1 - min(1, windowRange / 30)))
             let trendConfidence = max(0, min(1, 0.5 * coverage + 0.5 * rangeFactor))
-            
+
             trends.append(
                 PerformanceTrend(
                     scope: .distance,
@@ -311,52 +333,93 @@ public struct PlayerPerformanceEngine: Sendable {
                 )
             )
         }
-        
+
+        // Overall consistency trend (recent vs lifetime) — last 10 shots, tol = 0.05
+        func consistency(from values: [Double]) -> Double? {
+            guard values.count >= 5 else { return nil }
+            let m = values.reduce(0, +) / Double(values.count)
+            let v = values.reduce(0) { $0 + pow($1 - m, 2) } / Double(values.count)
+            let s = sqrt(v)
+            return max(0, min(1, 1 - s / 30))
+        }
+
+        let recentN = 10
+        let recentShots = Array(effectiveShots.suffix(recentN))
+        let recentCarriesAll = recentShots.map { $0.carryMeters }
+        let lifetimeCarriesAll = effectiveShots.map { $0.carryMeters }
+        if let recentC = consistency(from: recentCarriesAll),
+           let lifeC = consistency(from: lifetimeCarriesAll) {
+
+            let delta = recentC - lifeC
+            let tol = 0.05
+            let direction: TrendDirection =
+                delta > tol ? .improving :
+                (delta < -tol ? .declining : .stable)
+
+            let coverage = min(1, Double(min(recentCarriesAll.count, recentN)) / Double(recentN))
+            let windowRange = (recentCarriesAll.max() ?? 0) - (recentCarriesAll.min() ?? 0)
+            let rangeFactor = max(0, min(1, 1 - min(1, windowRange / 30)))
+            let trendConfidence = max(0, min(1, 0.5 * coverage + 0.5 * rangeFactor))
+
+            trends.append(
+                PerformanceTrend(
+                    scope: .overallConsistency,
+                    direction: direction,
+                    magnitude: abs(delta),
+                    confidence: trendConfidence,
+                    windowDescription: "last \(min(recentCarriesAll.count, recentN)) shots vs lifetime"
+                )
+            )
+        }
+
+        // Overall player profile
         let overallProfile = PlayerPerformanceProfile(
             totalRoundsAnalyzed: rounds.count,
-            totalShotsAnalyzed: shots.count,
+            totalShotsAnalyzed: effectiveShots.count,
             recentRoundsConsidered: recentRoundsConsidered,
             overallConsistency: overallConsistency,
             overallDistanceBiasMeters: 0
         )
-        
-          //DEBUG init
-            // Ensure a confidence profile exists for the return value
-          // Build a ConfidenceProfile using available signals
-          let sampleSize = Double(shots.count)
-          // Coverage from the recent window calculation above (0...1). Recompute here to avoid scope issues.
-          let coverage = min(1, Double(min(shots.count, recentWindow)) / Double(recentWindow))
-          // Trend confidence if a trend was computed; otherwise 0. Use the max confidence found in trends.
-          let trendConfidenceValue = trends.map { $0.confidence }.max() ?? 0
-          // Recency heuristic: weight by how much of the recent window we have.
-          let recencyValue = coverage
-          // Consistency heuristic: reuse overallConsistency.
-          let consistencyValue = overallConsistency
-          // Data freshness heuristic: if we have any shots, treat as fresh proportional to recency; else 0.
-          let dataFreshnessValue = shots.isEmpty ? 0 : recencyValue
-          let confidenceProfile = ConfidenceProfile(
-              overall: overallConsistency,
-              sampleSize: sampleSize,
-              recency: recencyValue,
-              consistency: consistencyValue,
-              trendConfidence: trendConfidenceValue,
-              dataFreshness: dataFreshnessValue
-          )
-          //DEBUG end
 
-          // Construct PlayerIntelligence with explicit initializer
-            return PlayerIntelligence(
-                playerID: playerID,
-                generatedAt: now,
-                overall: overallProfile,
-                clubs: clubProfiles,
-                trends: trends,
-                confidence: confidenceProfile,
-                notes: []
-            )
+        // ConfidenceProfile with recency and sample-size blend
+        let mostRecentDate = rounds.map { $0.finishedAt }.max()
+        let recencyScore: Double = {
+            guard let recent = mostRecentDate else { return 0.25 }
+            let days = max(0, now.timeIntervalSince(recent) / 86400)
+            switch days {
+            case ..<7: return 1.0
+            case ..<30: return 0.75
+            case ..<90: return 0.5
+            default: return 0.25
+            }
+        }()
+        // Sample-size scale capped at 20 for stable early confidence
+        let sampleScale = min(1, max(0, Double(min(effectiveShots.count, 20)) / 20.0))
+        let overallConfidence = max(0, min(1, 0.6 * sampleScale + 0.4 * recencyScore))
+        let trendConfidenceValue = trends.map { $0.confidence }.max() ?? 0
 
+        let updatedConfidence = ConfidenceProfile(
+            overall: overallConfidence,
+            sampleSize: sampleScale,
+            recency: recencyScore,
+            consistency: overallConsistency,
+            trendConfidence: trendConfidenceValue,
+            dataFreshness: effectiveShots.isEmpty ? 0 : recencyScore
+        )
+
+        // Final immutable PlayerIntelligence
+        return PlayerIntelligence(
+            playerID: playerID,
+            generatedAt: now,
+            overall: overallProfile,
+            clubs: clubProfiles,
+            trends: trends,
+            confidence: updatedConfidence,
+            notes: []
+        )
     }
-
+    
+    // MARK: - Deterministic helpers (unused in final stats, kept for future refinement)
 
     private func trimmedValues(_ values: [Double], trimFraction: Double) -> [Double] {
         guard !values.isEmpty, trimFraction > 0 else { return values }
@@ -392,4 +455,3 @@ public struct PlayerPerformanceEngine: Sendable {
         return max(0, min(1, ratio))
     }
 }
-
