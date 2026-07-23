@@ -31,6 +31,8 @@ public struct RecommendationPipeline:
     
     private let riskRewardAnalysisEngine:
         RiskRewardAnalysisEngine
+    
+    private let environmentalContextEngine: EnvironmentalContextEngine
 
     public init(
         strategicOptionEngine:
@@ -47,7 +49,8 @@ public struct RecommendationPipeline:
             HoleAreaAssessmentEngine = HoleAreaAssessmentEngine(),
         riskRewardAnalysisEngine:
             RiskRewardAnalysisEngine =
-                RiskRewardAnalysisEngine()
+                RiskRewardAnalysisEngine(),
+        environmentalContextEngine: EnvironmentalContextEngine = EnvironmentalContextEngine()
     ) {
         self.strategicOptionEngine =
             strategicOptionEngine
@@ -69,6 +72,8 @@ public struct RecommendationPipeline:
         
         self.riskRewardAnalysisEngine =
             riskRewardAnalysisEngine
+        
+        self.environmentalContextEngine = environmentalContextEngine
     }
 
     public func execute(
@@ -120,6 +125,38 @@ public struct RecommendationPipeline:
                     to:
                         strategicOption.target
                 )
+    
+        
+        // Environmental Intelligence
+        var envInputs = EnvironmentalContextEngine.Inputs()
+        // Weather (provider-agnostic)
+        if let w = inputs.weatherCondition {
+            envInputs.windSpeedMetersPerSecond = w.windSpeedmps
+            //windSpeedMetersPerSecond
+            envInputs.windDirectionDegrees = w.windDirectionDegrees
+            envInputs.observationAgeSeconds = w.ageSeconds
+            envInputs.providerQuality = w.providerQuality
+            // Optional temperature if available on WeatherCondition
+            // envInputs.temperatureCelsius = w.temperatureCelsius
+        }
+        envInputs.shotBearingDegrees = shotBearingDegrees
+        // Terrain and lie, if available on ShotContext/environment
+        envInputs.elevationDeltaMeters = context.shot.environment.elevationChangeMeters
+        envInputs.localSlopeDegrees = nil
+        // Map playable lie to LieAssessment category if possible
+        switch context.shot.playableLie {
+        case .tee, .fairway: envInputs.lieCategory = .fairway
+        case .lightRough: envInputs.lieCategory = .lightRough
+        case .deepRough: envInputs.lieCategory = .heavyRough
+        case .fairwayBunker, .greensideBunker, .pluggedBunker: envInputs.lieCategory = .sand
+        case .trees, .treeRoots, .pineStraw, .recovery: envInputs.lieCategory = .recovery
+        case .fringe, .green: envInputs.lieCategory = .unknown
+        case .cartPath, .water, .penaltyArea, .outOfBounds: envInputs.lieCategory = .unknown
+        case .unknown: envInputs.lieCategory = .unknown
+        }
+        envInputs.lieDetectionConfidence = 0.8
+        // Course conditions unavailable here; leave nil for now
+        // Hazard summary derived from holeAssessment
         let holeAssessment =
             holeAreaAssessmentEngine.assess(
                 areas:
@@ -129,7 +166,13 @@ public struct RecommendationPipeline:
                 shotBearingDegrees:
                     shotBearingDegrees
             )
+        envInputs.hazard = summarizeHazard(from: holeAssessment)
+        // Confidence inputs
+        envInputs.gpsAccuracyMeters = inputs.gpsAccuracyMeters
+        envInputs.feedsPresentFraction = nil
 
+        let environmentalAssessment = environmentalContextEngine.assess(from: envInputs)
+        
         let decisionContext =
             RecommendationDecisionContext(
                 strategicOption:
@@ -176,24 +219,18 @@ public struct RecommendationPipeline:
         let recommendation =
             caddyRecommendationEngine
                 .create(
-                    option:
-                        strategicOption,
-                    adaptiveAdjustment:
-                        adaptiveAdjustment,
-                    weatherAdjustment:
-                        weatherAdjustment
+                    option: strategicOption,
+                    adaptiveAdjustment: adaptiveAdjustment,
+                    weatherAdjustment: weatherAdjustment,
+                    environmentalAssessment: environmentalAssessment
                 )
         
-        
         return RecommendationPipelineResult(
-            strategicOption:
-                strategicOption,
-            adaptiveAdjustment:
-                adaptiveAdjustment,
-            weatherAdjustment:
-                weatherAdjustment,
-            recommendation:
-                recommendation
+            strategicOption: strategicOption,
+            adaptiveAdjustment: adaptiveAdjustment,
+            weatherAdjustment: weatherAdjustment,
+            recommendation: recommendation,
+            environmentalAssessment: environmentalAssessment
         )
     }
 
@@ -288,5 +325,45 @@ public struct RecommendationPipeline:
                 weather:
                     weather
             )
+    }
+    
+    private func summarizeHazard(from hole: HoleAssessment) -> HazardAssessment? {
+        guard !hole.areaAssessments.isEmpty else { return nil }
+        func level(for types: [HoleAreaType]) -> HazardAssessment.RiskLevel {
+            let maxRisk = hole.areaAssessments.filter { types.contains($0.area.type) }.map(\.risk).max() ?? .negligible
+            switch maxRisk {
+            case .negligible: return .negligible
+            case .low: return .low
+            case .moderate: return .moderate
+            case .high: return .high
+            case .severe: return .severe
+            }
+        }
+        let water = level(for: [.water])
+        let bunkers = level(for: [.bunker])
+        let trees = level(for: [.trees])
+        let penalty = level(for: [.penaltyArea])
+        let oob = level(for: [.outOfBounds])
+        // Recovery difficulty proxy: max risk among non-playing surfaces excluding green/fairway
+        let recovery = hole.areaAssessments.filter { $0.area.type.isHazard || $0.area.type == .trees }.map(\.risk).max() ?? .negligible
+        let recoveryLevel: HazardAssessment.RiskLevel = {
+            switch recovery {
+            case .negligible: return .negligible
+            case .low: return .low
+            case .moderate: return .moderate
+            case .high: return .high
+            case .severe: return .severe
+            }
+        }()
+        let forcedLayup = (water == .high || water == .severe) || (oob == .high || oob == .severe)
+        return HazardAssessment(
+            water: water,
+            bunkers: bunkers,
+            trees: trees,
+            penaltyAreas: penalty,
+            outOfBounds: oob,
+            recoveryDifficulty: recoveryLevel,
+            forcedLayup: forcedLayup
+        )
     }
 }

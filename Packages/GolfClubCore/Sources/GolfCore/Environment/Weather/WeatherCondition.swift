@@ -15,52 +15,39 @@ public struct WeatherCondition:
     Sendable {
 
 
-    public let windSpeedKph:
-        Double
+    public let windSpeedKph: Double
+    
+    public let windDirectionDegrees: Double
 
 
-    public let windDirectionDegrees:
-        Double
+    public let temperatureCelsius: Double
 
+    public let precipitation: Double
 
-    public let temperatureCelsius:
-        Double
-
-
-    public let precipitation:
-        Double
-
+    public let ageSeconds: Double
+    
+    public let providerQuality: Double
+    
 
     public init(
-        windSpeedKph:
-            Double,
-        windDirectionDegrees:
-            Double,
-        temperatureCelsius:
-            Double,
-        precipitation:
-            Double
+        windSpeedKph: Double,
+        windDirectionDegrees: Double,
+        temperatureCelsius: Double,
+        precipitation: Double,
+        ageSeconds: Double = 0,
+        providerQuality: Double = 1
     ) {
 
-        self.windSpeedKph =
-            max(
-                0,
-                windSpeedKph
-            )
+        self.windSpeedKph = max(0, windSpeedKph)
+        self.windDirectionDegrees = windDirectionDegrees
+        self.temperatureCelsius = temperatureCelsius
+        self.precipitation = min(1, max(0, precipitation))
+        self.ageSeconds = ageSeconds
+        self.providerQuality = providerQuality
+    }
 
-        self.windDirectionDegrees =
-            windDirectionDegrees
-
-        self.temperatureCelsius =
-            temperatureCelsius
-
-        self.precipitation =
-            min(
-                1,
-                max(
-                    0,
-                    precipitation
-                )
-            )
+    public var windSpeedmps: Double {
+        windSpeedKph / 3.6
     }
 }
+

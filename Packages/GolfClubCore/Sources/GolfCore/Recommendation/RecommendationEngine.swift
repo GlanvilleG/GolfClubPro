@@ -53,6 +53,8 @@ public enum RecommendationEngineError:
 public struct RecommendationEngine:
     Sendable {
 
+    internal var injectedPlayerIntelligence: PlayerIntelligence? = nil
+    
     private let strategyEngine:
         StrategyEngine
 
@@ -158,6 +160,9 @@ public struct RecommendationEngine:
                 )
         }
 
+        // Internal hook: optional PlayerIntelligence can be threaded here when available
+        let playerIntelligence: PlayerIntelligence? = nil
+        
         let scoredCandidates =
             context.availableClubs
                 .filter {
@@ -166,15 +171,11 @@ public struct RecommendationEngine:
                 .compactMap { club in
                     clubScoringEngine.score(
                         club: club,
-                        targetDistanceMeters:
-                            shotPlan
-                                .targetDistanceMeters,
-                        context:
-                            context,
-                        shotPlan:
-                            shotPlan,
-                        spatialRisk:
-                            spatialRisk
+                        targetDistanceMeters: shotPlan.targetDistanceMeters,
+                        context: context,
+                        shotPlan: shotPlan,
+                        spatialRisk: spatialRisk,
+                        intelligence: playerIntelligence
                     )
                 }
 
@@ -260,6 +261,7 @@ public struct RecommendationEngine:
     ) -> Double {
         var offset = 0.0
 
+        // Historical tendencies
         for summary in context.recentShotHistory {
             if summary.commonErrors.contains(.push) ||
                 summary.commonErrors.contains(.slice) {
@@ -271,6 +273,8 @@ public struct RecommendationEngine:
                 offset += 3
             }
         }
+
+        // Dispersion directional error
         for summary in context.dispersionSummaries {
             guard summary.directionalSampleSize >= 3,
                   let averageError =
@@ -282,7 +286,18 @@ public struct RecommendationEngine:
             offset -= averageError * 0.50
         }
 
-        if let wind = context.environment.wind {
+        // Build assessment for this calculation
+        let assessment = EnvironmentalAssessmentBuilder.buildAssessment(
+            from: context.environment,
+            shotBearingDegrees: context.currentShotPlan?.targetBearingDegrees ?? 0
+        )
+
+        // Prefer standardized crosswind from EnvironmentalAssessment when available
+        if let weather = assessment?.weather {
+            let cross = weather.crosswindMetersPerSecond
+            offset -= cross * 0.6
+        } else if let wind = context.environment.wind {
+            // Fallback to legacy raw-wind handling
             let relativeAngle =
                 angularDifferenceDegrees(
                     context.currentShotPlan?
@@ -322,3 +337,4 @@ public struct RecommendationEngine:
     }
     
 }
+

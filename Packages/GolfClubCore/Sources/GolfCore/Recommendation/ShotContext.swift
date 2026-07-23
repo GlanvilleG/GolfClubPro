@@ -28,14 +28,17 @@ public struct EnvironmentalContext:
 
     public var weatherSnapshot: WeatherSnapshot?
     public var elevationChangeMeters: Double?
+   
 
     public init(
         weatherSnapshot: WeatherSnapshot? = nil,
-        elevationChangeMeters: Double? = nil
+        elevationChangeMeters: Double? = nil,
+
     ) {
         self.weatherSnapshot = weatherSnapshot
         self.elevationChangeMeters =
             elevationChangeMeters
+
     }
 
     public var wind: WindContext? {
@@ -56,10 +59,10 @@ public struct EnvironmentalContext:
 
     public var weatherAvailability:
         WeatherAvailability {
-
         weatherSnapshot?.availability ??
             .unavailable
     }
+    
 }
 
 public struct RecentShotSummary:
@@ -107,6 +110,7 @@ public struct ShotContext:
     public var environment: EnvironmentalContext
     
     public var dispersionSummaries: [ClubDispersionSummary]
+    public var environmentalAssessment: EnvironmentalAssessment?
 
     public init(
         player: Player,
@@ -121,7 +125,9 @@ public struct ShotContext:
         strategyGeometry: HoleStrategyGeometry,
         currentShotPlan: ShotPlan? = nil,
         environment: EnvironmentalContext =
-            EnvironmentalContext()
+            EnvironmentalContext(),
+        environmentalAssessment: EnvironmentalAssessment? = nil
+        
     ) {
         self.player = player
         self.roundID = roundID
@@ -135,6 +141,7 @@ public struct ShotContext:
         self.strategyGeometry = strategyGeometry
         self.currentShotPlan = currentShotPlan
         self.environment = environment
+        self.environmentalAssessment = environmentalAssessment
     }
 
     public var finalTarget: GeoCoordinate {

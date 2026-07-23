@@ -57,4 +57,21 @@ public struct StrategyEngine: Sendable {
             alternativeClubIDs: alternativeClubIDs
         )
     }
+    
+    public func makeShotPlan(
+        from currentPosition: GeoCoordinate,
+        using geometry: HoleStrategyGeometry,
+        preferredClubID: ClubID? = nil,
+        alternativeClubIDs: [ClubID] = [],
+        environmentalAssessment: EnvironmentalAssessment?
+    ) throws -> ShotPlan {
+        // For now, we do not alter strategy based on environment in this refactor pass.
+        // This overload exists to accept the assessment and remain forward-compatible.
+        return try makeShotPlan(
+            from: currentPosition,
+            using: geometry,
+            preferredClubID: preferredClubID,
+            alternativeClubIDs: alternativeClubIDs
+        )
+    }
 }

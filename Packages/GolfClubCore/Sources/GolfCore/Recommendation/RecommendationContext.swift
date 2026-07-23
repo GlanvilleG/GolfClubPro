@@ -18,8 +18,8 @@ public struct RecommendationContext:
 
     public let spatialAnalysis:
         SpatialAnalysis
-
-    public init(
+    
+     public init(
         shotContext: ShotContext,
         spatialContext: RoundSpatialContext,
         spatialAnalysis: SpatialAnalysis
@@ -32,5 +32,17 @@ public struct RecommendationContext:
 
         self.spatialAnalysis =
             spatialAnalysis
+        
+    }
+    internal init(
+        shotContext: ShotContext,
+        spatialContext: RoundSpatialContext,
+        spatialAnalysis: SpatialAnalysis,
+        playerIntelligence: PlayerIntelligence?
+    ) {
+        self.shotContext = shotContext
+        self.spatialContext = spatialContext
+        self.spatialAnalysis = spatialAnalysis
+       
     }
 }

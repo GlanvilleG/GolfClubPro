@@ -27,6 +27,8 @@ public struct RecommendationPipelineResult:
 
     public let recommendation:
         CaddyRecommendation
+    
+    public let environmentalAssessment: EnvironmentalAssessment?
 
     public init(
         strategicOption:
@@ -36,7 +38,8 @@ public struct RecommendationPipelineResult:
         weatherAdjustment:
             WeatherAdjustment?,
         recommendation:
-            CaddyRecommendation
+            CaddyRecommendation,
+        environmentalAssessment: EnvironmentalAssessment? = nil
     ) {
 
         self.strategicOption =
@@ -50,5 +53,8 @@ public struct RecommendationPipelineResult:
 
         self.recommendation =
             recommendation
+        
+        self.environmentalAssessment =
+            environmentalAssessment
     }
 }

@@ -52,127 +52,150 @@ public struct RecommendationExplanationBuilder:
         )
     }
 
-    private func makeEnvironmentalConditions(
-        context: ShotContext
-    ) -> [ExplanationItem] {
+    private func makeEnvironmentalConditions(context: ShotContext) -> [ExplanationItem] {
+        var items: [ExplanationItem] = []
 
-        var items:
-            [ExplanationItem] = []
-
-        switch context.environment.weatherAvailability {
-
-        case .live:
-
-            items.append(
-                ExplanationItem(
-                    title:
-                        "Live weather data",
-                    detail:
-                        "Current weather conditions were used.",
-                    severity:
-                        .information
+        // Weather availability/advisory messages
+        if let snapshot = context.environment.weatherSnapshot {
+            switch snapshot.availability {
+            case .cached:
+                items.append(
+                    ExplanationItem(
+                        title: "Cached weather",
+                        detail: "Recent cached weather data was used.",
+                        severity: .advisory
+                    )
                 )
-            )
-
-        case .cached:
-
-            items.append(
-                ExplanationItem(
-                    title:
-                        "Cached weather",
-                    detail:
-                        "Recent cached weather data was used.",
-                    severity:
-                        .advisory
+            case .unavailable:
+                items.append(
+                    ExplanationItem(
+                        title: "Weather unavailable",
+                        detail: "No live weather information was available.",
+                        severity: .advisory
+                    )
                 )
-            )
-
-        case .stale:
-
-            items.append(
-                ExplanationItem(
-                    title:
-                        "Stale weather",
-                    detail:
-                        "Weather data may no longer represent current conditions.",
-                    severity:
-                        .caution
+            case .stale:
+                items.append(
+                    ExplanationItem(
+                        title: "Stale weather",
+                        detail: "Weather data may be out of date.",
+                        severity: .advisory
+                    )
                 )
-            )
-
-        case .unavailable:
-
+            case .live:
+                break
+            }
+        } else {
+            // No snapshot provided at all – treat as unavailable for explanation purposes
             items.append(
                 ExplanationItem(
-                    title:
-                        "Weather unavailable",
-                    detail:
-                        "No live weather information was available.",
-                    severity:
-                        .caution
+                    title: "Weather unavailable",
+                    detail: "No live weather information was available.",
+                    severity: .advisory
                 )
             )
         }
-
-        if let wind =
-            context.environment.wind {
-
-            items.append(
-                ExplanationItem(
-                    title:
-                        "Wind adjustment",
-                    detail:
-                        String(
-                            format: "%.1f m/s from %.0f°",
-                            wind.speedMetersPerSecond,
-                            wind.directionDegrees
+        
+        if let assessment = context.environmentalAssessment {
+            if let weather = assessment.weather {
+                items.append(
+                    ExplanationItem(
+                        title: "Wind (standardized)",
+                        detail: String(
+                            format: "cross %.1f m/s, along %.1f m/s",
+                            weather.crosswindMetersPerSecond,
+                            weather.alongWindMetersPerSecond
                         ),
-                    severity:
-                        .information
+                        severity: .information
+                    )
+                )
+            }
+            if let terrain = assessment.terrain, terrain.elevationDeltaMeters != 0 {
+                let direction = terrain.elevationDeltaMeters >= 0 ? "uphill" : "downhill"
+                items.append(
+                    ExplanationItem(
+                        title: "Elevation",
+                        detail: "\(Int(abs(terrain.elevationDeltaMeters).rounded())) metres \(direction)",
+                        severity: .information
+                    )
+                )
+            }
+
+            if let course = assessment.course {
+                if course.fairwayRollFactor != 1.0 {
+                    let descriptor = course.fairwayRollFactor > 1.0 ? "firm fairways" : "soft/wet fairways"
+                    items.append(
+                        ExplanationItem(
+                            title: "Course conditions",
+                            detail: "\(descriptor), roll factor \(String(format: "%.2f", course.fairwayRollFactor))",
+                            severity: .information
+                        )
+                    )
+                }
+                if course.preferredLies {
+                    items.append(
+                        ExplanationItem(
+                            title: "Preferred lies",
+                            detail: "Local rule in effect",
+                            severity: .information
+                        )
+                    )
+                }
+            }
+            let conf = assessment.confidence
+            items.append(
+                ExplanationItem(
+                    title: "Environmental confidence",
+                    detail: String(
+                        format: "overall %.0f%%, gps %.0f%%, weather %.0f%%",
+                        conf.overall * 100,
+                        conf.gpsQuality * 100,
+                        conf.weatherFreshness * 100
+                    ),
+                    severity: .information
                 )
             )
         }
 
-        if let elevation =
-            context.environment
-                .elevationChangeMeters {
-
-            let direction =
-                elevation >= 0
-                ? "uphill"
-                : "downhill"
-
+        if let wind = context.environment.wind {
             items.append(
                 ExplanationItem(
-                    title:
-                        "Elevation adjustment",
-                    detail:
-                        "\(Int(abs(elevation).rounded())) metres \(direction)",
-                    severity:
-                        .information
+                    title: "Wind adjustment",
+                    detail: String(
+                        format: "%.1f m/s from %.0f°",
+                        wind.speedMetersPerSecond,
+                        wind.directionDegrees
+                    ),
+                    severity: .information
                 )
             )
         }
 
-        if let temperature =
-            context.environment
-                .temperatureCelsius {
-
+        if let elevation = context.environment.elevationChangeMeters {
+            let direction = elevation >= 0 ? "uphill" : "downhill"
             items.append(
                 ExplanationItem(
-                    title:
-                        "Temperature",
-                    detail:
-                        "\(Int(temperature.rounded())) °C",
-                    severity:
-                        .information
+                    title: "Elevation adjustment",
+                    detail: "\(Int(abs(elevation).rounded())) metres \(direction)",
+                    severity: .information
+                )
+            )
+        }
+
+        if let temperature = context.environment.temperatureCelsius {
+            items.append(
+                ExplanationItem(
+                    title: "Temperature",
+                    detail: "\(Int(temperature.rounded())) °C",
+                    severity: .information
                 )
             )
         }
 
         return items
     }
-    
+
+        
     private func makeSummary(
         decision: RecommendationDecision,
         context: ShotContext

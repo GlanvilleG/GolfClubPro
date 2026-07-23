@@ -14,6 +14,7 @@
 		5A9CA9263007389A00283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */; };
 		5A9CA9283007392A00283BB6 /* ADR-020 – AI Shot Coaching Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */; };
 		5A9CA92A3007395000283BB6 /* ADR-021 – Human Playing Characteristics.md in Resources */ = {isa = PBXBuildFile; fileRef = 5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */; };
+		5AB5BFDD30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md in Resources */ = {isa = PBXBuildFile; fileRef = 5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */; };
 		5ABC36AF2FFDF02B00A78677 /* GolfClubPro Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5ABC36AE2FFDF02B00A78677 /* GolfClubPro Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37322FFDFC2700A78677 /* MeetingNotes.md */; };
 		5ABC374C2FFDFC2700A78677 /* ADR-000-template.md in Resources */ = {isa = PBXBuildFile; fileRef = 5ABC37212FFDFC2700A78677 /* ADR-000-template.md */; };
@@ -103,6 +104,7 @@
 		5A9CA9253007389200283BB6 /* ADR-022 – Recommendation Pipeline Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-022 – Recommendation Pipeline Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9273007392100283BB6 /* ADR-020 – AI Shot Coaching Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-020 – AI Shot Coaching Architecture.md"; sourceTree = "<group>"; };
 		5A9CA9293007394700283BB6 /* ADR-021 – Human Playing Characteristics.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-021 – Human Playing Characteristics.md"; sourceTree = "<group>"; };
+		5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "ADR-031 – Environmental Intelligence Architecture.md"; sourceTree = "<group>"; };
 		5ABC368D2FFDF02A00A78677 /* GolfClubPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfClubPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC369A2FFDF02B00A78677 /* GolfClubProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5ABC36A42FFDF02B00A78677 /* GolfClubProUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfClubProUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -403,6 +405,7 @@
 			children = (
 				5A8BAD4A300DADF700F42B0A /* ADR-028-Recommendation Decision Aggregate.md */,
 				5A8BAD44300CAAD900F42B0A /* ADR-027-Probabilistic Shot Modelling.md */,
+				5AB5BFDC30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md */,
 				5A8BAD42300BBA9400F42B0A /* ADR-026-AI Recommendation Pipeline.md */,
 				5ACDCDC2300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md */,
 				5A8BAD383009CA9100F42B0A /* ADR-023-Multi-Pipeline Product Architecture.md */,
@@ -712,6 +715,7 @@
 				5AFC4DBE3000F950002DF421 /* ADR-013-Offline-First-Architecture.md in Resources */,
 				5AC131512FFFB2080077FB46 /* ADR-004-Strongly-Typed-Identifiers.md in Resources */,
 				5AFC50203004E10F002DF421 /* ADR-016-Context-Centric-Domain-Architecture.md in Resources */,
+				5AB5BFDD30103C0A000359F7 /* ADR-031 – Environmental Intelligence Architecture.md in Resources */,
 				5A8BAD4B300DAE0400F42B0A /* ADR-028-Recommendation Decision Aggregate.md in Resources */,
 				5ACDCDC3300E2BA70057ACB7 /* ADR-025 – Provider Independence Through Immutable Decision Snapshots.md in Resources */,
 				5ABC37442FFDFC2700A78677 /* MeetingNotes.md in Resources */,

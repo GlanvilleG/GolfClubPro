@@ -8,6 +8,6 @@
       location = "group:BundledGolfClubCatalogueLoader.txt">
    </FileRef>
    <FileRef
-      location = "group:RecommendationEvaluationTests.swift">
+      location = "group:ShotContext+Assessment.swift">
    </FileRef>
 </Workspace>

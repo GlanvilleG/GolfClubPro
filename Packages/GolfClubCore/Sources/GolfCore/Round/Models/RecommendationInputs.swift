@@ -34,6 +34,9 @@ public struct RecommendationInputs:
     /// directional adjustment.
     public let weatherCondition:
         WeatherCondition?
+    
+    /// Estimated GPS horizontal accuracy in meters (lower is better).
+       public let gpsAccuracyMeters: Double?
 
     public init(
         candidateLandingZones:
@@ -43,7 +46,8 @@ public struct RecommendationInputs:
         playerPerformance:
             PlayerPerformanceModel? = nil,
         weatherCondition:
-            WeatherCondition? = nil
+            WeatherCondition? = nil,
+        gpsAccuracyMeters: Double? = nil
     ) {
         self.candidateLandingZones =
             candidateLandingZones
@@ -56,5 +60,8 @@ public struct RecommendationInputs:
 
         self.weatherCondition =
             weatherCondition
+        
+        self.gpsAccuracyMeters =
+            gpsAccuracyMeters
     }
 }

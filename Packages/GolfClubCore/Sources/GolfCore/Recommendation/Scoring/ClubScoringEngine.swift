@@ -21,6 +21,8 @@ public struct ClubScoringEngine:
             SpatialRiskAssessment
     ) -> ClubRecommendation? {
 
+        let env = context.environmentalAssessment
+
         let baseCarry =
             historicalCarry(
                 for: club,
@@ -30,31 +32,42 @@ public struct ClubScoringEngine:
             club.averageCarryMeters ??
             0
 
-        let windAdjustedCarry =
-            adjustCarryForWind(
-                baseCarry,
-                shotBearingDegrees:
-                    shotPlan.targetBearingDegrees,
-                wind:
-                    context.environment.wind
-            )
+        let windAdjustedCarry: Double = {
+            if let weather = env?.weather {
+                // Use along-wind (tail +, head -) to create a small carry factor
+                let factor = 1.0 + (weather.alongWindMetersPerSecond * 0.015)
+                return max(0, baseCarry * max(0.85, min(1.15, factor)))
+            } else {
+                return adjustCarryForWind(
+                    baseCarry,
+                    shotBearingDegrees: shotPlan.targetBearingDegrees,
+                    wind: context.environment.wind
+                )
+            }
+        }()
 
-        let lieAdjustedCarry =
-            adjustCarryForLie(
-                windAdjustedCarry,
-                lie:
-                    context.playableLie,
-                clubType:
-                    club.type
-            )
+        let lieAdjustedCarry: Double = {
+            if let lie = env?.lie {
+                return windAdjustedCarry * lie.distanceFactor
+            } else {
+                return adjustCarryForLie(
+                    windAdjustedCarry,
+                    lie: context.playableLie,
+                    clubType: club.type
+                )
+            }
+        }()
 
-        let elevationAdjustedCarry =
-            adjustCarryForElevation(
-                lieAdjustedCarry,
-                elevationChangeMeters:
-                    context.environment
-                        .elevationChangeMeters
-            )
+        let elevationAdjustedCarry: Double = {
+            if let terrain = env?.terrain {
+                return max(0, lieAdjustedCarry * terrain.carryAdjustmentFactor)
+            } else {
+                return adjustCarryForElevation(
+                    lieAdjustedCarry,
+                    elevationChangeMeters: context.environment.elevationChangeMeters
+                )
+            }
+        }()
 
         let difference =
             abs(
@@ -62,10 +75,23 @@ public struct ClubScoringEngine:
                 elevationAdjustedCarry
             )
 
+        // Apply mild course-condition expectation: fairway roll can reduce effective required carry slightly
+        let effectiveDifference: Double = {
+            if let course = env?.course {
+                // If roll > 1.0 (firm), we can tolerate being slightly short; if < 1.0 (wet/soft), we require more carry.
+                let roll = max(0.7, min(1.3, course.fairwayRollFactor))
+                // Map roll 0.7..1.3 to a small +/- adjustment up to ~3 meters
+                let adjustment = (roll - 1.0) * 5.0
+                return max(0, abs(targetDistanceMeters - elevationAdjustedCarry) - adjustment)
+            } else {
+                return difference
+            }
+        }()
+        
         let distanceScore =
             distanceSuitabilityScore(
                 differenceMeters:
-                    difference
+                    effectiveDifference
             )
 
         let lieScore =
@@ -123,14 +149,222 @@ public struct ClubScoringEngine:
                 )
             )
 
-        let confidence =
-            confidenceForClub(
-                club: club,
-                context: context,
-                distanceDifferenceMeters:
-                    difference
+        let confidence: Double = {
+            let history = context.recentShotHistory.first {
+                $0.clubID == club.id
+            }
+
+            let dispersion = context.dispersionSummaries.first {
+                $0.clubID == club.id
+            }
+
+            let sampleConfidence: Double
+
+            switch history?.sampleSize ?? 0 {
+            case 20...:
+                sampleConfidence = 1
+            case 10..<20:
+                sampleConfidence = 0.85
+            case 5..<10:
+                sampleConfidence = 0.65
+            case 1..<5:
+                sampleConfidence = 0.45
+            default:
+                sampleConfidence = 0.25
+            }
+
+            let distanceConfidence =
+                max(0, 1 - difference / 50)
+
+            let consistencyConfidence =
+                dispersionConsistencyConfidence(
+                    dispersion
+                )
+            let weatherConfidence: Double = {
+                if let env = context.environmentalAssessment {
+                    return env.confidence.overall
+                } else {
+                    return weatherConfidenceAdjustment(for: context.environment.weatherAvailability)
+                }
+            }()
+
+            return min(
+                1,
+                max(
+                    0,
+                    sampleConfidence * 0.35 +
+                    distanceConfidence * 0.30 +
+                    consistencyConfidence * 0.20 +
+                    weatherConfidence * 0.15
+                )
+            )
+        }()
+
+        let recommendationReasons =
+            uniqueReasons(
+                reasons(
+                    for: club,
+                    adjustedCarryMeters:
+                        elevationAdjustedCarry,
+                    targetDistanceMeters:
+                        targetDistanceMeters,
+                    context:
+                        context
+                ) + spatialRisk.reasons.map(\.rawValue)
             )
 
+        return ClubRecommendation(
+            clubID:
+                club.id,
+            score:
+                finalScore,
+            adjustedCarryMeters:
+                elevationAdjustedCarry,
+            distanceDifferenceMeters:
+                difference,
+            confidence:
+                confidence,
+            reasons:
+                recommendationReasons
+        )
+    }
+   
+    @usableFromInline
+    func score(
+        club: Club,
+        targetDistanceMeters: Double,
+        context: ShotContext,
+        shotPlan: ShotPlan,
+        spatialRisk: SpatialRiskAssessment,
+        intelligence: PlayerIntelligence?
+    ) -> ClubRecommendation? {
+
+        let env = context.environmentalAssessment
+
+        let baseCarry =
+            resolveAverageCarry(
+                for: club,
+                context: context,
+                intelligence: intelligence
+            ) ?? 0
+
+        let windAdjustedCarry: Double = {
+            if let weather = env?.weather {
+                let factor = 1.0 + (weather.alongWindMetersPerSecond * 0.015)
+                return max(0, baseCarry * max(0.85, min(1.15, factor)))
+            } else {
+                return adjustCarryForWind(
+                    baseCarry,
+                    shotBearingDegrees: shotPlan.targetBearingDegrees,
+                    wind: context.environment.wind
+                )
+            }
+        }()
+
+        let lieAdjustedCarry: Double = {
+            if let lie = env?.lie {
+                return windAdjustedCarry * lie.distanceFactor
+            } else {
+                return adjustCarryForLie(
+                    windAdjustedCarry,
+                    lie: context.playableLie,
+                    clubType: club.type
+                )
+            }
+        }()
+
+        let elevationAdjustedCarry: Double = {
+            if let terrain = env?.terrain {
+                return max(0, lieAdjustedCarry * terrain.carryAdjustmentFactor)
+            } else {
+                return adjustCarryForElevation(
+                    lieAdjustedCarry,
+                    elevationChangeMeters: context.environment.elevationChangeMeters
+                )
+            }
+        }()
+
+        let difference =
+            abs(
+                targetDistanceMeters -
+                elevationAdjustedCarry
+            )
+
+        let effectiveDifference: Double = {
+            if let course = env?.course {
+                let roll = max(0.7, min(1.3, course.fairwayRollFactor))
+                let adjustment = (roll - 1.0) * 5.0
+                return max(0, abs(targetDistanceMeters - elevationAdjustedCarry) - adjustment)
+            } else {
+                return difference
+            }
+        }()
+
+        let distanceScore =
+            distanceSuitabilityScore(
+                differenceMeters:
+                    effectiveDifference
+            )
+
+        let lieScore =
+            lieSuitabilityScore(
+                clubType:
+                    club.type,
+                lie:
+                    context.playableLie
+            )
+
+        guard lieScore >= 0.40 else {
+            return nil
+        }
+
+        let historyPenalty = resolveMissPenalty(
+            for: club,
+            context: context,
+            intelligence: intelligence
+        )
+
+        let dispersionPenalty =
+            dispersionPenalty(
+                for:
+                    club.id,
+                summaries:
+                    context.dispersionSummaries
+            )
+
+        let routeRiskPenalty =
+            routeRiskPenalty(
+                for:
+                    shotPlan.riskLevel
+            )
+
+        let missingWeatherPenalty =
+            context.environment.wind == nil
+            ? 0.03
+            : 0
+
+        let finalScore =
+            min(
+                1,
+                max(
+                    0,
+                    distanceScore * 0.60 +
+                    lieScore * 0.25 +
+                    shotPlan.confidence * 0.15 -
+                    historyPenalty -
+                    dispersionPenalty -
+                    routeRiskPenalty -
+                    missingWeatherPenalty -
+                    spatialRisk.penalty
+                )
+            )
+
+        let confidence: Double = resolveConfidence(
+            for: club,
+            context: context,
+            intelligence: intelligence
+        )
+        
         let recommendationReasons =
             uniqueReasons(
                 reasons(
@@ -515,10 +749,14 @@ public struct ClubScoringEngine:
             dispersionConsistencyConfidence(
                 dispersion
             )
-        let weatherConfidence =
-            weatherConfidenceAdjustment(
-                for: context.environment.weatherAvailability
-            )
+        let weatherConfidence: Double = {
+            if let env = context.environmentalAssessment {
+                return env.confidence.overall
+            } else {
+                return weatherConfidenceAdjustment(for: context.environment.weatherAvailability)
+            }
+        }()
+              
         return min(
             1,
             max(
@@ -617,8 +855,18 @@ public struct ClubScoringEngine:
                 "Live weather was unavailable, so no wind adjustment was applied."
             )
         }
+        
+        if let course = context.environmentalAssessment?.course {
+            if course.fairwayRollFactor > 1.05 {
+                reasons.append("Firm fairways may add roll, slightly relaxing carry requirement.")
+            } else if course.fairwayRollFactor < 0.95 {
+                reasons.append("Wet/soft fairways reduce roll, increasing carry requirement.")
+            }
+        }
+        
         return reasons
     }
+     
     private func angularDifferenceDegrees(
         _ first: Double,
         _ second: Double
@@ -674,6 +922,65 @@ public struct ClubScoringEngine:
                 result.append(reason)
             }
         }
+    }
+    // MARK: - Player Intelligence Preparation (not yet used)
+
+    @usableFromInline
+    func resolveAverageCarry(
+        for club: Club,
+        context: ShotContext,
+        intelligence: PlayerIntelligence?
+    ) -> Double? {
+        // Prefer PlayerIntelligence distance profile if available
+        if let avg = intelligence?.clubs[club.id]?.distance.averageCarryMeters {
+            return avg
+        }
+        // Fallback to current behavior via recentShotHistory
+        return historicalCarry(for: club, history: context.recentShotHistory) ?? club.averageCarryMeters
+    }
+
+    @usableFromInline
+    func resolveMissPenalty(
+        for club: Club,
+        context: ShotContext,
+        intelligence: PlayerIntelligence?
+    ) -> Double {
+        if let miss = intelligence?.clubs[club.id]?.typicalMissDirection {
+            // Provide a small, deterministic penalty based on coarse miss direction only
+            switch miss {
+            case .left, .right:
+                return 0.03
+            case .centred:
+                return 0
+            case .insufficientData:
+                break
+            }
+        }
+        // Fallback to existing error-based penalty
+        return historicalErrorPenalty(for: club.id, history: context.recentShotHistory)
+    }
+
+    @usableFromInline
+    func resolveConfidence(
+        for club: Club,
+        context: ShotContext,
+        intelligence: PlayerIntelligence?
+    ) -> Double {
+        if let intelligence {
+            // Combine player confidence with environmental confidence deterministically
+            let player = intelligence.confidence.overall
+            let weather: Double = {
+                if let env = context.environmentalAssessment {
+                    return env.confidence.overall
+                } else {
+                    return weatherConfidenceAdjustment(for: context.environment.weatherAvailability)
+                }
+            }()
+            // Simple blend (weights can be tuned later)
+            return min(1, max(0, player * 0.7 + weather * 0.3))
+        }
+        // Fallback to existing confidence calculation
+        return confidenceForClub(club: club, context: context, distanceDifferenceMeters: 0)
     }
     
 }

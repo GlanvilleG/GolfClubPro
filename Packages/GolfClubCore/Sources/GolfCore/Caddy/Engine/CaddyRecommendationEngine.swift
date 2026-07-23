@@ -12,13 +12,24 @@ public struct CaddyRecommendationEngine:
 
     public init() {}
 
+    // Backward-compatible overload for existing callers/tests
     public func create(
-        option:
-            StrategicOption,
-        adaptiveAdjustment:
-            AdaptiveTargetAdjustment,
-        weatherAdjustment:
-            WeatherAdjustment?
+        option: StrategicOption,
+        adaptiveAdjustment: AdaptiveTargetAdjustment,
+        weatherAdjustment: WeatherAdjustment?
+    ) -> CaddyRecommendation {
+        return create(
+            option: option,
+            adaptiveAdjustment: adaptiveAdjustment,
+            weatherAdjustment: weatherAdjustment,
+            environmentalAssessment: nil
+        )
+    }
+    public func create(
+        option: StrategicOption,
+        adaptiveAdjustment: AdaptiveTargetAdjustment,
+        weatherAdjustment: WeatherAdjustment?,
+        environmentalAssessment: EnvironmentalAssessment?
     ) -> CaddyRecommendation {
 
         var reasons:
@@ -43,6 +54,10 @@ public struct CaddyRecommendationEngine:
             reasons.append(
                 .weatherInfluence
             )
+        }
+
+        if environmentalAssessment != nil {
+            // Environmental context was considered via standardized assessment
         }
 
         return CaddyRecommendation(
