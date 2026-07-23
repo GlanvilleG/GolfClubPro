@@ -86,6 +86,7 @@ public struct RecommendationAuditRecord:
     public var humidityPercent: Double?
     public var pressureHPa: Double?
 
+    public var explainabilitySnapshot: RecommendationEvidenceSnapshot?
     public init(
         id: RecommendationAuditRecordID =
             RecommendationAuditRecordID(),
@@ -119,7 +120,8 @@ public struct RecommendationAuditRecord:
         windGustMetersPerSecond: Double? = nil,
         temperatureCelsius: Double? = nil,
         humidityPercent: Double? = nil,
-        pressureHPa: Double? = nil
+        pressureHPa: Double? = nil,
+        explainabilitySnapshot: RecommendationEvidenceSnapshot? = nil
     ) {
         self.id = id
         self.playerID = playerID
@@ -161,5 +163,6 @@ public struct RecommendationAuditRecord:
         self.humidityPercent =
             humidityPercent
         self.pressureHPa =
-            pressureHPa    }
+            pressureHPa
+        self.explainabilitySnapshot = explainabilitySnapshot }
 }

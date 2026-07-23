@@ -111,7 +111,8 @@ public struct RecommendationAuditBuilder:
             pressureHPa:
                 context
                     .environment
-                    .pressureHPa
+                .pressureHPa,
+            explainabilitySnapshot: nil
         )
     }
 

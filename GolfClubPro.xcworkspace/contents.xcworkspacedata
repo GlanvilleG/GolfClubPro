@@ -8,9 +8,6 @@
       location = "group:BundledGolfClubCatalogueLoader.txt">
    </FileRef>
    <FileRef
-      location = "group:PlayerPerformanceEngine_deprecated.swift">
-   </FileRef>
-   <FileRef
-      location = "group:ADR-032-Player-Performance-Intelligence-Architecture.md">
+      location = "group:Architectural Evolution.md">
    </FileRef>
 </Workspace>

@@ -693,4 +693,20 @@ Extend the recommendation architecture so GolfClubPro evaluates probable shot ou
 - Updated Player Domain Model.
 - Updated Architecture.md.
 
+---
+
+### Sprint 10.7 — Explainability Engine Scaffolding
+
+- Added internal explainability enums and value types (Stage 1)
+- Added structured evidence model and references (Stage 2)
+- Added mapper to public evidence and deterministic ordering utilities (Stages 3 & 5)
+- Added composers for confidence/warnings and alternatives (Stage 7)
+- Added minimal low-confidence flags (Stage 8)
+- Introduced RecommendationEvidenceSnapshot (snapshot boundary, compile-only)
+- Added snapshot→structured and snapshot→public evidence mappers with tests
+- Integrated feature-flagged snapshot attachment to RecommendationAuditRecord
+- Drafted ADR-033 — Explainability Architecture
+- No changes to public RecommendationExplanation API
+- All tests passing
+
 

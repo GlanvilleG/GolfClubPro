@@ -269,4 +269,14 @@ final class RecommendationAuditTests:
             180
         )
     }
+    func testAuditRecordIncludesExplainabilitySnapshotWhenEnabled() throws {
+        let club = Club(name: "7 Iron", type: .iron, averageCarryMeters: 145)
+        let player = Player(name: "Gerard", recommendationAuditEnabled: true)
+        let context = makeContext(player: player, clubs: [club])
+
+        let result = try RecommendationEngine().recommend(for: context)
+        let record = try XCTUnwrap(result.auditRecord)
+        XCTAssertNotNil(record.explainabilitySnapshot)
+        XCTAssertEqual(record.explainabilitySnapshot?.decision.preferredClub?.clubID, record.preferredClubID)
+    }
 }

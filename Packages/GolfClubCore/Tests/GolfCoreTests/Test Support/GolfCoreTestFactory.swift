@@ -171,4 +171,21 @@ enum GolfCoreTestFactory {
             source: .weatherKit
         )
     }
+    static func makeShotContext(
+        base: ShotContext = makeShotContext(),
+        overriding plan: ShotPlan
+    ) -> ShotContext {
+        ShotContext(
+            player: base.player,
+            roundID: base.roundID,
+            hole: base.hole,
+            currentPosition: base.currentPosition,
+            playableLie: base.playableLie,
+            courseArea: base.courseArea,
+            availableClubs: base.availableClubs,
+            recentShotHistory: base.recentShotHistory,
+            strategyGeometry: base.strategyGeometry,
+            currentShotPlan: plan
+        )
+    }
 }

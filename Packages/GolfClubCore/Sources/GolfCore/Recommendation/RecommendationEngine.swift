@@ -244,13 +244,31 @@ public struct RecommendationEngine:
                     recommendations
             )
 
-       return RecommendationResult(
+        var finalAuditRecord = auditRecord
+        if var rec = finalAuditRecord {
+            // Feature-flagged by the same audit enablement
+            let candidateSummaries = recommendations.map { rec in
+                RecommendationEvidenceSnapshot.CandidateSummary(
+                    clubID: String(describing: rec.clubID),
+                    score: rec.score,
+                    confidence: rec.confidence
+                )
+            }
+            let snapshot = RecommendationEvidenceSnapshot(
+                decision: decision,
+                candidates: candidateSummaries
+            )
+            rec.explainabilitySnapshot = snapshot
+            finalAuditRecord = rec
+        }
+
+        return RecommendationResult(
             decision:
                 decision,
             explanation:
                 explanation,
             auditRecord:
-                auditRecord
+                finalAuditRecord
         )
     }
     

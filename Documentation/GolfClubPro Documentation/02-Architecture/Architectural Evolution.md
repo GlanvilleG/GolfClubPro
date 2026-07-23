@@ -12,9 +12,6 @@
 | **v0.7** *(planned)* | Adaptive AI Caddie |
 
 Record the current milestone:
-
-
-```markdown
 ## v0.4 — Architecture Milestone 1
 
 - Introduced Domain-Driven Design
@@ -71,3 +68,11 @@ Record the current milestone:
 - Expanded architectural test coverage and recommendation regression testing.
 - Strengthened separation between analytics, decision making and presentation.
 - Preserved deterministic, explainable and offline-first architectural principles across the recommendation subsystem.
+
+## Sprint 10.7 — Explainability Snapshot Boundary
+
+- Introduced RecommendationEvidenceSnapshot as a deterministic input boundary for Explainability and Audit (compile-only, no wiring yet).
+- Added mappers from snapshot → structured evidence and snapshot → public evidence with deterministic ordering.
+- Feature-flagged minimal snapshot attachment to RecommendationAuditRecord in RecommendationEngine.
+- Next: approve and wire snapshot production at the pipeline/engine boundary (EnvironmentalAssessment, Risk/Strategic summaries) and integrate with ExplainabilityEngine mapping without altering public APIs.
+
