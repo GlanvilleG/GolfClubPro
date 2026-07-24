@@ -10,4 +10,7 @@
    <FileRef
       location = "group:Architectural Evolution.md">
    </FileRef>
+   <FileRef
+      location = "group:ADR-033 &#x2013; Explainability Architecture.md">
+   </FileRef>
 </Workspace>
